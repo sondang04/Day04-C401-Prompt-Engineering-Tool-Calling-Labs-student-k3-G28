@@ -1,0 +1,1160 @@
+{
+  "run_id": "v4_B_group_openrouter_20260729T113938643002",
+  "version": "v4",
+  "artifact_version": "v4+pcf22e0901fc3+tcfe116309267",
+  "prompt_hash": "cf22e0901fc33bed5c27787541c6a4e8f781fc95ff89284d2706d58a9eefe426",
+  "tools_hash": "cfe1163092678b82fd4bd0a549d3bce5486411d560252c0d8a44820c2164628c",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "/home/a1z0v/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/a1z0v/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28/starter_v0/artifacts/tools.yaml",
+  "eval_cases": "data/eval_group.json",
+  "dataset_id": "day04_v4_research_group",
+  "dataset_role": "group",
+  "description": "10 case do nhóm tự viết để stress-test agent: 5 single-turn dùng query và 5 multi-turn dùng turns. Các case nhắm vào phần bề mặt mà eval_base CHƯA chạm tới: các bonus tool (papers, paper_text, send), enum chưa được đặc tả (search_type=Top, topic=general), tính tổng quát của quy tắc query, ranh giới gửi sau khi đã được duyệt, và rủi ro hỏi lại thừa. Chấm trên tool_calls + args (subset).",
+  "generated_at": "2026-07-29T11:39:38",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 6,
+    "case_accuracy": 0.6,
+    "tool_routing_accuracy": 0.8,
+    "argument_accuracy": 0.6,
+    "multiturn_accuracy": 0.4,
+    "failure_counts": {
+      "wrong_tool": 2,
+      "wrong_boundary": 1,
+      "missing_info": 1
+    },
+    "observed_mismatch_counts": {
+      "wrong_arg_value": 2,
+      "missing_tool_call": 2
+    }
+  },
+  "results": [
+    {
+      "id": "G01_papers_routing",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "bonus_tool_routing",
+        "difficulty": "medium",
+        "what_it_tests": "Yêu cầu bài báo khoa học phải đi vào papers chứ không phải lookup; description của papers còn mơ hồ nên đây là phép thử định tuyến sang bonus tool."
+      },
+      "input": "Tìm giúp mình vài bài báo khoa học về multimodal learning trên arXiv.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "multimodal learning"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "multimodal learning",
+              "max_results": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "multimodal learning",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "multimodal learning",
+            "api_query": "all:multimodal AND all:learning",
+            "total_results": 14963,
+            "items": [
+              {
+                "arxiv_id": "2206.09242v1",
+                "title": "GaLeNet: Multimodal Learning for Disaster Prediction, Management and Relief",
+                "summary": "After a natural disaster, such as a hurricane, millions are left in need of emergency assistance. To allocate resources optimally, human planners need to accurately analyze data that can flow in large volumes from several sources. This motivates the development of multimodal machine learning frameworks that can integrate multiple data sources and leverage them efficiently. To date, the research community has mainly focused on unimodal reasoning to provide granular assessments of the damage. Moreover, previous studies mostly rely on post-disaster images, which may take several days to become available. In this work, we propose a multimodal framework (GaLeNet) for assessing the severity of damage by complementing pre-disaster images with weather data and the trajectory of the hurricane. Through extensive experiments on data from two hurricanes, we demonstrate (i) the merits of multimodal approaches compared to unimodal methods, and (ii) the effectiveness of GaLeNet at fusing various modalities. Furthermore, we show that GaLeNet can leverage pre-disaster images in the absence of post-disaster images, preventing substantial delays in decision making.",
+                "authors": [
+                  "Rohit Saha",
+                  "Mengyi Fang",
+                  "Angeline Yasodhara",
+                  "Kyryl Truskovskyi",
+                  "Azin Asgarian",
+                  "Daniel Homola",
+                  "Raahil Shah",
+                  "Frederik Dieleman",
+                  "Jack Weatheritt",
+                  "Thomas Rogers"
+                ],
+                "published": "2022-06-18T16:45:57Z",
+                "updated": "2022-06-18T16:45:57Z",
+                "url": "http://arxiv.org/abs/2206.09242v1",
+                "pdf_url": "https://arxiv.org/pdf/2206.09242v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV",
+                  "cs.LG"
+                ]
+              },
+              {
+                "arxiv_id": "2403.06024v1",
+                "title": "Semi-Supervised Multimodal Multi-Instance Learning for Aortic Stenosis Diagnosis",
+                "summary": "Automated interpretation of ultrasound imaging of the heart (echocardiograms) could improve the detection and treatment of aortic stenosis (AS), a deadly heart disease. However, existing deep learning pipelines for assessing AS from echocardiograms have two key limitations. First, most methods rely on limited 2D cineloops, thereby ignoring widely available Doppler imaging that contains important complementary information about pressure gradients and blood flow abnormalities associated with AS. Second, obtaining labeled data is difficult. There are often far more unlabeled echocardiogram recordings available, but these remain underutilized by existing methods. To overcome these limitations, we introduce Semi-supervised Multimodal Multiple-Instance Learning (SMMIL), a new deep learning framework for automatic interpretation for structural heart diseases like AS. When deployed, SMMIL can combine information from two input modalities, spectral Dopplers and 2D cineloops, to produce a study-level AS diagnosis. During training, SMMIL can combine a smaller labeled set and an abundant unlabeled set of both modalities to improve its classifier. Experiments demonstrate that SMMIL outperforms recent alternatives at 3-level AS severity classification as well as several clinically relevant AS detection tasks.",
+                "authors": [
+                  "Zhe Huang",
+                  "Xiaowei Yu",
+                  "Benjamin S. Wessler",
+                  "Michael C. Hughes"
+                ],
+                "published": "2024-03-09T22:23:45Z",
+                "updated": "2024-03-09T22:23:45Z",
+                "url": "http://arxiv.org/abs/2403.06024v1",
+                "pdf_url": "https://arxiv.org/pdf/2403.06024v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV",
+                  "cs.ET",
+                  "cs.LG"
+                ]
+              },
+              {
+                "arxiv_id": "2008.13369v1",
+                "title": "Introducing Representations of Facial Affect in Automated Multimodal Deception Detection",
+                "summary": "Automated deception detection systems can enhance health, justice, and security in society by helping humans detect deceivers in high-stakes situations across medical and legal domains, among others. This paper presents a novel analysis of the discriminative power of dimensional representations of facial affect for automated deception detection, along with interpretable features from visual, vocal, and verbal modalities. We used a video dataset of people communicating truthfully or deceptively in real-world, high-stakes courtroom situations. We leveraged recent advances in automated emotion recognition in-the-wild by implementing a state-of-the-art deep neural network trained on the Aff-Wild database to extract continuous representations of facial valence and facial arousal from speakers. We experimented with unimodal Support Vector Machines (SVM) and SVM-based multimodal fusion methods to identify effective features, modalities, and modeling approaches for detecting deception. Unimodal models trained on facial affect achieved an AUC of 80%, and facial affect contributed towards the highest-performing multimodal approach (adaptive boosting) that achieved an AUC of 91% when tested on speakers who were not part of training sets. This approach achieved a higher AUC than existing automated machine learning approaches that used interpretable visual, vocal, and verbal features to detect deception in this dataset, but did not use facial affect. Across all videos, deceptive and truthful speakers exhibited significant differences in facial valence and facial arousal, contributing computational support to existing psychological theories on affect and deception. The demonstrated importance of facial affect in our models informs and motivates the future development of automated, affect-aware machine learning approaches for modeling and detecting deception and other social behaviors in-the-wild.",
+                "authors": [
+                  "Leena Mathur",
+                  "Maja J Matarić"
+                ],
+                "published": "2020-08-31T05:12:57Z",
+                "updated": "2020-08-31T05:12:57Z",
+                "url": "http://arxiv.org/abs/2008.13369v1",
+                "pdf_url": "https://arxiv.org/pdf/2008.13369v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV",
+                  "cs.HC",
+                  "cs.LG"
+                ]
+              },
+              {
+                "arxiv_id": "2412.02527v1",
+                "title": "The Multimodal Universe: Enabling Large-Scale Machine Learning with 100TB of Astronomical Scientific Data",
+                "summary": "We present the MULTIMODAL UNIVERSE, a large-scale multimodal dataset of scientific astronomical data, compiled specifically to facilitate machine learning research. Overall, the MULTIMODAL UNIVERSE contains hundreds of millions of astronomical observations, constituting 100\\,TB of multi-channel and hyper-spectral images, spectra, multivariate time series, as well as a wide variety of associated scientific measurements and \"metadata\". In addition, we include a range of benchmark tasks representative of standard practices for machine learning methods in astrophysics. This massive dataset will enable the development of large multi-modal models specifically targeted towards scientific applications. All codes used to compile the MULTIMODAL UNIVERSE and a description of how to access the data is available at https://github.com/MultimodalUniverse/MultimodalUniverse",
+                "authors": [
+                  "The Multimodal Universe Collaboration",
+                  "Jeroen Audenaert",
+                  "Micah Bowles",
+                  "Benjamin M. Boyd",
+                  "David Chemaly",
+                  "Brian Cherinka",
+                  "Ioana Ciucă",
+                  "Miles Cranmer",
+                  "Aaron Do",
+                  "Matthew Grayling",
+                  "Erin E. Hayes",
+                  "Tom Hehir",
+                  "Shirley Ho",
+                  "Marc Huertas-Company",
+                  "Kartheik G. Iyer",
+                  "Maja Jablonska",
+                  "Francois Lanusse",
+                  "Henry W. Leung",
+                  "Kaisey Mandel",
+                  "Juan Rafael Martínez-Galarza",
+                  "Peter Melchior",
+                  "Lucas Meyer",
+                  "Liam H. Parker",
+                  "Helen Qu",
+                  "Jeff Shen",
+                  "Michael J. Smith",
+                  "Connor Stone",
+                  "Mike Walmsley",
+                  "John F. Wu"
+                ],
+                "published": "2024-12-03T16:21:17Z",
+                "updated": "2024-12-03T16:21:17Z",
+                "url": "http://arxiv.org/abs/2412.02527v1",
+                "pdf_url": "https://arxiv.org/pdf/2412.02527v1",
+                "source": "arxiv.org",
+                "primary_category": "astro-ph.IM",
+                "categories": [
+                  "astro-ph.IM",
+                  "astro-ph.GA",
+                  "astro-ph.SR"
+                ]
+              },
+              {
+                "arxiv_id": "1605.05212v1",
+                "title": "Multimodal Sparse Coding for Event Detection",
+                "summary": "Unsupervised feature learning methods have proven effective for classification tasks based on a single modality. We present multimodal sparse coding for learning feature representations shared across multiple modalities. The shared representations are applied to multimedia event detection (MED) and evaluated in comparison to unimodal counterparts, as well as other feature learning methods such as GMM supervectors and sparse RBM. We report the cross-validated classification accuracy and mean average precision of the MED system trained on features learned from our unimodal and multimodal settings for a subset of the TRECVID MED 2014 dataset.",
+                "authors": [
+                  "Youngjune Gwon",
+                  "William Campbell",
+                  "Kevin Brady",
+                  "Douglas Sturim",
+                  "Miriam Cha",
+                  "H. T. Kung"
+                ],
+                "published": "2016-05-17T15:37:19Z",
+                "updated": "2016-05-17T15:37:19Z",
+                "url": "http://arxiv.org/abs/1605.05212v1",
+                "pdf_url": "https://arxiv.org/pdf/1605.05212v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.LG",
+                "categories": [
+                  "cs.LG",
+                  "cs.CV"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_topic_general",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "topic_general_not_news",
+        "difficulty": "medium",
+        "what_it_tests": "Tra cứu kiến thức chung phải dùng topic=general. Kiểm tra agent có lạm dụng topic=news sau khi prompt/tools nhấn mạnh news hay không; đồng thời query không được cắt mất 'Việt Nam'."
+      },
+      "input": "Tra cứu giúp mình dân số Việt Nam hiện nay là bao nhiêu.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "dân số Việt Nam",
+              "topic": "general"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "dân số Việt Nam",
+              "topic": "general"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "dân số Việt Nam",
+            "topic": "general"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "dân số Việt Nam",
+            "topic": "general",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "dân số việt nam",
+                "url": "https://vietnamnet.vn/dan-so-viet-nam-tag5881068972606219125-page1.html",
+                "source": "vietnamnet.vn",
+                "summary": "Title: dân số việt nam\n# dân số việt nam. ## Tin tức mới nhất về dân số việt nam. Chiều cao thanh niên Việt Nam tăng 2 bậc sau 10 năm nhưng vẫn thua Thái Lan hơn 2cm. Phụ nữ sinh đủ 2 con trước 35 tuổi được thưởng tiền. Phụ nữ ở 21 tỉnh thành khi sinh đủ 2 con trước 35 tuổi sẽ được khen thưởng, hỗ trợ tiền hoặc hiện vật. Sau 10 năm, chiều cao người Việt đã tăng thêm 2 bậc, hiện xếp thứ 4 khu vực Đông Nam Á. Hơn 96 triệu dân, Việt Nam đối mặt hàng loạt thách thức về dân số. Thứ trưởng Y tế cho biết, công tác dân số đang gặp nhiều thách thức rất lớn cả về quy mô, cơ cấu, chất lượng dân số. Tỉnh nào đẻ nhiều con nhất nước? Việt Nam hiện có 33 tỉnh có mức sinh cao, trong đó có nhiều tỉnh thành kinh tế phát triển cũng gia nhập nhóm này. Việt Nam là một trong những nước già hoá dân số nhanh nhất thế giới, theo tính toán đến năm 2038 sẽ hết thời kỳ dân số vàng. 21 tỉnh 'lười đẻ', Việt Nam không cấm người dân sinh con thứ 3. Chất lượng dân số được cải thiện nhiều mặt; nhiều văn bản quan trọng đã được ban hành để định hướng cho công tác dân số trong thời gian tới tuy nhiên công tác dân số 2020 đối diện nhiều thách thức. Theo mục tiêu tổng quát của Chiến lược Dân số Việt Nam đến năm 2030 đã được Thủ tướng Chính phủ phê duyệt, Việt Nam cần duy trì mức sinh thay thế, cân bằng giới tính, tận dụng cơ cấu dân số vàng, thích ứng với già hóa dân số…. Kết quả tổng điều tra dân số và nhà ở năm 2019 cho thấy, TP.HCM là địa phương có mức sinh thấp nhất cả nước (1,39 con/phụ nữ), Hà Tĩnh cao nhất (2,83 con/phụ nữ). Dân số Việt Nam hơn 96,2 triệu người, đông thứ 15 thế giới. Bộ Y tế cho biết, pháp luật không có quy định khống chế người dân được sinh bao nhiêu con, đây là quyền của người dân.",
+                "score": 0.90771407
+              },
+              {
+                "title": "dân số việt nam",
+                "url": "https://vietnamnet.vn/dan-so-viet-nam-tag5881068972606219125-page0.html",
+                "source": "vietnamnet.vn",
+                "summary": "Title: dân số việt nam\n# dân số việt nam. Dự báo mức sinh ở Việt Nam sẽ tiếp tục giảm, Bộ trưởng Đào Hồng Lan cho biết Bộ Y tế đề xuất nhiều giải pháp hỗ trợ cho phụ nữ trong quá trình mang thai và sinh con. Dân số Việt Nam sẽ bắt đầu tăng trưởng âm sau 3 thập kỷ nếu giữ đà mức sinh thấp. Bộ Y tế cho biết với kịch bản mức sinh tiếp tục giảm, đến năm 2039 Việt Nam sẽ kết thúc thời kỳ dân số vàng, năm 2042 quy mô dân số trong độ tuổi lao động đạt đỉnh và sau năm 2054 dân số sẽ bắt đầu tăng trưởng âm. Không chỉ là vùng tập trung dân cư lớn nhất cả nước, khu vực này còn là nơi có mật độ dân số đông nhất Việt Nam. Một km2 có tới 1.126 người cư trú, gấp gần 10 lần nơi dân thưa nhất. Dân số Việt Nam hiện hơn 101,1 triệu người, tốc độ gia tăng ngày càng giảm. Năm 2024 dù được coi là “năm đẹp” nhưng không kéo được mức sinh của người Việt tăng lên, thậm chí tiếp tục giảm, đạt mức thấp nhất trong lịch sử là 1,91 con/phụ nữ. Nơi nào dân số đông, sống lâu nhất Việt Nam? ### Nơi nào dân số đông, sống lâu nhất Việt Nam? Đây là nơi nhiều năm liên tục mỗi phụ nữ chỉ sinh chưa đến 1,5 con, trong khi tuổi thọ trung bình của người dân nơi đây cao nhất nước với 76,5 tuổi. Tỉnh nào ở Việt Nam có dân số giảm? ### Tỉnh nào ở Việt Nam có dân số giảm? Tỷ lệ tăng dân số ở mức âm khiến trong 3 năm gần đây (2021-2023), hai địa phương này tổng cộng sụt giảm khoảng 3 triệu người. Dân số Việt Nam sẽ sớm đạt 100 triệu người. Dân số Việt Nam hiện ở mức hơn 99 triệu, lãnh đạo Tổng cục Dân số Bộ Y tế cho biết theo dự báo, nước ta sẽ đón chào công dân thứ 100 triệu vào năm 2023.",
+                "score": 0.8827621
+              },
+              {
+                "title": "Dân số việt nam: Tin tức, Video, hình ảnh Dân số việt nam | CafeBiz",
+                "url": "https://cafebiz.vn/dan-so-viet-nam.html",
+                "source": "cafebiz.vn",
+                "summary": "Title: Dân số việt nam: Tin tức, Video, hình ảnh Dân số việt nam | CafeBiz\nViệt Nam là nước có tốc độ già hóa dân số nhanh nhất châu Á. ### Việt Nam là nước có tốc độ già hóa dân số nhanh nhất châu Á. Việt Nam là một trong những nước có tốc độ già hóa dân số nhanh nhất châu Á, thời gian chuyển từ giai đoạn già hóa sang già là 17 - 20 năm. Quỹ Dân số Liên Hợp Quốc (UNFPA) tại Việt Nam cho biết dân số Việt Nam sẽ sớm đạt 100 triệu người và dấu mốc này sẽ đưa Việt Nam trở thành quốc gia đông dân thứ 15 trên thế giới. Theo Tổng cục Thống kê, với tốc độ tăng dân số trung bình những năm gần đây, dự báo trung tuần tháng 4, Việt Nam sẽ đón công dân thứ 100 triệu chào đời. khu vực Đông Nam Á. Tại Việt Nam, một cá nhân phải nằm trong nhóm 20% dân số giàu nhất mới có thu nhập hằng năm là 103 triệu đồng. Dân số Việt Nam đang đối diện với thách thức \"kép\": là nước nằm trong nhóm có tốc độ già hóa dân số nhanh, già hóa kéo theo tuổi thọ trung bình tăng cao nhưng số năm sống khỏe lại giảm. Trong khi đó, con số này tại Singapore là 98 và tại Việt Nam là 46 ô tô trên mỗi 1.000 dân. Như vậy, số ô tô trên dân số Việt Nam vẫn còn tương đối thấp so với các quốc gia phát triển trong khu vực. Mới đây, Ngân hàng Thế giới World Bank (WB) đã công bố báo cáo về dự báo cơ cấu dân số và khuyến nghị cải cách chính sách ở Việt Nam. Theo đó, báo cáo cho biết, Việt Nam đang đứng trước nguy cơ “dư thừa” nam giới trong 3 thập kỷ tới. Theo ước tính của Chainalysis, có hơn 5,9 triệu người, tương đương 6,12% dân số Việt Nam sở hữu tiền mã hóa. Hơn 1/4 dân số Việt Nam sở hữu DNA của người Neanderthal có tác dụng chống COVID-19. ### Hơn 1/4 dân số Việt Nam sở hữu DNA của người Neanderthal có tác dụng chống COVID-19.",
+                "score": 0.8740022
+              },
+              {
+                "title": "dân số Việt Nam",
+                "url": "https://vietnambiz.vn/dan-so-viet-nam.html",
+                "source": "vietnambiz.vn",
+                "summary": "Title: dân số Việt Nam\nHà Nội đặt mục tiêu dân số sau 2065 không quá 20 triệu người, cần đánh giá kỹ lợi thế sân bay Ứng Hòa. ### Hà Nội đặt mục tiêu dân số sau 2065 không quá 20 triệu người, cần đánh giá kỹ lợi thế sân bay Ứng Hòa. Mức sinh trung bình năm 2025 chỉ đạt 1,93 con, khiến 'dân số già' đến nhanh hơn. ### Mức sinh trung bình năm 2025 chỉ đạt 1,93 con, khiến 'dân số già' đến nhanh hơn. Mức sinh năm 2025 của Việt Nam tăng nhẹ. ### Mức sinh năm 2025 của Việt Nam tăng nhẹ. Mức sinh của Việt Nam thuộc nhóm thấp nhất Đông Nam Á. ### Mức sinh của Việt Nam thuộc nhóm thấp nhất Đông Nam Á. Tổng tỷ suất sinh tại Việt Nam tiếp tục giảm, TP HCM xuống dưới mức 1,4. ### Tổng tỷ suất sinh tại Việt Nam tiếp tục giảm, TP HCM xuống dưới mức 1,4. Tỷ suất sinh tại Việt Nam giảm thế nào trong 10 năm qua và nguy cơ già hoá dân số. ### Tỷ suất sinh tại Việt Nam giảm thế nào trong 10 năm qua và nguy cơ già hoá dân số. Tuổi kết hôn lần đầu người Việt Nam là 27,2. ### Tuổi kết hôn lần đầu người Việt Nam là 27,2. Việt Nam sắp vào nhóm các nước trên 100 triệu người: Tổng GDP hàng năm 60.000 tỷ USD, chiếm 66% dân số thế giới. ### Việt Nam sắp vào nhóm các nước trên 100 triệu người: Tổng GDP hàng năm 60.000 tỷ USD, chiếm 66% dân số thế giới. Việt Nam dự kiến đón công dân thứ 100 triệu trong tháng 4/2023. ### Việt Nam dự kiến đón công dân thứ 100 triệu trong tháng 4/2023. Một nửa dân số Việt Nam chưa có tài khoản tại ngân hàng. ### Một nửa dân số Việt Nam chưa có tài khoản tại ngân hàng. Dân số vàng thật không? ### Dân số vàng thật không? Người Việt già trước khi giàu: Có nên tăng độ tuổi nghỉ hưu? # dân số Việt Nam. Diễn đàn Đầu tư Việt Nam 2026.",
+                "score": 0.80698997
+              },
+              {
+                "title": "dân số việt nam",
+                "url": "https://vietnamnet.vn/dan-so-viet-nam-tag5881068972606219125.html",
+                "source": "vietnamnet.vn",
+                "summary": "Title: dân số việt nam\n# dân số việt nam. Việt Nam đặt mục tiêu nâng mức sinh mỗi năm lên 2%, sinh và nuôi con được hỗ trợ. Trước xu hướng giảm sinh đang diễn ra trên phạm vi rộng, nhiều cặp vợ chồng ngại sinh đẻ, Bộ Y tế đặt mục tiêu tăng mức sinh trung bình mỗi năm 2% và tất cả địa phương đều hỗ trợ việc sinh con, nuôi con. Bộ trưởng Y tế: Mức sinh ở Việt Nam thấp nhất trong lịch sử. Dự báo mức sinh ở Việt Nam sẽ tiếp tục giảm, Bộ trưởng Đào Hồng Lan cho biết Bộ Y tế đề xuất nhiều giải pháp hỗ trợ cho phụ nữ trong quá trình mang thai và sinh con. Nhiều người cho rằng, nỗi lo về nhà ở khi giá bất động sản tăng cao, chi phí cho việc học tập, y tế, sinh hoạt tạo gánh nặng khiến các cặp vợ chồng trẻ không dám sinh con dẫu có khát khao đông con đến đâu. Bộ Y tế cho biết với kịch bản mức sinh tiếp tục giảm, đến năm 2039 Việt Nam sẽ kết thúc thời kỳ dân số vàng, năm 2042 quy mô dân số trong độ tuổi lao động đạt đỉnh và sau năm 2054 dân số sẽ bắt đầu tăng trưởng âm. Top 3 tỉnh có dân số ít nhất cả nước gồm những địa phương nào? Vùng nào tập trung đông người nhất Việt Nam? Không chỉ là vùng tập trung dân cư lớn nhất cả nước, khu vực này còn là nơi có mật độ dân số đông nhất Việt Nam. Một km2 có tới 1.126 người cư trú, gấp gần 10 lần nơi dân thưa nhất. Thành phố có dân số đông dân nhất cả nước gấp gần 30 lần nơi ít dân nhất. TPHCM có dân số đông nhất cả nước, gấp gần 30 lần nơi ít dân nhất. Năm 2024 dù được coi là “năm đẹp” nhưng không kéo được mức sinh của người Việt tăng lên, thậm chí tiếp tục giảm, đạt mức thấp nhất trong lịch sử là 1,91 con/phụ nữ. Tỉnh nào ở Việt Nam có dân số giảm?",
+                "score": 0.75268626
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_search_type_top",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_search_type_top",
+        "difficulty": "hard",
+        "what_it_tests": "'được quan tâm nhiều nhất' phải map sang search_type=Top thay vì mặc định Latest. Mô tả search_type hiện chỉ là 'Cách sắp xếp' nên chưa đủ để phân biệt."
+      },
+      "input": "Tìm những tweet được quan tâm nhiều nhất về VinFast.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "VinFast",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "VinFast",
+              "search_type": "Top",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "VinFast",
+            "search_type": "Top",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "VinFast",
+            "search_type": "Top",
+            "items": [
+              {
+                "title": "Terjadi lakalantas taxi vinfast menjelang flyover pancoran arah cawang, belum diketahui ada korban jiwa atau tidak dan s",
+                "summary": "Terjadi lakalantas taxi vinfast menjelang flyover pancoran arah cawang, belum diketahui ada korban jiwa atau tidak dan sudah dalam penanganan petugas. \n@RadioElshinta https://t.co/PcWJAPav0q",
+                "url": "https://x.com/Bowie_Tian/status/2081770796536750559",
+                "source": "@Bowie_Tian",
+                "date": "Mon Jul 27 15:56:49 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "695"
+                }
+              },
+              {
+                "title": "Across Canada and North America, EV drivers can access a growing network of public charging stations through providers s",
+                "summary": "Across Canada and North America, EV drivers can access a growing network of public charging stations through providers such as ChargePoint, FLO, Circuit électrique, Petro-Canada, BC Hydro, Ivy Charging Network, Electrify Canada, and many more.\n\n#VinFastCanada #DriveElectric https://t.co/bnqseGn2yO",
+                "url": "https://x.com/VinFastCanada/status/2082115116770754866",
+                "source": "@VinFastCanada",
+                "date": "Tue Jul 28 14:45:02 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 1,
+                  "views": "95"
+                }
+              },
+              {
+                "title": "Bantu *VIRALKAN* Gaes Unit kami Dari PCNU Jakpus (Simanis) Lagi Pengantaran Pasien di halangi oleh mobil VinFast VF3 dep",
+                "summary": "Bantu *VIRALKAN* Gaes Unit kami Dari PCNU Jakpus (Simanis) Lagi Pengantaran Pasien di halangi oleh mobil VinFast VF3 depan plat B 2005 DON Terima Kasih🙏🙏\n\n Ig ambulance_indonesia_ https://t.co/kZuHsJQRP0",
+                "url": "https://x.com/Idnextgen/status/2049322091833684153",
+                "source": "@Idnextgen",
+                "date": "Wed Apr 29 02:57:15 +0000 2026",
+                "metrics": {
+                  "favorites": 999,
+                  "retweets": 585,
+                  "views": "49535"
+                }
+              },
+              {
+                "title": "23.02: RT@Bowie_Tian : Terjadi lakalantas taxi vinfast menjelang flyover pancoran arah cawang, belum diketahui ada korba",
+                "summary": "23.02: RT@Bowie_Tian : Terjadi lakalantas taxi vinfast menjelang flyover pancoran arah cawang, belum diketahui ada korban jiwa atau tidak dan sudah dalam penanganan petugas. \n@TMCPoldaMetro \n@NTMCLantasPolri \n\nhttps://t.co/WAyOhihbcU",
+                "url": "https://x.com/RadioElshinta/status/2081772215096549485",
+                "source": "@RadioElshinta",
+                "date": "Mon Jul 27 16:02:28 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "1464"
+                }
+              },
+              {
+                "title": "And yes — the trunk opens too. 😄",
+                "summary": "And yes — the trunk opens too. 😄\n\nA miniature VF 8 with full-size attention to detail.\n\n#VinFast #VF8 #ElectricVehicles #Vietnam #India",
+                "url": "https://x.com/VinFastofficial/status/2077270938299568254",
+                "source": "@VinFastofficial",
+                "date": "Wed Jul 15 05:56:00 +0000 2026",
+                "metrics": {
+                  "favorites": 3051,
+                  "retweets": 504,
+                  "views": "72929"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_query_rule_generality",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "query_redundancy_rule",
+        "difficulty": "medium",
+        "what_it_tests": "Quy tắc 'query không lặp lại thông tin đã có ở tham số khác' phải tổng quát cho chủ đề ngoài AI và mốc thời gian 'tháng này' -> month, chứ không chỉ đúng với các case AI trong eval_base."
+      },
+      "input": "Tìm trên web tin tức bầu cử Mỹ trong tháng này.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "bầu cử Mỹ",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "bầu cử Mỹ",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "bầu cử Mỹ",
+            "topic": "news",
+            "timeframe": "month"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "bầu cử Mỹ",
+            "topic": "news",
+            "timeframe": "month",
+            "items": [
+              {
+                "title": "Trump says these documents prove his false claims of election fraud. Here's what they really say - AP News",
+                "url": "https://apnews.com/article/trump-voter-fraud-china-meddling-election-documents-46caa9f4ac6768f373d69c9a5e944570",
+                "source": "apnews.com",
+                "summary": "Test Your News I.Q. 2026 Elections Election Results Election calendar White House Congress Supreme Court The latest AP-NORC polls. 2026 Elections Election Results Election calendar White House Congress Supreme Court The latest AP-NORC polls. President Donald Trump used a primetime address to the nation Thursday to elevate his yearslong push to raise doubts about the legitimacy of U.S. elections and dispute his 2020 loss in an appeal for more restrictive voting laws ahead of the midterms. “Starting during the 2020 election cycle, the People’s Republic of China carried out what is believed to be the largest compromise of election data in history, resulting in China’s illicit acquisition of 220 million U.S. voter files,” Trump said Thursday night. In his remarks, Trump touted the release of a new Department of Homeland Security investigation, based on state voter rolls and public records, that he said had identified approximately 278,000 noncitizens registered to vote in federal elections.",
+                "score": 0.13891701
+              },
+              {
+                "title": "Trump touts America's \"golden age\", attacks communism in delayed July 4th speech - CBS News",
+                "url": "https://www.cbsnews.com/news/trump-july-4-speech-washington-dc/",
+                "source": "cbsnews.com",
+                "summary": "# Trump touts America's \"golden age\", attacks communism in delayed July 4th speech. President Trump paid homage to veterans, attacked communism and touted America's \"golden age\" in his July 4th speech commemorating the 250th anniversary of American independence. \"You look at Venezuela, you look at Iran, we wiped it out, wiped out their military,\" he said, before comparing the sinking of a Spanish fleet on Manila Bay to this year's attacks on Iran's navy. In similar tones to his speech on the eve of July 4th, Mr. Trump also used this speech to attack communism, in rhetoric which some have interpreted as an attack on Democrats ahead of the midterm elections. The president rounded out his speech where he also paid tribute to NASA astronauts past and present, police forces and farmers, by declaring that the 250th anniversary of the Declaration of Independence is \"only the dawn of the golden age of America,\" and that \"the best is yet to come.\".",
+                "score": 0.109296516
+              },
+              {
+                "title": "America split from monarchy 250 years ago. Trump’s presidency is testing how far it’s come - Los Angeles Times",
+                "url": "https://www.latimes.com/world-nation/story/2026-06-28/america-split-from-monarchy-250-years-ago-trumps-presidency-is-testing-how-far-its-come",
+                "source": "latimes.com",
+                "summary": "The 250th anniversary of America’s liberation from a king kicked off with a campaign-style rally on the National Mall by President Trump, whose face already stares down from banners fluttering from federal buildings across the nation’s capital. Since returning to office in January 2025, Trump has nominated one of his personal lawyers to serve as attorney general, ordered the Department of Justice to pursue his political enemies, deployed the U.S. Marines to the nation’s second largest city and leveraged the presidency to enrich himself and his family. “It’s more about how he imagines who is he and what the presidency is,” Zelizer said. During his first term, he referred to Article II of the Constitution when he told participants in a youth summit, “I have the right to do whatever I want as president,” while declaring that it “gives me all of these rights at a level nobody has ever seen before.” He told the New York Times in an interview this year that the only check on his global power was “my own morality.",
+                "score": 0.085962325
+              },
+              {
+                "title": "Trump hails America as 'most exceptional nation ever to exist' in Mount Rushmore speech - Fox News",
+                "url": "https://www.foxnews.com/politics/trump-hails-america-most-exceptional-nation-ever-exist-mount-rushmore-speech",
+                "source": "foxnews.com",
+                "summary": "* #### Trump calls out NATO ahead of summit, calling it 'ridiculous' for US to persist on 'one sided path'. * #### Republican unveils Declaration of Independence bill ahead of America's 250th birthday. * #### President Trump to celebrate US exceptionalism on America's 250th birthday. # Trump hails America as 'most exceptional nation ever to exist' in Mount Rushmore speech. President Donald Trump marked the eve of America's 250th anniversary with a sweeping patriotic address at Mount Rushmore on Friday, declaring the United States the \"most exceptional nation ever to exist\" and vowing that it would \"never be a Communist country.\". President Donald Trump delivers remarks at Mount Rushmore on the eve of America's 250th anniversary. And by the grace of God, the United States of America is the most successful, most accomplished, most exceptional nation ever to exist in human history.\". President Donald Trump speaks beneath Mount Rushmore during a celebration ahead of America's 250th anniversary.",
+                "score": 0.080335975
+              },
+              {
+                "title": "Trump pardons 9 people convicted of tampering with emission controls on diesel engines - Fox News",
+                "url": "https://www.foxnews.com/politics/trump-pardons-9-people-convicted-tampering-emission-controls-diesel-engines",
+                "source": "foxnews.com",
+                "summary": "©2026 FOX News Network, LLC. * #### Pope Leo urges US to welcome immigrants in America 250 speech before visiting global migrant hotspot. * #### Immigrant business owner who built the American Dream says birth tourism is a 'slap in the face'. * #### Trump hails America as 'most exceptional nation ever to exist' in Mount Rushmore speech. * #### Republican unveils Declaration of Independence bill ahead of America's 250th birthday. * #### Trump marks America's 250th birthday with Mount Rushmore speech celebrating freedom. By James Cirrone  Fox News. On Friday, Trump announced six of the pardons on Truth Social, arguing that the men he granted clemency to were \"persecuted by the Biden Administration\" and punished for \"fixing their car.\". Eight of the people Trump pardoned were diesel mechanics or car tuners who were prosecuted for selling and installing so-called \"defeat devices\" into trucks, according to a Fox News review of federal court records.",
+                "score": 0.07084848
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_no_over_clarify",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "no_over_clarification",
+        "difficulty": "medium",
+        "what_it_tests": "Yêu cầu đã đủ thông tin bắt buộc: phải map tên hiển thị sang handle và gọi timeline ngay. Kiểm tra agent KHÔNG gọi clarify chỉ vì thiếu tham số tùy chọn như limit."
+      },
+      "input": "Lấy tweet gần đây của Google DeepMind.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "GoogleDeepMind"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "DeepMind"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "screenname: expected 'GoogleDeepMind', got 'DeepMind'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "DeepMind"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "JSONDecodeError",
+            "message": "Expecting value: line 1 column 1 (char 0)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_send_after_approval",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "send_after_explicit_approval",
+        "difficulty": "hard",
+        "what_it_tests": "Mặt còn lại của ranh giới R12: sau khi người dùng đã duyệt rõ ràng thì phải gọi send với confirmed=true, không được hỏi lại lần nữa. Mô tả 'Cờ xác nhận' hiện chưa nói khi nào đặt true."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Đăng bản tin AI hôm nay lên Telegram giúp mình."
+        },
+        {
+          "role": "user",
+          "content": "Nội dung là bản tóm tắt 3 tin AI nổi bật hôm nay."
+        },
+        {
+          "role": "user",
+          "content": "Mình đồng ý, bạn đăng đi."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có muốn đăng bản tin này lên kênh Telegram nào cụ thể không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "missing tool call send",
+          "extra tool call clarify"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có muốn đăng bản tin này lên kênh Telegram nào cụ thể không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có muốn đăng bản tin này lên kênh Telegram nào cụ thể không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_correction_timeframe",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_correction_timeframe",
+        "difficulty": "medium",
+        "what_it_tests": "3 turn: phải nhận bản sửa timeframe week -> month ở lượt 2 và giữ chủ đề từ lượt 1, không quay lại giá trị cũ."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin công nghệ trong tuần này."
+        },
+        {
+          "role": "user",
+          "content": "Đổi lại thành trong tháng này đi."
+        },
+        {
+          "role": "user",
+          "content": "Giữ nguyên chủ đề công nghệ nhé."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "công nghệ",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "công nghệ",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "công nghệ",
+            "topic": "news",
+            "timeframe": "month"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "công nghệ",
+            "topic": "news",
+            "timeframe": "month",
+            "items": [
+              {
+                "title": "Công nghệ chiến lược được hưởng nhiều cơ chế ưu đãi, đặc biệt chưa từng có",
+                "url": "https://baochinhphu.vn/cong-nghe-chien-luoc-duoc-huong-nhieu-co-che-uu-dai-dac-biet-chua-tung-co-10226071615272163.htm",
+                "source": "baochinhphu.vn",
+                "summary": "Thông qua việc đánh giá kết quả theo từng mốc thực hiện, cơ quan quản lý sẽ lựa chọn phương án tối ưu nhất để tiếp tục đầu tư và phát triển. Cách tiếp cận này không chỉ thúc đẩy cạnh tranh lành mạnh trong nghiên cứu mà còn góp phần nng cao khả năng tìm kiếm các giải pháp công nghệ mang tính đột phá. [...] Theo ông Nguyễn Phú Hùng, Vụ trưởng Vụ Khoa học kỹ thuật và công nghệ (Bộ KH&CN), tinh thần xuyên suốt của Nghị quyết 57 là kiên quyết không dừng lại ở tư duy gia công hay phụ thuộc vào công nghệ nhập khẩu. Mục tiêu đặt ra là phải tập trung làm chủ công nghệ lõi, công nghệ chiến lược, từng bước xy dựng nền công nghệ tự lực, tự cường của đất nước. [...] 16/07/2026   17:23\n\nCông nghệ chiến lược được hưởng nhiều cơ chế ưu đãi, đặc biệt chưa từng có- Ảnh 1.\n\nÔng Nguyễn Phú Hùng, Vụ trưởng Vụ Khoa học kỹ thuật và công nghệ (Bộ KH&CN) - ẢNh: VGP/Thu Giang\n\nNghị quyết số 57-NQ/TW của Bộ Chính trị đã xác định khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia là đột phá chiến lược, động lực chính để Việt Nam bứt phá, vượt qua bẫy thu nhập trung bình.",
+                "score": 0.32018378
+              },
+              {
+                "title": "Vốn công nghệ chảy vào Việt Nam",
+                "url": "https://thanhnien.vn/von-cong-nghe-chay-vao-viet-nam-185260715220131442.htm",
+                "source": "thanhnien.vn",
+                "summary": "Trước đó, hồi tháng 2, Victory Giant Technology (Trung Quốc) đầu tư vào Bắc Ninh 520 triệu USD sản xuất bảng mạch in (PCB) công nghệ cao phục vụ các lĩnh vực AI, máy chủ, trung tm dữ liệu và bán dẫn. Dự án được kỳ vọng sẽ góp phần hoàn thiện chuỗi cung ứng điện tử và bán dẫn tại miền Bắc, đồng thời tạo động lực thu hút thêm các doanh nghiệp (DN) công nghệ phụ trợ. Tại TP.HCM, Intel Products Vietnam tiếp tục mở rộng hoạt động lắp ráp và kiểm định chip tại Khu công nghệ cao TP.HCM. [...] công nghệ thông tin - truyền thông cho các thương hiệu quốc tế. Dù không phải nhà đầu tư lớn trong lĩnh vực công nghiệp hỗ trợ, song các tài liệu được công bố qua nhiều thời kỳ cho thấy khách hàng hoặc đối tác của Wistron là những ông lớn như Acer, Dell, HP, Lenovo, Sony và Apple. [...] Cùng thời gian này, Amkor Technology (Hàn Quốc) tiếp tục mở rộng công suất nhà máy đóng gói và kiểm thử bán dẫn tại Bắc Ninh, Hana Micron (Hàn Quốc) triển khai các hạng mục tăng vốn và mở rộng dy chuyền sản xuất tại Bắc Giang nhằm đáp ứng nhu cầu ngày càng lớn của thị trường chip toàn cầu.",
+                "score": 0.27112126
+              },
+              {
+                "title": "Thanh tra Chứng khoán chỉ ra nhiều vi phạm tại Công ty Cổ phần Tập đoàn Công nghệ CMC",
+                "url": "https://thanhtra.com.vn/ket-luan-thanh-tra-E17BD7A25/thanh-tra-chung-khoan-chi-ra-nhieu-vi-pham-tai-cong-ty-co-phan-tap-doan-cong-nghe-cmc-ab6de198f.html",
+                "source": "thanhtra.com.vn",
+                "summary": "Theo kết luận, trong giai đoạn được thanh tra, CMC đã xy dựng quy chế công bố thông tin, duy trì chuyên mục quan hệ cổ đông trên website doanh nghiệp và thực hiện phần lớn các nghĩa vụ công bố thông tin định kỳ, bất thường theo quy định. Tuy nhiên, doanh nghiệp vẫn chưa bảo đảm đầy đủ tính kịp thời trong công tác công bố thông tin. [...] Trong đó, doanh nghiệp bị phạt 65 triệu đồng do công bố thông tin không đúng thời hạn; phạt 92,5 triệu đồng do không thực hiện báo cáo đối với các thông tin phải báo cáo theo quy định; và phạt 65 triệu đồng do không công bố báo cáo sử dụng vốn, số tiền thu được từ đợt chào bán để thực hiện dự án đã được kiểm toán xác nhận tại Đại hội đồng cổ đông thường niên. [...] Bên cạnh xử phạt bằng tiền, cơ quan thanh tra còn áp dụng biện pháp khắc phục hậu quả, buộc doanh nghiệp phải công bố đầy đủ báo cáo sử dụng vốn đã được kiểm toán xác nhận tại kỳ Đại hội đồng cổ đông gần nhất hoặc công bố thuyết minh chi tiết việc sử dụng vốn trong báo cáo tài chính năm đã được kiểm toán.",
+                "score": 0.264182
+              },
+              {
+                "title": "Khởi công Dự án xây dựng mới Học viện Kỹ thuật và Công nghệ an ninh",
+                "url": "https://bocongan.gov.vn/bai-viet/khoi-cong-du-an-xay-dung-moi-hoc-vien-ky-thuat-va-cong-nghe-an-ninh-1785232290",
+                "source": "bocongan.gov.vn",
+                "summary": "Phát biểu tại buổi Lễ, Thứ trưởng Đặng Hồng Đức nhấn mạnh, Đảng và Nhà nước đã xác định khoa học - công nghệ, đổi mới sáng tạo và chuyển đổi số là động lực then chốt, là “đột phá chiến lược” để đưa đất nước bứt phá trong kỷ nguyên mới. Trong đó, con người là yếu tố then chốt và là nền móng cho sự phát triển bền vững. Điều này cho thấy vai trò quan trọng của các học viện, trường đại học trong quá trình đào tạo nguồn nhn lực chất lượng cao cho đất nước. [...] Thiếu tướng Lê Minh Thảo khẳng định, Học viện Kỹ thuật và Công nghệ an ninh sẽ thực hiện đầy đủ trách nhiệm của Chủ đầu tư; quản lý chặt chẽ tiến độ, chất lượng, khối lượng và nguồn vốn đầu tư; tun thủ nghiêm các quy định của pháp luật trong toàn bộ quá trình triển khai Dự án, đảm bảo Dự án được triển khai đúng tiến độ, chất lượng, sớm đưa vào sử dụng, đáp ứng kỳ vọng của lãnh đạo Bộ Công an và toàn thể cán bộ, giảng viên, học viên Học viện. [...] hôm nay. Cùng với đó, công tác giải ngn vốn đầu tư công cũng cần được triển khai một cách nhanh nhất để công trình hoàn thành đúng kế hoạch, đảm bảo sinh viên được học tập trong môi trường đẹp nhất, chất lượng nhất, và mỗi thế hệ sinh viên ra trường sẽ mãi tự hào khi được là sinh viên của trường.",
+                "score": 0.2522417
+              },
+              {
+                "title": "TPIsoftware hợp tác với Juxta đưa công nghệ định vị tiên tiến không phụ thuộc vệ tinh vào các lĩnh vực liên quan đến an ninh",
+                "url": "https://www.prnewswire.com/vn/news-releases/u0074u0070u0069u0073u006Fu0066u0074u0077u0061u0072u0065u002Du0068u1EE3u0070u002Du0074u0061u0063u002Du0076u1EDBu0069u002Du006Au0075u0078u0074-302837216.html",
+                "source": "prnewswire.com",
+                "summary": "người lái hoạt động tại vùng núi hoặc khu vực xa xôi, nơi việc thu tín hiệu bị hạn chế hoặc gián đoạn. Công nghệ này cũng đã được ứng dụng trong theo dõi tài sản y tế, vận hành kho bãi và logistics, cùng các môi trường vận hành trọng yếu khác yêu cầu khả năng định vị liên tục, không phụ thuộc vào cơ sở hạ tầng. [...] Thông qua thỏa thuận này, TPIsoftware sẽ hỗ trợ quản lý mạng lưới đại lý phn phối và cung cấp dịch vụ tích hợp hệ thống tại nhiều khu vực. Công nghệ UPS độc quyền của Juxta sẽ được tích hợp vào các giải pháp AI tích hợp của TPIsoftware để cho phép định vị tự chủ, theo thời gian thực nhằm nng cao độ chính xác trong theo dõi và an toàn trong phòng ngừa và giảm nhẹ thiên tai, chăm sóc sức khỏe và quản lý logistics để xy dựng khả năng chống chịu trước tình trạng gy nhiễu và can thiệp tín hiệu. [...] UPS hỗ trợ theo dõi với độ chính xác dưới một mét ở mọi nơi trên Trái Đất, ngay cả trong trường hợp GPS bị chặn và tín hiệu bị cản trở. UPS đã được thử nghiệm thực địa và triển khai trong các môi trường chính phủ, quốc phòng, logistics và chăm sóc sức khỏe, nơi khả năng định vị đáng tin cậy là rất quan trọng. Công nghệ này có thể hỗ trợ giám sát hoạt động toàn diện, định vị liên tục trong đường hầm, không gian trong nhà và dưới lòng đất, cũng như điều hướng cho các hệ thống không người lái hoạt",
+                "score": 0.23414427
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_paper_text_vs_fetch",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "tool_discrimination_url",
+        "difficulty": "hard",
+        "what_it_tests": "fetch và paper_text đều nhận một URL. Link arXiv phải đi vào paper_text chứ không phải fetch; đây là cặp tool dễ nhầm nhất trong bộ khai báo hiện tại."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm bài báo về diffusion models trên arXiv."
+        },
+        {
+          "role": "user",
+          "content": "Đọc toàn văn bài này giúp mình: https://arxiv.org/abs/2006.11239"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "paper_text",
+            "args": {
+              "arxiv_url": "https://arxiv.org/abs/2006.11239"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "paper_text",
+            "args": {
+              "arxiv_url": "https://arxiv.org/abs/2006.11239"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "paper_text",
+          "args": {
+            "arxiv_url": "https://arxiv.org/abs/2006.11239"
+          },
+          "result": {
+            "tool": "get_arxiv_paper_text",
+            "arxiv_id": "2006.11239",
+            "url": "https://arxiv.org/abs/2006.11239",
+            "pdf_url": "https://arxiv.org/pdf/2006.11239.pdf",
+            "pdf_path": "/home/a1z0v/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28/starter_v0/arxiv_papers/2006.11239.pdf",
+            "txt_path": "/home/a1z0v/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28/starter_v0/arxiv_papers/2006.11239.txt",
+            "page_count": 25,
+            "pages_read": 5,
+            "chars_returned": 8000,
+            "items": [
+              {
+                "title": "arXiv paper 2006.11239",
+                "url": "https://arxiv.org/abs/2006.11239",
+                "source": "arxiv.org",
+                "summary": "Denoising Diffusion Probabilistic Models\nJonathan Ho\nUC Berkeley\njonathanho@berkeley.edu\nAjay Jain\nUC Berkeley\najayj@berkeley.edu\nPieter Abbeel\nUC Berkeley\npabbeel@cs.berkeley.edu\nAbstract\nWe present high quality image synthesis results using diffusion probabilistic models,\na class of latent variable models inspired by considerations from nonequilibrium\nthermodynamics. Our best results are obtained by training on a weighted variational\nbound designed according to a novel connection between diffusion probabilistic\nmodels and denoising score matching with Langevin dynamics, and our models nat-\nurally admit a progressive lossy decompression scheme that can be interpreted as a\ngeneralization of autoregressive decoding. On the unconditional CIFAR10 dataset,\nwe obtain an Inception score of 9.46 and a state-of-the-art FID score of 3.17. On\n256x256 LSUN, we obtain sample quality similar to ProgressiveGAN. Our imple-\nmentation is available at https://github.com/hojonathanho/diffusion.\n1 Introduction\nDeep generative models of all kinds have recently exhibited high quality samples in a wide variety\nof data modalities. Generative adversarial networks (GANs), autoregressive models, ﬂows, and\nvariational autoencoders (V AEs) have synthesized striking image and audio samples [ 14, 27, 3,\n58, 38, 25, 10, 32, 44, 57, 26, 33, 45], and there have been remarkable advances in energy-based\nmodeling and score matching that have produced images comparable to those of GANs [11, 55].\nFigure 1: Generated samples on CelebA-HQ 256× 256 (left) and unconditional CIFAR10 (right)\n34th Conference on Neural Information Processing Systems (NeurIPS 2020), Vancouver, Canada.\narXiv:2006.11239v2  [cs.LG]  16 Dec 2020\n\n\u0000!\n<latexit sha1_base64=\"7yFrn0YPyuP5dVIvc7Tl2zcbS/g=\">AAAB+HicbVBNSwMxEJ2tX7V+dNWjl2ARPJXdKuix6MVjBfsB7VKyaXYbmk2WJKvU0l/ixYMiXv0p3vw3pu0etPXBwOO9GWbmhSln2njet1NYW9/Y3Cpul3Z29/bL7sFhS8tMEdokkkvVCbGmnAnaNMxw2kkVxUnIaTsc3cz89gNVmklxb8YpDRIcCxYxgo2V+m65x6WIFYuHBislH/tuxat6c6BV4uekAjkafferN5AkS6gwhGOtu76XmmCClWGE02mpl2maYjLCMe1aKnBCdTCZHz5Fp1YZoEgqW8Kgufp7YoITrcdJaDsTbIZ62ZuJ/3ndzERXwYSJNDNUkMWiKOPISDRLAQ2YosTwsSWYKGZvRWSIFSbGZlWyIfjLL6+SVq3qn1drdxeV+nUeRxGO4QTOwIdLqMMtNKAJBDJ4hld4c56cF+fd+Vi0Fpx85gj+wPn8AXOGk5o=</latexit>\nx T \u0000! ··· \u0000! x t \u0000\u0000 \u0000 \u0000 \u0000! x t \u0000 1 \u0000! ··· \u0000! x 0\n<latexit sha1_base64=\"l4LvSgM7PR7I/kkuy5soikK4gpU=\">AAAEoXictVLditNAFE7XqGv92a5eejOYLexKLU0VFKRQ9EYvhCrb3YUklOlk2g6dnzBzYrcb8zK+lU/gazhJK6atuiB4YODM+T/n+8YJZwY6nW+1vRvuzVu39+/U7967/+CgcfjwzKhUEzokiit9McaGcibpEBhwepFoisWY0/Px/G3hP/9MtWFKnsIyoZHAU8kmjGCwplHjeygwzAjThNM4Kz/jSXaZj05zFHIlp5pNZ4C1VgsUkliB2TX/oQLYCpe/4rJwZhJM6NPMJyLPt9IM0SwBA0tOUaVGBs/8/J8mWVRH6eSjhtdpd0pBu4q/VjxnLYPR4d7XMFYkFVQC4diYwO8kEGVYA7P183qYGmr3meMpDawqsaAmykpEctS0lhhNlLZPAiqt1YwMC2OWYmwjiynNtq8w/s4XpDB5FWVMJilQSVaNJilHoFABL4qZpgT40irYntTOisgMa0zAkqC+0QbY/MquIfCcYssbsBH1UNIFUUJgGVePGfhR1qyj1YETXAaH/SqAnp836/lGftUfdNcFiqbBT8L2jouQdvE9iVAoVUyDWONFa5XVYlJSjezEPT+BlmCSiVQgw65or2vBaE0Y5z1e4D/VeBmhstwJyo5C0YeZ53vdo/z19lhVjly71+K6xRb/ZbO/rbLCS8HMwmVZ7W9zeFc567b95+3uxxde/82a3/vOY+eJc+z4zkun77xzBs7QIbUPNVP7Ustdz33vDtxPq9C92jrnkbMhbvAD81mObw==</latexit>\np✓(xt\u0000 1|xt)\n<latexit sha1_base64=\"XVzP503G8Ma8Lkwk3KKGZcZJbZ0=\">AAACEnicbVC7SgNBFJ2Nrxhfq5Y2g0FICsNuFEwZsLGMYB6QLMvsZDYZMvtg5q4Y1nyDjb9iY6GIrZWdf+Mk2SImHrhwOOde7r3HiwVXYFk/Rm5tfWNzK79d2Nnd2z8wD49aKkokZU0aiUh2PKKY4CFrAgfBOrFkJPAEa3uj66nfvmdS8Si8g3HMnIAMQu5zSkBLrlmO3R4MGZBSLyAw9Pz0YeKmcG5P8CNekKDsmkWrYs2AV4mdkSLK0HDN714/oknAQqCCKNW1rRiclEjgVLBJoZcoFhM6IgPW1TQkAVNOOntpgs+00sd+JHWFgGfq4kRKAqXGgac7p0eqZW8q/ud1E/BrTsrDOAEW0vkiPxEYIjzNB/e5ZBTEWBNCJde3YjokklDQKRZ0CPbyy6ukVa3YF5Xq7WWxXsviyKMTdIpKyEZXqI5uUAM1EUVP6AW9oXfj2Xg1PozPeWvOyGaO0R8YX7+bCp4F</latexit>\nq(xt|xt\u0000 1)\n<latexit sha1_base64=\"eAZ87UuTmAQoJ4u19RGH5tA+bCI=\">AAACC3icbVC7TgJBFJ31ifhatbSZQEywkOyiiZQkNpaYyCMBspkdZmHC7MOZu0ay0tv4KzYWGmPrD9j5N87CFgieZJIz59ybe+9xI8EVWNaPsbK6tr6xmdvKb+/s7u2bB4dNFcaSsgYNRSjbLlFM8IA1gINg7Ugy4ruCtdzRVeq37plUPAxuYRyxnk8GAfc4JaAlxyzclbo+gaHrJQ8TB/AjnvsmcGZPTh2zaJWtKfAysTNSRBnqjvnd7Yc09lkAVBClOrYVQS8hEjgVbJLvxopFhI7IgHU0DYjPVC+Z3jLBJ1rpYy+U+gWAp+p8R0J8pca+qyvTRdWil4r/eZ0YvGov4UEUAwvobJAXCwwhToPBfS4ZBTHWhFDJ9a6YDokkFHR8eR2CvXjyMmlWyvZ5uXJzUaxVszhy6BgVUAnZ6BLV0DWqowai6Am9oDf0bjwbr8aH8TkrXTGyniP0B8bXL+1hmu8=</latexit>\nFigure 2: The directed graphical model considered in this work.\nThis paper presents progress in diffusion probabilistic models [53]. A diffusion probabilistic model\n(which we will call a “diffusion model” for brevity) is a parameterized Markov chain trained using\nvariational inference to produce samples matching the data after ﬁnite time. Transitions of this chain\nare learned to reverse a diffusion process, which is a Markov chain that gradually adds noise to the\ndata in the opposite direction of sampling until signal is destroyed. When the diffusion consists of\nsmall amounts of Gaussian noise, it is sufﬁcient to set the sampling chain transitions to conditional\nGaussians too, allowing for a particularly simple neural network parameterization.\nDiffusion models are straightforward to deﬁne and efﬁcient to train, but to the best of our knowledge,\nthere has been no demonstration that they are capable of generating high quality samples. We\nshow that diffusion models actually are capable of generating high quality samples, sometimes\nbetter than the published results on other types of generative models (Section 4). In addition, we\nshow that a certain parameterization of diffusion models reveals an equivalence with denoising\nscore matching over multiple noise levels during training and with annealed Langevin dynamics\nduring sampling (Section 3.2) [ 55, 61]. We obtained our best sample quality results using this\nparameterization (Section 4.2), so we consider this equivalence to be one of our primary contributions.\nDespite their sample quality, our models do not have competitive log likelihoods compared to other\nlikelihood-based models (our models do, however, have log likelihoods better than the large estimates\nannealed importance sampling has been reported to produce for energy based models and score\nmatching [11, 55]). We ﬁnd that the majority of our models’ lossless codelengths are consumed\nto describe imperceptible image details (Section 4.3). We present a more reﬁned analysis of this\nphenomenon in the language of lossy compression, and we show that the sampling procedure of\ndiffusion models is a type of progressive decoding that resembles autoregressive decoding along a bit\nordering that vastly generalizes what is normally possible with autoregressive models.\n2 Background\nDiffusion models [53] are latent variable models of the form pθ(x0) :=\n∫\npθ(x0:T )dx1:T , where\nx1,..., xT are latents of the same dimensionality as the data x0∼ q(x0). The joint distribution\npθ(x0:T ) is called the reverse process, and it is deﬁned as a Markov chain with learned Gaussian\ntransitions starting atp(xT ) =N (xT ; 0, I):\npθ(x0:T ) :=p(xT )\nT∏\nt=1\npθ(xt−1|xt), p θ(xt−1|xt) :=N (xt−1; µθ(xt,t ), Σθ(xt,t )) (1)\nWhat distinguishes diffusion models from other types of latent variable models is that the approximate\nposteriorq(x1:T|x0), called the forward process or diffusion process, is ﬁxed to a Markov chain that\ngradually adds Gaussian noise to the data according to a variance scheduleβ1,...,β T :\nq(x1:T|x0) :=\nT∏\nt=1\nq(xt|xt−1), q (xt|xt−1) :=N (xt;\n√\n1−βtxt−1,βtI) (2)\nTraining is performed by optimizing the usual variational bound on negative log likelihood:\nE [− logpθ(x0)]≤ Eq\n[\n− log pθ(x0:T )\nq(x1:T|x0)\n]\n= Eq\n[\n− logp(xT )−\n∑\nt≥1\nlogpθ(xt−1|xt)\nq(xt|xt−1)\n]\n=:L (3)\nThe forward process variances βt can be learned by reparameterization [ 33] or held constant as\nhyperparameters, and expressiveness of the reverse process is ensured in part by the choice of\nGaussian conditionals inpθ(xt−1|xt), because both processes have the same functional form when\nβt are small [ 53]. A notable property of the forward process is that it admits sampling xt at an\narbitrary timestept in closed form: using the notationαt := 1−βt and ¯αt :=∏t\ns=1αs, we have\nq(xt"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_clarify_missing_paper_ref",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "clarify_ambiguous_reference",
+        "difficulty": "hard",
+        "what_it_tests": "'bài đó' không xác định được là bài nào và chưa có arxiv_url. Phải clarify thay vì đoán một ID bất kỳ; bản clarify của R11 chỉ phủ đường fetch nên đây là đường papers/paper_text."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm bài báo về reinforcement learning."
+        },
+        {
+          "role": "user",
+          "content": "Đọc toàn văn bài đó cho mình."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "reinforcement learning",
+              "max_results": 1
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call papers"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "reinforcement learning",
+            "max_results": 1
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "reinforcement learning",
+            "api_query": "all:reinforcement AND all:learning",
+            "total_results": 45320,
+            "items": [
+              {
+                "arxiv_id": "2607.18488v1",
+                "title": "The Open Ant: A Robot Platform for Reinforcement Learning Research",
+                "summary": "Reinforcement learning (RL) research has demonstrated success in both physical and simulated domains; however, the predominant methodology remains rooted in simulations. The predominance of simulations makes translating research to physical reality uncertain for both algorithms and researchers. We propose a physical platform that is designed to simplify the transition. In this paper, we present the Open Ant: a physical variant of the commonly used Gymnasium Ant environment, along with a simulation. We demonstrate that competent walking policies can be learned from scratch in approximately one hour directly from the physical robot's experience for two substantially different RL algorithms: SARSA($λ$) and Soft Actor-Critic (SAC). Separately, we show policies that were learned in simulation transfer to reality. We also examine how well the platform supports a nimble experimental ecosystem. Specifically, we observe the speed with which new users from diverse backgrounds achieve their first success with the platform, and how easily the platform can be repaired and updated when hardware issues arise. Both the hardware design and software are available as open-source on GitHub for ease of customization. In summary, we advocate for the use of the Open Ant for RL researchers who frequently use simulated environments, so they can more easily include robot experiments in their evaluations.",
+                "authors": [
+                  "Elena Sorina Lupu",
+                  "Patrick Spieler",
+                  "Khurram Javed",
+                  "Kris De Asis",
+                  "John D. Martin",
+                  "Martha Steenstrup",
+                  "Joseph Modayil"
+                ],
+                "published": "2026-07-20T20:18:29Z",
+                "updated": "2026-07-20T20:18:29Z",
+                "url": "http://arxiv.org/abs/2607.18488v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.18488v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.RO",
+                "categories": [
+                  "cs.RO",
+                  "cs.AI",
+                  "eess.SY"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G10_parallel_from_followup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_parallel_tools",
+        "difficulty": "hard",
+        "what_it_tests": "Yêu cầu hai nguồn xuất hiện ở lượt sau và chủ đề nằm ở lượt trước: phải gọi song song lookup + social_search và giải quyết đại từ 'nó' thành Gemini cho cả hai query."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mình đang tìm hiểu về Gemini."
+        },
+        {
+          "role": "user",
+          "content": "Lấy giúp mình cả tin trên web lẫn tweet về nó."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Gemini",
+              "topic": "news"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Gemini"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Gemini",
+              "topic": "general"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Gemini",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "topic: expected 'news', got 'general'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Gemini",
+            "topic": "general"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "Gemini",
+            "topic": "general",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Gemini for Developers - Codelabs",
+                "url": "https://codelabs.developers.google.com/gemini-for-developers",
+                "source": "codelabs.developers.google.com",
+                "summary": "An API key for Google AI studio samples.\n A Google Cloud Project with billing enabled for Google Cloud samples.\n Your local development environment or Cloud Shell Editor in Google Cloud.\n \n\n## 2. The Gemini Family 🫂\n\nGemini is Google's AI model that brings any idea to life. It's a great model for multimodal understanding and agentic and vibe coding — all built on a foundation of state-of-the-art reasoning. You can watch this video for a quick overview of the Gemini model: [...] Gemini Enterprise Agent Platform is a fully-managed, unified AI development platform for building and using generative AI in Google Cloud. Gemini Enterprise Agent Platform Studio ( console.cloud.google.com/agent-platform) helps you test, tune, and deploy enterprise-ready generative AI applications.\n\n## Google Antigravity 🚀 [...] Gemini can transform text input into single speaker or multi-speaker audio using Gemini text-to-speech (TTS) generation capabilities. TTS generation is controllable, meaning you can use natural language to structure interactions and guide the style, accent, pace, and tone of the audio.",
+                "score": 0.7180613
+              },
+              {
+                "title": "Google Gemini - Artificial Intelligence - Guides at University of ...",
+                "url": "https://guides.library.unt.edu/artificial-intelligence/gemini",
+                "source": "guides.library.unt.edu",
+                "summary": "Google Gemini is a family of advanced artificial intelligence models designed to understand and process information in a similar way to humans. Unlike traditional search engines, Gemini can handle various formats like text, code, images, and even video. This allows it to grasp complex topics and generate creative responses, making it a powerful tool for tasks like research, coding assistance, and natural language communication.\n\n## Versions of Google Gemini [...] There are three main versions of Google Gemini, each optimized for different purposes:\n\nGemini Ultra:This is the most powerful and largest version. It's designed to tackle highly complex tasks that require a lot of processing power, making it ideal for advanced research or intricate creative projects.\n\nGemini Flash: A lightweight version of Gemini Pro that was trained using knowledge distillation, a machine learning technique [...] Gemini Pro: This is the most versatile version. It strikes a balance between power and efficiency, allowing it to handle a wide range of tasks effectively. This makes it a good choice for everyday use cases where you need a mix of capabilities.",
+                "score": 0.62770075
+              },
+              {
+                "title": "3 Google updates from Galaxy Unpacked 2026",
+                "url": "https://blog.google/products-and-platforms/platforms/android/galaxy-unpacked-2026",
+                "source": "blog.google",
+                "summary": "While Gemini works to complete the task, you can track the step-by-step progress on your screen, multitask in other apps, or close your phone and let Gemini run in the background. If you need to make a quick adjustment or add a personal touch, you can step in to handle a specific detail and then hand control back to Gemini to complete the rest. Gemini is designed to notify you when the task is ready for your review and final confirmation. [...] Gemini Notebook is your thinking and research partner powered by our advanced multimodal models. On the Galaxy Z Fold8 series' expansive display, you can drag and drop photos, documents, whiteboard images, voice recordings, and more directly into a side-by-side workspace. [...] We’re also bringing Gemini to glasses. At Google I/O 2026, we announced intelligent eyewear — created in partnership with Samsung and launching this fall — and shared two designs from our partners, eyewear brands Gentle Monster and Warby Parker. Today we revealed two more frames and shared more about how Gemini’s helpfulness will come to life on these new devices. For example if you’re wearing a compatible Wear OS watch, you’ll be able to control your glasses with just a hand gesture.",
+                "score": 0.5585443
+              },
+              {
+                "title": "Google Workspace with Gemini | Generative AI",
+                "url": "https://knowledge.workspace.google.com/admin/generative-ai/workspace-with-gemini/google-workspace-with-gemini",
+                "source": "knowledge.workspace.google.com",
+                "summary": "AI assistant at work to tackle routine and complex tasks. You can kickstart learning, brainstorming, planning, and more with the Gemini app on your laptop or mobile device. Use Gems to build a team of AI experts to help with repeatable tasks or tackle complex projects — including coding, deep research, and data analysis.  Gemini Notebook—Accelerate team knowledge sharing by uploading your sources to get instant insights with podcast-like Audio Overviews, Mind Maps, Infographics, and more. This [...] than ever before.  Gemini in AppSheet—Use Gemini for App Creation to build apps by describing a business process or idea in natural language. Use Gemini in AppSheet Solutions to add AI tasks in automations to extract and categorize information from images and documents. | [...] Google Workspace with Gemini is a powerful collaborative partner that can act as a coach, thought partner, source of inspiration, and productivity booster—all while ensuring every user and organization has control over their data.\n\n### Business / Enterprise\n\n## Features available today\n\nGoogle Workspace plans include access to the Gemini app, Gemini Notebook, and Gemini in Gmail, Docs, Meet, and more.\n\n|  |",
+                "score": 0.55796635
+              },
+              {
+                "title": "Google founder Sergey Brin found out using Gemini, company's own AI model, on the internal list of tools engineers are banned from using; to kill that one rule 'upset Brin' passed over the 'fight' to company's CEO - The Times of India",
+                "url": "https://timesofindia.indiatimes.com/technology/tech-news/google-founder-sergey-brin-found-out-using-gemini-companys-own-ai-model-on-the-internal-list-of-tools-engineers-are-banned-from-using-to-kill-that-one-rule-upset-brin-passed-over-the-fight-to-companys-ceo/articleshow/132636943.cms",
+                "source": "timesofindia.indiatimes.com",
+                "summary": "Google co-founder Sergey Brin revealed that he once found Gemini, Google's own AI model, on an internal list of coding tools that engineers were not allowed to use. Speaking on the All-In podcast last year, Brin said he was surprised to see Gemini on the company's internal \"no list\" and spent weeks trying to get the rule removed. After failing to resolve the issue himself, he said he turned to Google CEO Sundar Pichai, who supported him and helped get the restriction lifted. Brin said the [...] Instagram, Facebook and more; TOI Tech Desk brings the news with accuracy and authenticity. [...] Trending Topics",
+                "score": 0.46687052
+              }
+            ]
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "Gemini",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "Gemini",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "Le planteé este desafío imposible a Gemini: ",
+                "summary": "Le planteé este desafío imposible a Gemini: \n\n$5,000 en 72 horas, sin dinero, sin anuncios, en piloto automático. Y su respuesta... bueno, me dejó sin palabras.\n\n​🧵 Aquí tienes el plan maestro que me dio. 👇 https://t.co/XNO3mHDyAz",
+                "url": "https://x.com/Gilfrancoalejo/status/2082325124242432076",
+                "source": "@Gilfrancoalejo",
+                "date": "Wed Jul 29 04:39:32 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "WTB WTS BELI INFO SEWA LANGGANAN APLIKASI PRO PREMIUM VIP GARANSI ORDER",
+                "summary": "WTB WTS BELI INFO SEWA LANGGANAN APLIKASI PRO PREMIUM VIP GARANSI ORDER\n\n☎️ https://t.co/QX7AlFIiP4\n\nNETFLIX CHAT GPT CHATGPT WETV WATTPAD GRAMMARLY YOUTUBE CANVA ILOVEPDF PRIME VIDIO HBO MAX SCRIBD CAPCUT CAMSCANNER LIGHTROOM QUILLBOT VIU VSCO YOUKU ZOOM GEMINI CLAUDE LOKLOK .dh https://t.co/m7shWqWcpP",
+                "url": "https://x.com/LailaSalsa5/status/2082325102012833972",
+                "source": "@LailaSalsa5",
+                "date": "Wed Jul 29 04:39:26 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "1"
+                }
+              },
+              {
+                "title": "@rickwong888 @GoogleWorkspace @SharePoint Sites is the closest thing but it's pretty basic",
+                "summary": "@rickwong888 @GoogleWorkspace @SharePoint Sites is the closest thing but it's pretty basic\n\nI ended up building a custom knowledge base powered by Drive + Gemini API",
+                "url": "https://x.com/majidmanzarpour/status/2082325037600666050",
+                "source": "@majidmanzarpour",
+                "date": "Wed Jul 29 04:39:11 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "2"
+                }
+              },
+              {
+                "title": "The job title 'Prompt Engineer' aged terribly. ",
+                "summary": "The job title 'Prompt Engineer' aged terribly. \n\nAs Claude, GPT and Gemini become smarter, prompting gets easier. The value isn't knowing how to talk to the machine, the value is knowing exactly what system architecture to ask it to build.",
+                "url": "https://x.com/heyiamnick_/status/2082325033280545240",
+                "source": "@heyiamnick_",
+                "date": "Wed Jul 29 04:39:10 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "1"
+                }
+              },
+              {
+                "title": "ADA OPEN APP PREMIUM MURAH",
+                "summary": "ADA OPEN APP PREMIUM MURAH\n☎️ https://t.co/pcOlNJQQFv\n\nVIU WATTPAD NETFLIX DISNEY WETV CAPCUT LOKLOK DRAMAWAVE SHORTMAX ILOVEPDF SCRIBD IQIYI PICSART CANVA LIGHTROOM QUILLBOT GRAMMARLY CLAUDE SPOTIFY GEMINI YOUTUBE CHATGPT ZOOM REELSHORT\n\nfast #zonauang\nhttps://t.co/tKLhIgKIYT",
+                "url": "https://x.com/hundreeds/status/2082325021796843764",
+                "source": "@hundreeds",
+                "date": "Wed Jul 29 04:39:07 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "18"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

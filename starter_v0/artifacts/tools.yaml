@@ -14,9 +14,9 @@ tools:
       type: object
       properties:
         question: {type: string, default: "", description: "Câu hỏi"}
-        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Kiểu trả lời"}
+        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Bắt buộc truyền. 'yes_no' khi xin xác nhận/phê duyệt trước khi gửi hoặc đăng. 'choice' khi đưa ra danh sách lựa chọn. 'text' cho câu hỏi mở (thiếu handle, thiếu URL...)."}
         options: {type: array, default: [], items: {type: string}, description: "Các lựa chọn"}
-      required: [question]
+      required: [question, response_type]
 
   - name: timeline
     description: "Lấy các bài đăng gần đây."
@@ -38,15 +38,15 @@ tools:
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: "Tra cứu thông tin trên internet. Dùng khi người dùng muốn tìm trên web hoặc tin tức, kể cả khi cuộc hội thoại trước đó đang nói về mạng xã hội."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        topic: {type: string, enum: [general, news], default: "general", description: "Phân loại"}
-        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian"}
+        query: {type: string, default: "", description: "Chủ đề cần tra cứu. Không lặp lại thông tin đã được biểu diễn ở tham số khác (topic timeframe) hoặc ở việc chọn tool."}
+        topic: {type: string, enum: [general, news], default: "general", description: "Bắt buộc truyền. 'news' khi hỏi về tin tức/thời sự/sự kiện gần đây ('tin ... hôm nay', 'tin tức tuần này'). 'general' cho kiến thức chung."}
+        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian."}
         max_results: {type: integer, default: 5, description: "Số kết quả"}
-      required: [query]
+      required: [query, topic]
 
   - name: fetch
     description: "Lấy nội dung từ một địa chỉ."

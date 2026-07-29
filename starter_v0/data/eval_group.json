@@ -1,7 +1,291 @@
 {
-  "dataset_id": "day04_v2_research_group",
+  "dataset_id": "day04_v4_research_group",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "description": "10 case do nhóm tự viết để stress-test agent: 5 single-turn dùng query và 5 multi-turn dùng turns. Các case nhắm vào phần bề mặt mà eval_base CHƯA chạm tới: các bonus tool (papers, paper_text, send), enum chưa được đặc tả (search_type=Top, topic=general), tính tổng quát của quy tắc query, ranh giới gửi sau khi đã được duyệt, và rủi ro hỏi lại thừa. Chấm trên tool_calls + args (subset).",
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
+  "cases": [
+    {
+      "id": "G01_papers_routing",
+      "phase": "B",
+      "query": "Tìm giúp mình vài bài báo khoa học về multimodal learning trên arXiv.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "multimodal learning"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "bonus_tool_routing",
+        "difficulty": "medium",
+        "what_it_tests": "Yêu cầu bài báo khoa học phải đi vào papers chứ không phải lookup; description của papers còn mơ hồ nên đây là phép thử định tuyến sang bonus tool."
+      }
+    },
+    {
+      "id": "G02_topic_general",
+      "phase": "B",
+      "query": "Tra cứu giúp mình dân số Việt Nam hiện nay là bao nhiêu.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "dân số Việt Nam",
+              "topic": "general"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "topic_general_not_news",
+        "difficulty": "medium",
+        "what_it_tests": "Tra cứu kiến thức chung phải dùng topic=general. Kiểm tra agent có lạm dụng topic=news sau khi prompt/tools nhấn mạnh news hay không; đồng thời query không được cắt mất 'Việt Nam'."
+      }
+    },
+    {
+      "id": "G03_search_type_top",
+      "phase": "B",
+      "query": "Tìm những tweet được quan tâm nhiều nhất về VinFast.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "VinFast",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "arg_search_type_top",
+        "difficulty": "hard",
+        "what_it_tests": "'được quan tâm nhiều nhất' phải map sang search_type=Top thay vì mặc định Latest. Mô tả search_type hiện chỉ là 'Cách sắp xếp' nên chưa đủ để phân biệt."
+      }
+    },
+    {
+      "id": "G04_query_rule_generality",
+      "phase": "B",
+      "query": "Tìm trên web tin tức bầu cử Mỹ trong tháng này.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "bầu cử Mỹ",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "query_redundancy_rule",
+        "difficulty": "medium",
+        "what_it_tests": "Quy tắc 'query không lặp lại thông tin đã có ở tham số khác' phải tổng quát cho chủ đề ngoài AI và mốc thời gian 'tháng này' -> month, chứ không chỉ đúng với các case AI trong eval_base."
+      }
+    },
+    {
+      "id": "G05_no_over_clarify",
+      "phase": "B",
+      "query": "Lấy tweet gần đây của Google DeepMind.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "GoogleDeepMind"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "no_over_clarification",
+        "difficulty": "medium",
+        "what_it_tests": "Yêu cầu đã đủ thông tin bắt buộc: phải map tên hiển thị sang handle và gọi timeline ngay. Kiểm tra agent KHÔNG gọi clarify chỉ vì thiếu tham số tùy chọn như limit."
+      }
+    },
+    {
+      "id": "G06_send_after_approval",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Đăng bản tin AI hôm nay lên Telegram giúp mình."
+        },
+        {
+          "role": "user",
+          "content": "Nội dung là bản tóm tắt 3 tin AI nổi bật hôm nay."
+        },
+        {
+          "role": "user",
+          "content": "Mình đồng ý, bạn đăng đi."
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "send_after_explicit_approval",
+        "difficulty": "hard",
+        "what_it_tests": "Mặt còn lại của ranh giới R12: sau khi người dùng đã duyệt rõ ràng thì phải gọi send với confirmed=true, không được hỏi lại lần nữa. Mô tả 'Cờ xác nhận' hiện chưa nói khi nào đặt true."
+      }
+    },
+    {
+      "id": "G07_correction_timeframe",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin công nghệ trong tuần này."
+        },
+        {
+          "role": "user",
+          "content": "Đổi lại thành trong tháng này đi."
+        },
+        {
+          "role": "user",
+          "content": "Giữ nguyên chủ đề công nghệ nhé."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "công nghệ",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_correction_timeframe",
+        "difficulty": "medium",
+        "what_it_tests": "3 turn: phải nhận bản sửa timeframe week -> month ở lượt 2 và giữ chủ đề từ lượt 1, không quay lại giá trị cũ."
+      }
+    },
+    {
+      "id": "G08_paper_text_vs_fetch",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm bài báo về diffusion models trên arXiv."
+        },
+        {
+          "role": "user",
+          "content": "Đọc toàn văn bài này giúp mình: https://arxiv.org/abs/2006.11239"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "paper_text",
+            "args": {
+              "arxiv_url": "https://arxiv.org/abs/2006.11239"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "tool_discrimination_url",
+        "difficulty": "hard",
+        "what_it_tests": "fetch và paper_text đều nhận một URL. Link arXiv phải đi vào paper_text chứ không phải fetch; đây là cặp tool dễ nhầm nhất trong bộ khai báo hiện tại."
+      }
+    },
+    {
+      "id": "G09_clarify_missing_paper_ref",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm bài báo về reinforcement learning."
+        },
+        {
+          "role": "user",
+          "content": "Đọc toàn văn bài đó cho mình."
+        }
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "clarify_ambiguous_reference",
+        "difficulty": "hard",
+        "what_it_tests": "'bài đó' không xác định được là bài nào và chưa có arxiv_url. Phải clarify thay vì đoán một ID bất kỳ; bản clarify của R11 chỉ phủ đường fetch nên đây là đường papers/paper_text."
+      }
+    },
+    {
+      "id": "G10_parallel_from_followup",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Mình đang tìm hiểu về Gemini."
+        },
+        {
+          "role": "user",
+          "content": "Lấy giúp mình cả tin trên web lẫn tweet về nó."
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Gemini",
+              "topic": "news"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Gemini"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_parallel_tools",
+        "difficulty": "hard",
+        "what_it_tests": "Yêu cầu hai nguồn xuất hiện ở lượt sau và chủ đề nằm ở lượt trước: phải gọi song song lookup + social_search và giải quyết đại từ 'nó' thành Gemini cho cả hai query."
+      }
+    }
+  ]
 }
