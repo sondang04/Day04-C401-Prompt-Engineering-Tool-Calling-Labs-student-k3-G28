@@ -1,1 +1,2 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_name,metric_before,metric_after,run_file
+v1,<Dương Mạnh Phong>,"system_prompt.md,tools.yaml",v1+<prompt_hash>+<tools_hash>,<prompt_hash>,<tools_hash>,"loại bỏ chỉ dẫn ép đoán/ép gửi luôn; làm rõ query convention","6 case fail v0 do prompt cấm hỏi lại + arg convention mơ hồ",case_accuracy,0.70,<số mới>,runs/v1_....json

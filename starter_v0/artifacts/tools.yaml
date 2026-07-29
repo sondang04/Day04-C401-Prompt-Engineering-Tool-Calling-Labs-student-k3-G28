@@ -9,7 +9,7 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Hỏi lại người dùng. Dùng khi (1) thiếu một argument bắt buộc cho tool khác (ví dụ: không biết handle/username, không có URL), hoặc (2) trước khi thực hiện một hành động nhạy cảm/không thể hoàn tác như gửi hoặc đăng nội dung ra bên ngoài — khi đó dùng response_type='yes_no' và chỉ tiếp tục hành động đó sau khi người dùng xác nhận 'có'. Không dùng cho các câu hỏi ngoài phạm vi nghiên cứu (toán, code, chit-chat) — những câu đó trả lời trực tiếp, không cần tool."
     parameters:
       type: object
       properties:
@@ -19,41 +19,41 @@ tools:
       required: [question]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: "Lấy các bài đăng gần đây CỦA một tài khoản social media cụ thể (screenname/handle đã biết, ví dụ 'sama'). Chỉ dùng khi biết chính xác handle; nếu user nói tên người nhưng không rõ handle và bạn không chắc, dùng clarify trước, không tự đoán."
     parameters:
       type: object
       properties:
-        screenname: {type: string, default: "", description: "Tên tài khoản"}
-        limit: {type: integer, default: 5, description: "Số lượng"}
+        screenname: {type: string, default: "", description: "Handle tài khoản, không có dấu @ (ví dụ: 'sama', 'OpenAI')"}
+        limit: {type: integer, default: 5, description: "Số bài muốn lấy"}
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: "Tìm bài đăng trên mạng xã hội theo từ khóa (khác với timeline: dùng khi tìm theo CHỦ ĐỀ, không phải theo một tài khoản cụ thể)."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Từ khóa"}
+        query: {type: string, default: "", description: "CHỈ chứa từ khóa chủ đề cốt lõi (ví dụ 'AI', không phải 'AI news' hay 'tin tức AI'). Không nhét các từ mô tả loại nội dung hay thời gian vào đây — dùng search_type/limit cho việc đó."}
         search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Cách sắp xếp"}
         limit: {type: integer, default: 5, description: "Số lượng"}
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: "Tìm trên web (không phải mạng xã hội)."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        topic: {type: string, enum: [general, news], default: "general", description: "Phân loại"}
-        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian"}
+        query: {type: string, default: "", description: "CHỈ chứa từ khóa chủ đề cốt lõi (ví dụ 'AI', không phải 'AI news' hay 'tin AI hôm nay'). Ý định 'tin tức'/'mới nhất' thể hiện qua topic và timeframe, không nhét vào query."}
+        topic: {type: string, enum: [general, news], default: "general", description: "Đặt 'news' khi user hỏi tin tức/sự kiện gần đây (ví dụ có từ 'tin', 'tin tức', 'mới nhất', 'hôm nay'); 'general' cho tra cứu thông tin thông thường."}
+        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian; đặt 'day' khi user nói 'hôm nay'."}
         max_results: {type: integer, default: 5, description: "Số kết quả"}
       required: [query]
 
   - name: fetch
-    description: "Lấy nội dung từ một địa chỉ."
+    description: "Đọc nội dung đầy đủ của một URL cụ thể đã biết. Không dùng khi user chỉ nhắc mơ hồ đến 'bài viết này' mà không cung cấp URL — khi đó dùng clarify để hỏi URL trước."
     parameters:
       type: object
       properties:
-        url: {type: string, default: "", description: "Địa chỉ"}
+        url: {type: string, default: "", description: "URL đầy đủ, ví dụ 'https://example.com/article'"}
       required: [url]
 
   - name: format
@@ -79,12 +79,12 @@ tools:
 
   # ---------------- Bonus tools ----------------
   - name: send
-    description: "Gửi một đoạn văn bản đi."
+    description: "Gửi một đoạn văn bản lên Telegram — hành động không thể hoàn tác. BẮT BUỘC gọi clarify (response_type='yes_no') để xác nhận với user trước, chỉ gọi send sau khi user đã đồng ý."
     parameters:
       type: object
       properties:
         text: {type: string, default: "", description: "Nội dung"}
-        confirmed: {type: boolean, default: false, description: "Cờ xác nhận"}
+        confirmed: {type: boolean, default: false, description: "Chỉ đặt true sau khi user đã xác nhận đồng ý qua clarify"}
       required: [text]
 
   - name: policy
