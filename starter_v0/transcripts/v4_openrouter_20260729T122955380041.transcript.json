@@ -1,0 +1,308 @@
+{
+  "transcript_id": "v4_openrouter_20260729T122955380041",
+  "version": "v4",
+  "artifact_version": "v4+pcf22e0901fc3+tcfe116309267",
+  "prompt_hash": "cf22e0901fc33bed5c27787541c6a4e8f781fc95ff89284d2706d58a9eefe426",
+  "tools_hash": "cfe1163092678b82fd4bd0a549d3bce5486411d560252c0d8a44820c2164628c",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "/home/a1z0v/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28/starter_v0/artifacts/versions/v4/system_prompt.md",
+  "tools": "/home/a1z0v/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28/starter_v0/artifacts/versions/v4/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T12:29:55",
+  "updated_at": "2026-07-29T12:29:55",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T12:29:39",
+      "user": "Tìm trên web tin AI hôm nay và tìm thêm tweet về AI.",
+      "status": "answered",
+      "assistant_text": "Here are the latest news articles and tweets related to AI today:\n\n### News Articles\n1. **[CNBC Daily Open: Chipping away at the AI boom](https://www.cnbc.com/2026/07/28/daily-open-ai-boom-chip-selloff-sk-hynix.html)** - Heavy selling across Asia's biggest tech firms shows more jitters around the AI trade. Nvidia shares sink on OpenAI funding report, allowing Apple to regain the crown of the world's most valuable company.\n   \n2. **[Stock market today: Nasdaq pares losses as chip stocks sell off, S&P 500 and Dow rise](https://ca.finance.yahoo.com/news/stock-market-today-tuesday-july-28-dow-sp-500-nasdaq-082832371.html)** - US tech stocks diverged as a sell-off in chip stocks underscored concerns about AI circular financing deals, countering a drop in oil prices and earnings optimism.\n\n3. **[Senate confirms Jay Clayton as new intelligence czar](https://www.washingtonpost.com/national-security/2026/07/28/senate-confirms-jay-clayton-new-intelligence-czar/)** - The Senate confirmed Jay Clayton as director of national intelligence, with implications for AI and tech policy.\n\n4. **[AI rotation boosts enterprise and IT services stocks: Analyst](https://www.cnbc.com/video/2026/07/28/ai-rotation-boosts-enterprise-and-it-services-stocks-analyst.html)** - Analysts discuss how enterprise software companies stand to benefit amid the rotation out of AI capex trades.\n\n5. **[Nvidia Slides as AI Spending Fears Hit Chip Stocks](https://finance.yahoo.com/technology/ai/articles/nvidia-slides-ai-spending-fears-122828811.html)** - Nvidia fell 5% as investors questioned the funding structure behind the AI infrastructure boom.\n\n### Recent Tweets\n1. **[@MRAI888](https://x.com/MRAI888/status/2082337732802805810)** - \"不要老是为上涨和下跌找理由，下跌你说任何看空原因都是对的...\" (Translation: \"Don't always look for reasons for rises and falls...\")\n\n2. **[@Wilsonpablo108](https://x.com/Wilsonpablo108/status/2082337727341879708)** - \"Owning infrastructure is becoming crucial with AI advancements.\"\n\n3. **[@wokeupviolent](https://x.com/wokeupviolent/status/2082337724393046103)** - \"[REUTERS] Chip stocks drag Chinese mainland shares as AI rout deepens; Hong Kong rises.\"\n\n4. **[@itsmelu1za](https://x.com/itsmelu1za/status/2082337722924929446)** - \"ai porque tá aparecendo coisa da comunidade de valorant, só tem gore meudeus\" (Translation: \"Why is AI showing things from the Valorant community, it's all gore, my God.\")\n\n5. **[@23041_bhusal](https://x.com/23041_bhusal/status/2082337722627473668)** - \"That's Ai u Muslim retard.\"\n\nIf you need more information or a specific focus, let me know!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "tin AI hôm nay",
+                "topic": "news",
+                "timeframe": "day"
+              }
+            },
+            {
+              "name": "social_search",
+              "args": {
+                "query": "AI",
+                "search_type": "Latest"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "tin AI hôm nay",
+                "topic": "news",
+                "timeframe": "day"
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "tin AI hôm nay",
+                "topic": "news",
+                "timeframe": "day",
+                "items": [
+                  {
+                    "title": "CNBC Daily Open: Chipping away at the AI boom - CNBC",
+                    "url": "https://www.cnbc.com/2026/07/28/daily-open-ai-boom-chip-selloff-sk-hynix.html",
+                    "source": "cnbc.com",
+                    "summary": "# CNBC Daily Open: Chipping away at the AI boom. * Heavy selling across Asia's biggest tech firms shows more jitters around the AI trade. * Nvidia shares sink on OpenAI funding report, allowing Apple to regain the crown of the world's most valuable company. * Oil prices continue to decline as de-escalation hopes are raised between the U.S. and Iran. *The Nasdaq-South Korea feedback loop continues to link the AI trade from one side of the globe to the other, and today it's to the downside.*. Tuesday's trading in Asia saw Samsung and SK Hynix plunge, driving a 10% drop on South Korea's Kospi. This allowed Apple to regain its crown as the world's most valuable company at $4.95 trillion. France and Spain are bracing for another heatwave, which could exacerbate the wildfires still raging across parts of both countries. Over the course of Monday, more regions across both France and Spain were evacuated, as firefighters fought to keep the fires away from major cities.",
+                    "score": 0.28781834
+                  },
+                  {
+                    "title": "Stock market today: Nasdaq pares losses as chip stocks sell off, S&P 500 and Dow rise - Yahoo! Finance Canada",
+                    "url": "https://ca.finance.yahoo.com/news/stock-market-today-tuesday-july-28-dow-sp-500-nasdaq-082832371.html",
+                    "source": "ca.finance.yahoo.com",
+                    "summary": "# Stock market today: Nasdaq pares losses as chip stocks sell off, S&P 500 and Dow rise. US tech stocks diverged on Tuesday as a sell-off in chip stocks underscored concerns about AI circular financing deals, countering a drop in oil prices and earnings optimism. The Nasdaq Composite (^IXIC) pared losses to fall 0.1%. The S&P 500 (^GSPC) rose 0.3%, while the Dow Jones Industrial Average (^DJI) added 1% as investors weighed the latest quarterly results. Sentiment on the AI trade has soured amid reports that Nvidia (NVDA) is exploring a $250 billion funding backstop for OpenAI (OPAI.PVT), further intertwining the two companies and heightening worries about circular financing. The Federal Reserve kicks off its two-day policy meeting on Tuesday, and it's one of the hardest policy decisions for the market to call in years. US consumer confidence ticked lower in July to 90.8, according to the Conference Board, as perceptions of the labor market softened.",
+                    "score": 0.25408348
+                  },
+                  {
+                    "title": "Senate confirms Jay Clayton as new intelligence czar - The Washington Post",
+                    "url": "https://www.washingtonpost.com/national-security/2026/07/28/senate-confirms-jay-clayton-new-intelligence-czar/",
+                    "source": "washingtonpost.com",
+                    "summary": "# Senate confirms Jay Clayton as new intelligence czar. The Senate confirmed Jay Clayton as director of national intelligence, ending the acting tenure of Bill Pulte, a housing official and Trump loyalist. Jay Clayton appears before the Senate Intelligence Committee earlier this month during a hearing on his nomination to serve as director of national intelligence. The Senate confirmed Jay Clayton as the director of national intelligence Tuesday, ending the tenure of Bill Pulte, a housing official and Trump loyalist, who held the role for more than a month. The 51-to-47 vote was more partisan than expected after Trump nominated Clayton in June. AI & Tech Brief: Reflection AI arrives in Washington. AI & Tech Brief: Anthropic’s army of AI integrators. AI & Tech Brief: The AI gatekeepers. AI & Tech Brief: The techno-optimist’s case. AI & Tech Brief: GOP Chair Eyes AI Query Red Flags. AI & Tech Brief: Dem caucuses to meet on AI.",
+                    "score": 0.18515061
+                  },
+                  {
+                    "title": "AI rotation boosts enterprise and IT services stocks: Analyst - CNBC",
+                    "url": "https://www.cnbc.com/video/2026/07/28/ai-rotation-boosts-enterprise-and-it-services-stocks-analyst.html",
+                    "source": "cnbc.com",
+                    "summary": "Monday - Friday, 11:00 - 12:00 SIN/HK | 0500 - 06:00 CET. # AI rotation boosts enterprise and IT services stocks: Analyst. Sushovon Nayak, Lead IT Analyst at Anand Rathi Institutional Equities explains their positive stance on the IT services sector. He explains how enterprise software companies stand to benefit amid the rotation out of AI capex trades.",
+                    "score": 0.15676242
+                  },
+                  {
+                    "title": "Nvidia Slides as AI Spending Fears Hit Chip Stocks - Yahoo Finance",
+                    "url": "https://finance.yahoo.com/technology/ai/articles/nvidia-slides-ai-spending-fears-122828811.html",
+                    "source": "finance.yahoo.com",
+                    "summary": "3. Most active penny stocks. 2. Best 0% APR cards. 3. Best balance transfer cards. 2. Best high-yield savings accounts. 3. Best money market accounts. 4. Best free checking accounts. 3. How to get approved. # Nvidia Slides as AI Spending Fears Hit Chip Stocks. Nvidia (NVDA, Financials), the semiconductor company best known for artificial intelligence chips, fell 5% Monday as investors questioned the funding structure behind the AI infrastructure boom. GuruFocus has detected 3 Warning Signs with NVDA. The decline followed a report that Nvidia was discussing about $250 billion in financing guarantees for an OpenAI data center. Separate talks reportedly involved financing up to $350 billion in OpenAI chip purchases. China's progress in chip equipment and the strong market debut of memory producer CXMT added to fears that established semiconductor leaders could face tougher competition. The market reaction comes before earnings from Apple, Meta, Microsoft and Amazon, which could offer clearer signals on future AI infrastructure spending.",
+                    "score": 0.15201993
+                  }
+                ]
+              }
+            },
+            {
+              "tool": "social_search",
+              "args": {
+                "query": "AI",
+                "search_type": "Latest"
+              },
+              "result": {
+                "tool": "search_tweets",
+                "query": "AI",
+                "search_type": "Latest",
+                "items": [
+                  {
+                    "title": "不要老是为上涨和下跌找理由，下跌你说任何看空原因都是对的，下跌再给市场情绪降温难道不是一件好事吗，下跌的时候考虑什么时候抄底、抄底什么，上涨的时候考虑什么时候卖，难道跌了海力士、美光就不赚钱了吗，AI就没用了吗，不要被市场牵着走，保持独立思",
+                    "summary": "不要老是为上涨和下跌找理由，下跌你说任何看空原因都是对的，下跌再给市场情绪降温难道不是一件好事吗，下跌的时候考虑什么时候抄底、抄底什么，上涨的时候考虑什么时候卖，难道跌了海力士、美光就不赚钱了吗，AI就没用了吗，不要被市场牵着走，保持独立思考！",
+                    "url": "https://x.com/MRAI888/status/2082337732802805810",
+                    "source": "@MRAI888",
+                    "date": "Wed Jul 29 05:29:38 +0000 2026",
+                    "metrics": {
+                      "favorites": 0,
+                      "retweets": 0,
+                      "views": "2"
+                    }
+                  },
+                  {
+                    "title": "@EyoAugusti73181 Owning infrastructure is becoming crucial with AI advancements.",
+                    "summary": "@EyoAugusti73181 Owning infrastructure is becoming crucial with AI advancements.",
+                    "url": "https://x.com/Wilsonpablo108/status/2082337727341879708",
+                    "source": "@Wilsonpablo108",
+                    "date": "Wed Jul 29 05:29:36 +0000 2026",
+                    "metrics": {
+                      "favorites": 0,
+                      "retweets": 0,
+                      "views": null
+                    }
+                  },
+                  {
+                    "title": "[REUTERS] Chip stocks drag Chinese mainland shares as AI rout deepens; Hong Kong rises",
+                    "summary": "[REUTERS] Chip stocks drag Chinese mainland shares as AI rout deepens; Hong Kong rises",
+                    "url": "https://x.com/wokeupviolent/status/2082337724393046103",
+                    "source": "@wokeupviolent",
+                    "date": "Wed Jul 29 05:29:36 +0000 2026",
+                    "metrics": {
+                      "favorites": 0,
+                      "retweets": 0,
+                      "views": null
+                    }
+                  },
+                  {
+                    "title": "ai porque tá aparecendo coisa da comunidade de valorant, só tem gore meudeus",
+                    "summary": "ai porque tá aparecendo coisa da comunidade de valorant, só tem gore meudeus",
+                    "url": "https://x.com/itsmelu1za/status/2082337722924929446",
+                    "source": "@itsmelu1za",
+                    "date": "Wed Jul 29 05:29:35 +0000 2026",
+                    "metrics": {
+                      "favorites": 0,
+                      "retweets": 0,
+                      "views": "2"
+                    }
+                  },
+                  {
+                    "title": "@Kryptotajeer That's Ai u Muslim retard",
+                    "summary": "@Kryptotajeer That's Ai u Muslim retard",
+                    "url": "https://x.com/23041_bhusal/status/2082337722627473668",
+                    "source": "@23041_bhusal",
+                    "date": "Wed Jul 29 05:29:35 +0000 2026",
+                    "metrics": {
+                      "favorites": 0,
+                      "retweets": 0,
+                      "views": null
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Here are the latest news articles and tweets related to AI today:\n\n### News Articles\n1. **[CNBC Daily Open: Chipping away at the AI boom](https://www.cnbc.com/2026/07/28/daily-open-ai-boom-chip-selloff-sk-hynix.html)** - Heavy selling across Asia's biggest tech firms shows more jitters around the AI trade. Nvidia shares sink on OpenAI funding report, allowing Apple to regain the crown of the world's most valuable company.\n   \n2. **[Stock market today: Nasdaq pares losses as chip stocks sell off, S&P 500 and Dow rise](https://ca.finance.yahoo.com/news/stock-market-today-tuesday-july-28-dow-sp-500-nasdaq-082832371.html)** - US tech stocks diverged as a sell-off in chip stocks underscored concerns about AI circular financing deals, countering a drop in oil prices and earnings optimism.\n\n3. **[Senate confirms Jay Clayton as new intelligence czar](https://www.washingtonpost.com/national-security/2026/07/28/senate-confirms-jay-clayton-new-intelligence-czar/)** - The Senate confirmed Jay Clayton as director of national intelligence, with implications for AI and tech policy.\n\n4. **[AI rotation boosts enterprise and IT services stocks: Analyst](https://www.cnbc.com/video/2026/07/28/ai-rotation-boosts-enterprise-and-it-services-stocks-analyst.html)** - Analysts discuss how enterprise software companies stand to benefit amid the rotation out of AI capex trades.\n\n5. **[Nvidia Slides as AI Spending Fears Hit Chip Stocks](https://finance.yahoo.com/technology/ai/articles/nvidia-slides-ai-spending-fears-122828811.html)** - Nvidia fell 5% as investors questioned the funding structure behind the AI infrastructure boom.\n\n### Recent Tweets\n1. **[@MRAI888](https://x.com/MRAI888/status/2082337732802805810)** - \"不要老是为上涨和下跌找理由，下跌你说任何看空原因都是对的...\" (Translation: \"Don't always look for reasons for rises and falls...\")\n\n2. **[@Wilsonpablo108](https://x.com/Wilsonpablo108/status/2082337727341879708)** - \"Owning infrastructure is becoming crucial with AI advancements.\"\n\n3. **[@wokeupviolent](https://x.com/wokeupviolent/status/2082337724393046103)** - \"[REUTERS] Chip stocks drag Chinese mainland shares as AI rout deepens; Hong Kong rises.\"\n\n4. **[@itsmelu1za](https://x.com/itsmelu1za/status/2082337722924929446)** - \"ai porque tá aparecendo coisa da comunidade de valorant, só tem gore meudeus\" (Translation: \"Why is AI showing things from the Valorant community, it's all gore, my God.\")\n\n5. **[@23041_bhusal](https://x.com/23041_bhusal/status/2082337722627473668)** - \"That's Ai u Muslim retard.\"\n\nIf you need more information or a specific focus, let me know!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "tin AI hôm nay",
+            "topic": "news",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "tin AI hôm nay",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "CNBC Daily Open: Chipping away at the AI boom - CNBC",
+                "url": "https://www.cnbc.com/2026/07/28/daily-open-ai-boom-chip-selloff-sk-hynix.html",
+                "source": "cnbc.com",
+                "summary": "# CNBC Daily Open: Chipping away at the AI boom. * Heavy selling across Asia's biggest tech firms shows more jitters around the AI trade. * Nvidia shares sink on OpenAI funding report, allowing Apple to regain the crown of the world's most valuable company. * Oil prices continue to decline as de-escalation hopes are raised between the U.S. and Iran. *The Nasdaq-South Korea feedback loop continues to link the AI trade from one side of the globe to the other, and today it's to the downside.*. Tuesday's trading in Asia saw Samsung and SK Hynix plunge, driving a 10% drop on South Korea's Kospi. This allowed Apple to regain its crown as the world's most valuable company at $4.95 trillion. France and Spain are bracing for another heatwave, which could exacerbate the wildfires still raging across parts of both countries. Over the course of Monday, more regions across both France and Spain were evacuated, as firefighters fought to keep the fires away from major cities.",
+                "score": 0.28781834
+              },
+              {
+                "title": "Stock market today: Nasdaq pares losses as chip stocks sell off, S&P 500 and Dow rise - Yahoo! Finance Canada",
+                "url": "https://ca.finance.yahoo.com/news/stock-market-today-tuesday-july-28-dow-sp-500-nasdaq-082832371.html",
+                "source": "ca.finance.yahoo.com",
+                "summary": "# Stock market today: Nasdaq pares losses as chip stocks sell off, S&P 500 and Dow rise. US tech stocks diverged on Tuesday as a sell-off in chip stocks underscored concerns about AI circular financing deals, countering a drop in oil prices and earnings optimism. The Nasdaq Composite (^IXIC) pared losses to fall 0.1%. The S&P 500 (^GSPC) rose 0.3%, while the Dow Jones Industrial Average (^DJI) added 1% as investors weighed the latest quarterly results. Sentiment on the AI trade has soured amid reports that Nvidia (NVDA) is exploring a $250 billion funding backstop for OpenAI (OPAI.PVT), further intertwining the two companies and heightening worries about circular financing. The Federal Reserve kicks off its two-day policy meeting on Tuesday, and it's one of the hardest policy decisions for the market to call in years. US consumer confidence ticked lower in July to 90.8, according to the Conference Board, as perceptions of the labor market softened.",
+                "score": 0.25408348
+              },
+              {
+                "title": "Senate confirms Jay Clayton as new intelligence czar - The Washington Post",
+                "url": "https://www.washingtonpost.com/national-security/2026/07/28/senate-confirms-jay-clayton-new-intelligence-czar/",
+                "source": "washingtonpost.com",
+                "summary": "# Senate confirms Jay Clayton as new intelligence czar. The Senate confirmed Jay Clayton as director of national intelligence, ending the acting tenure of Bill Pulte, a housing official and Trump loyalist. Jay Clayton appears before the Senate Intelligence Committee earlier this month during a hearing on his nomination to serve as director of national intelligence. The Senate confirmed Jay Clayton as the director of national intelligence Tuesday, ending the tenure of Bill Pulte, a housing official and Trump loyalist, who held the role for more than a month. The 51-to-47 vote was more partisan than expected after Trump nominated Clayton in June. AI & Tech Brief: Reflection AI arrives in Washington. AI & Tech Brief: Anthropic’s army of AI integrators. AI & Tech Brief: The AI gatekeepers. AI & Tech Brief: The techno-optimist’s case. AI & Tech Brief: GOP Chair Eyes AI Query Red Flags. AI & Tech Brief: Dem caucuses to meet on AI.",
+                "score": 0.18515061
+              },
+              {
+                "title": "AI rotation boosts enterprise and IT services stocks: Analyst - CNBC",
+                "url": "https://www.cnbc.com/video/2026/07/28/ai-rotation-boosts-enterprise-and-it-services-stocks-analyst.html",
+                "source": "cnbc.com",
+                "summary": "Monday - Friday, 11:00 - 12:00 SIN/HK | 0500 - 06:00 CET. # AI rotation boosts enterprise and IT services stocks: Analyst. Sushovon Nayak, Lead IT Analyst at Anand Rathi Institutional Equities explains their positive stance on the IT services sector. He explains how enterprise software companies stand to benefit amid the rotation out of AI capex trades.",
+                "score": 0.15676242
+              },
+              {
+                "title": "Nvidia Slides as AI Spending Fears Hit Chip Stocks - Yahoo Finance",
+                "url": "https://finance.yahoo.com/technology/ai/articles/nvidia-slides-ai-spending-fears-122828811.html",
+                "source": "finance.yahoo.com",
+                "summary": "3. Most active penny stocks. 2. Best 0% APR cards. 3. Best balance transfer cards. 2. Best high-yield savings accounts. 3. Best money market accounts. 4. Best free checking accounts. 3. How to get approved. # Nvidia Slides as AI Spending Fears Hit Chip Stocks. Nvidia (NVDA, Financials), the semiconductor company best known for artificial intelligence chips, fell 5% Monday as investors questioned the funding structure behind the AI infrastructure boom. GuruFocus has detected 3 Warning Signs with NVDA. The decline followed a report that Nvidia was discussing about $250 billion in financing guarantees for an OpenAI data center. Separate talks reportedly involved financing up to $350 billion in OpenAI chip purchases. China's progress in chip equipment and the strong market debut of memory producer CXMT added to fears that established semiconductor leaders could face tougher competition. The market reaction comes before earnings from Apple, Meta, Microsoft and Amazon, which could offer clearer signals on future AI infrastructure spending.",
+                "score": 0.15201993
+              }
+            ]
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI",
+            "search_type": "Latest"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "AI",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "不要老是为上涨和下跌找理由，下跌你说任何看空原因都是对的，下跌再给市场情绪降温难道不是一件好事吗，下跌的时候考虑什么时候抄底、抄底什么，上涨的时候考虑什么时候卖，难道跌了海力士、美光就不赚钱了吗，AI就没用了吗，不要被市场牵着走，保持独立思",
+                "summary": "不要老是为上涨和下跌找理由，下跌你说任何看空原因都是对的，下跌再给市场情绪降温难道不是一件好事吗，下跌的时候考虑什么时候抄底、抄底什么，上涨的时候考虑什么时候卖，难道跌了海力士、美光就不赚钱了吗，AI就没用了吗，不要被市场牵着走，保持独立思考！",
+                "url": "https://x.com/MRAI888/status/2082337732802805810",
+                "source": "@MRAI888",
+                "date": "Wed Jul 29 05:29:38 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "2"
+                }
+              },
+              {
+                "title": "@EyoAugusti73181 Owning infrastructure is becoming crucial with AI advancements.",
+                "summary": "@EyoAugusti73181 Owning infrastructure is becoming crucial with AI advancements.",
+                "url": "https://x.com/Wilsonpablo108/status/2082337727341879708",
+                "source": "@Wilsonpablo108",
+                "date": "Wed Jul 29 05:29:36 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "[REUTERS] Chip stocks drag Chinese mainland shares as AI rout deepens; Hong Kong rises",
+                "summary": "[REUTERS] Chip stocks drag Chinese mainland shares as AI rout deepens; Hong Kong rises",
+                "url": "https://x.com/wokeupviolent/status/2082337724393046103",
+                "source": "@wokeupviolent",
+                "date": "Wed Jul 29 05:29:36 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "ai porque tá aparecendo coisa da comunidade de valorant, só tem gore meudeus",
+                "summary": "ai porque tá aparecendo coisa da comunidade de valorant, só tem gore meudeus",
+                "url": "https://x.com/itsmelu1za/status/2082337722924929446",
+                "source": "@itsmelu1za",
+                "date": "Wed Jul 29 05:29:35 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "2"
+                }
+              },
+              {
+                "title": "@Kryptotajeer That's Ai u Muslim retard",
+                "summary": "@Kryptotajeer That's Ai u Muslim retard",
+                "url": "https://x.com/23041_bhusal/status/2082337722627473668",
+                "source": "@23041_bhusal",
+                "date": "Wed Jul 29 05:29:35 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T12:29:55"
+    }
+  ]
+}

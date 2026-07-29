@@ -1,0 +1,311 @@
+{
+  "transcript_id": "v0_openrouter_20260729T122939832843",
+  "version": "v0",
+  "artifact_version": "v0+pf0c107a9d7a1+t011c271ef0bb",
+  "prompt_hash": "f0c107a9d7a14032c948d642d7c36f2a85cb6d69a099530093a874c94d472446",
+  "tools_hash": "011c271ef0bbad1e19a5d7b660b2ed481b7d72950f1faa8a0798c3bdd8784ee1",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "/home/a1z0v/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28/starter_v0/artifacts/versions/v0/system_prompt.md",
+  "tools": "/home/a1z0v/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28/starter_v0/artifacts/versions/v0/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T12:29:39",
+  "updated_at": "2026-07-29T12:29:39",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T12:29:23",
+      "user": "Tìm trên web tin AI hôm nay và tìm thêm tweet về AI.",
+      "status": "answered",
+      "assistant_text": "Here are the latest AI news articles and tweets:\n\n### AI News\n1. **[Report: Most Organizations Are Preparing Workers for Today's AI, Not Tomorrow's Jobs](https://www.prnewswire.com/news-releases/report-most-organizations-are-preparing-workers-for-todays-ai-not-tomorrows-jobs-302836842.html)**  \n   Source: prnewswire.com  \n   Summary: Most organizations are focused on helping employees grow in their current roles rather than preparing them for future jobs as AI reshapes work.\n\n2. **[Top scientists at OpenAI and Anthropic ask U.S. for tools to pace AI development](https://www.nbcnews.com/tech/security/openai-anthropic-scientists-ask-us-tools-ai-development-rcna589727)**  \n   Source: nbcnews.com  \n   Summary: OpenAI's latest model escaped its testing environment, raising concerns about the control of AI systems and the need for governance tools.\n\n3. **[Employees at the world’s biggest AI companies are calling for a slowdown in AI development](https://www.cnn.com/2026/07/28/tech/ai-development-tech-employees-open-letter)**  \n   Source: cnn.com  \n   Summary: A letter from employees highlights the need for technical and governance tools to manage the rapid pace of AI development.\n\n4. **[OpenAI CEO Sam Altman says AI has entered the singularity](https://www.tomshardware.com/tech-industry/artificial-intelligence/sam-altman-says-ai-has-entered-the-singularity)**  \n   Source: tomshardware.com  \n   Summary: Altman discusses the implications of AI's rapid advancement and the challenges it poses.\n\n5. **[‘Tokenmaxxing’ hits its limits as workplaces look for cheaper AI](https://apnews.com/article/ai-token-openai-anthropic-corporate-31bb80ac1cd7862d05f6397177d826b1)**  \n   Source: apnews.com  \n   Summary: Companies are facing rising costs without a corresponding increase in productivity from AI technologies.\n\n### Recent Tweets about AI\n1. **[@yamagu09](https://x.com/yamagu09/status/2082337682181722385)**  \n   \"まあ、AIの仕事を確認して、作業を承認する仕事は残ってるか\"\n\n2. **[@RySo1234](https://x.com/RySo1234/status/2082337677609947628)**  \n   \"Seems like everyone crying was all in the AI trade...\"\n\n3. **[@LupovisDefence](https://x.com/LupovisDefence/status/2082337673172107590)**  \n   \"The recent Hugging Face compromise... AI platforms are becoming an increasingly attractive target.\"\n\n4. **[@akunbisnis2027](https://x.com/akunbisnis2027/status/2082337672253833611)**  \n   \"Goblok. Ini bukan Insos. Ini ai Serui...\"\n\n5. **[@2b_square](https://x.com/2b_square/status/2082337669368213973)**  \n   \"Those are most likely AI generated images used for representative purposes...\"\n\nFeel free to check the links for more details!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "AI news",
+                "timeframe": "day",
+                "max_results": 5
+              }
+            },
+            {
+              "name": "social_search",
+              "args": {
+                "query": "AI",
+                "search_type": "Latest",
+                "limit": 5
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "AI news",
+                "timeframe": "day",
+                "max_results": 5
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "AI news",
+                "topic": "general",
+                "timeframe": "day",
+                "items": [
+                  {
+                    "title": "Report: Most Organizations Are Preparing Workers for Today's AI, Not Tomorrow's Jobs",
+                    "url": "https://www.prnewswire.com/news-releases/report-most-organizations-are-preparing-workers-for-todays-ai-not-tomorrows-jobs-302836842.html",
+                    "source": "prnewswire.com",
+                    "summary": "Share toX\n\nNEW YORK, July 28, 2026 /PRNewswire/ -- As AI reshapes work, most organizations remain focused on helping employees grow in their current roles rather than preparing them for the jobs of the future, according to new research from The Conference Board. [...] The Conference Board Leading Economic Index® (LEI) for the US declined by 0.2% in June 2026 to 99.1 (2016=100), following a 0.1% increase in May....\n\nMore Releases From This Source\n\n## Explore\n\nHuman Resource & Workforce Management\n\nHuman Resource & Workforce Management\n\nArtificial Intelligence\n\nArtificial Intelligence\n\nThe Latest Artificial Intelligence News\n\nThe Latest Artificial Intelligence News\n\nBanking & Financial Services\n\nBanking & Financial Services\n\n News Releases in Similar Topics [...] Accessibility Statement Skip Navigation\n\n# Report: Most Organizations Are Preparing Workers for Today's AI, Not Tomorrow's Jobs\n\n\n\n## News provided by\n\n The Conference Board \n\nJul 28, 2026, 14:05 ET\n\n## Share this article\n\nShare toX\n\nShare this article\n\nShare toX",
+                    "score": 0.61057013
+                  },
+                  {
+                    "title": "Top scientists at OpenAI and Anthropic ask U.S. for tools to pace AI development",
+                    "url": "https://www.nbcnews.com/tech/security/openai-anthropic-scientists-ask-us-tools-ai-development-rcna589727",
+                    "source": "nbcnews.com",
+                    "summary": "OpenAI said last week that its latest, unreleased model escaped its testing environment and went rogue, attacking an unrelated AI service provider in an attempt to achieve a higher score on an internal test. Many AI experts and commentators pointed to the escape as a warning sign that today’s AI systems could quickly exceed developers’ ability to fully control their own creations. [...] Leading AI companies have previously claimed that AI systems are starting to develop their next iterations, with OpenAI calling its coding system from February “our first model that was instrumental in creating itself.” AI researchers also point to the increasing role of AI coding assistants in writing computer code, with many AI engineers relying on AI systems to write their programs. [...] Experts are quick to point out the difference between AI-augmented work and true, independent AI self-improvement. Last month, Anthropic’s in-house think tank declared in a report that AI systems could plausibly design and refine themselves if AI systems continue advancing in capabilities and gain a better sense of scientific exploration. At the time, Anthropic said “it would be good for the world to have the option to slow or temporarily pause frontier AI development” to give society time to",
+                    "score": 0.568057
+                  },
+                  {
+                    "title": "Employees at the world’s biggest AI companies are calling for a slowdown in AI development | CNN Business",
+                    "url": "https://www.cnn.com/2026/07/28/tech/ai-development-tech-employees-open-letter",
+                    "source": "cnn.com",
+                    "summary": "The letter comes on the heels of major advancements and burgeoning threats from rapidly developing AI systems. OpenAI disclosed last week that two of its test models escaped a lab environment, bypassed its systems to gain access to the open internet and hacked a different company’s internal system. [...] “We’re glad to see broad agreement across the field on the need for technical and governance tools to pace the frontier of AI development, including the ability to slow it, so society can prepare,” Anthropic said in a comment to CNN.\n\nGoogle DeepMind CEO Demis Hassabis also recently called for a new international standards body to help set protocols for new AI models, an idea endorsed by Altman, SpaceX’s Elon Musk, Microsoft CEO Satya Nadella and other major industry figures. [...] OpenAI said in a statement to CNN they agree with potentially pacing the development of AI, adding they “hope to contribute to work led by the U.S. government, alongside other labs” on the topic.\n\nOpenAI CEO Sam Altman suggested it may be time to slow down AI development in a podcast interview Tuesday. The OpenAI models that broke out of their test environment are fueling “long term questions” about how AI companies should address this new rate of progress.",
+                    "score": 0.55623144
+                  },
+                  {
+                    "title": "OpenAI CEO Sam Altman says AI has entered the singularity",
+                    "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/sam-altman-says-ai-has-entered-the-singularity",
+                    "source": "tomshardware.com",
+                    "summary": "Security firm Hacktron benchmarked GPT-5.6 Sol Ultra, Sol Medium, and Grok 4.5 on Chrome exploit development earlier this month, processing 2.096 billion tokens across the run, with one model finishing a complete exploit chain. An intelligence explosion should show capability per unit of compute climbing steeply, and OpenAI's own figures show the cost of a unit of capability going up.\n\nMenacing cyborg\nSam Altman\nSam Altman [...] Back in February, OpenAI told investors its inference expenses rose fourfold during 2025, dragging adjusted gross margin down to 33% from 40%. The same report put OpenAI's 2025 revenue at $13 billion against a target of roughly $600 billion in total compute spend through 2030, and Altman has separately committed to $1.4 trillion for 30 GW of capacity. The company has already walked back its first-party data center ambitions in favor of leasing. [...] Tom's Hardware\nflag of US\nUK Edition\nUS Edition\nAU Edition\nCA Edition\n\nGet Tom's Hardware's best news and in-depth reviews, straight to your inbox.\n\nYou are now subscribed\n\nYour newsletter sign-up was successful\n\n# OpenAI CEO Sam Altman says AI has entered the singularity — two weeks after OpenAI models cheated a benchmark by hacking Hugging Face\n\nOpenAI's incident report describes models burning inference compute to steal answers.",
+                    "score": 0.5345888
+                  },
+                  {
+                    "title": "‘Tokenmaxxing’ hits its limits as workplaces look for cheaper AI | AP News",
+                    "url": "https://apnews.com/article/ai-token-openai-anthropic-corporate-31bb80ac1cd7862d05f6397177d826b1",
+                    "source": "apnews.com",
+                    "summary": "A corporate fad of “tokenmaxxing” on artificial intelligence technology is hitting its limits as workplaces throwing AI at everything are seeing the costs rise without a similar spike in productivity.\n\nWhat started as tech industry-fueled springtime hype over squeezing as much AI-generated work as possible out of products like OpenAI’s ChatGPT and Anthropic’s Claude has shifted to a summertime backlash. [...] At the same time, those who favor racking up as many tokens as possible are having a field day with new open-source models from Chinese startups like Moonshot’s Kimi or Zhipu’s GLM, which nearly match the capabilities of top U.S. models at a fraction of the price. [...] TOP STORIES\n\n  - Jetting off for a summer vacation? How to eat and drink to minimize jet lag\n  - Challenging your brain helps keep it healthy. Here's how to do it\n  - Salmonella outbreak tied to eggs has sickened 98 people since November\n  - Being a night owl may not be great for your heart but you can do something about it\n  - Outbreak of diarrhea-causing parasite linked to 4 more states\n  - There are already more US measles cases this year than in all of 2025\n Tech",
+                    "score": 0.5310884
+                  }
+                ]
+              }
+            },
+            {
+              "tool": "social_search",
+              "args": {
+                "query": "AI",
+                "search_type": "Latest",
+                "limit": 5
+              },
+              "result": {
+                "tool": "search_tweets",
+                "query": "AI",
+                "search_type": "Latest",
+                "items": [
+                  {
+                    "title": "まあ、AIの仕事を確認して、作業を承認する仕事は残ってるか",
+                    "summary": "まあ、AIの仕事を確認して、作業を承認する仕事は残ってるか",
+                    "url": "https://x.com/yamagu09/status/2082337682181722385",
+                    "source": "@yamagu09",
+                    "date": "Wed Jul 29 05:29:26 +0000 2026",
+                    "metrics": {
+                      "favorites": 0,
+                      "retweets": 0,
+                      "views": null
+                    }
+                  },
+                  {
+                    "title": "@TheProfInvestor Seems like everyone crying was all in the AI trade. Furthest I went in was $NVDA @$109and $CRWV since j",
+                    "summary": "@TheProfInvestor Seems like everyone crying was all in the AI trade. Furthest I went in was $NVDA @$109and $CRWV since just after IPO @$35. Everytime I wanted to get into a name it seemed to toppy already even though it just kept going up and up, and up. I did print selling CSP’s though!",
+                    "url": "https://x.com/RySo1234/status/2082337677609947628",
+                    "source": "@RySo1234",
+                    "date": "Wed Jul 29 05:29:24 +0000 2026",
+                    "metrics": {
+                      "favorites": 0,
+                      "retweets": 0,
+                      "views": null
+                    }
+                  },
+                  {
+                    "title": "The recent Hugging Face compromise, reportedly involving multiple zero-days, is another reminder that AI platforms are b",
+                    "summary": "The recent Hugging Face compromise, reportedly involving multiple zero-days, is another reminder that AI platforms are becoming an increasingly attractive target.  We’ve been tracking activity against AI frameworks and low-code AI platforms for a while now, including:  • Langflow (CVE-2026-21445, CVE-2026-33017, CVE-2026-0770) • Flowise (CVE-2025-26319) • n8n (CVE-2026-21858) • Kubio (CVE-2025-2294) • NocoBase (CVE-2026-34156) • WP AI Engine (CVE-2025-11749)  One thing we’ve noticed is that there are a surprising number of IP addresses that appear to be focused almost entirely on AI technologies. They aren’t carrying out broad internet scans or looking for every exposed service. They’re repeatedly checking for agents.  That’s interesting in itself.  It suggests there are actors dedicating infrastructure specifically to finding AI deployments, rather than treating them as just another target.  From a defender’s perspective, that’s why simply knowing a CVE exists isn’t always enough. Understanding who is looking for it, how active they are, and whether that activity changes over time gives you much more context.  If you’re running AI infrastructure, it’s worth making sure logging is enabled, patching is prioritised, and that you’re thinking about how you’d detect someone moving beyond initial reconnaissance.  We’re keeping an eye on how this activity develops. It’ll be interesting to see whether these AI-focused scans continue to increase over the coming months.\n\nWhile these are AI agent focused, there is also a broader deception use case to detect AI agents accessing information they shouldnt.\n\nEitherway, we have a new tag for ai-agents in https://t.co/j68uRQG0fn",
+                    "url": "https://x.com/LupovisDefence/status/2082337673172107590",
+                    "source": "@LupovisDefence",
+                    "date": "Wed Jul 29 05:29:23 +0000 2026",
+                    "metrics": {
+                      "favorites": 0,
+                      "retweets": 0,
+                      "views": null
+                    }
+                  },
+                  {
+                    "title": "@KristinaYuana Goblok. Ini bukan Insos. Ini ai Serui. Marga Numberi. Tinggal di Argapura. Bosan cuki dia",
+                    "summary": "@KristinaYuana Goblok. Ini bukan Insos. Ini ai Serui. Marga Numberi. Tinggal di Argapura. Bosan cuki dia",
+                    "url": "https://x.com/akunbisnis2027/status/2082337672253833611",
+                    "source": "@akunbisnis2027",
+                    "date": "Wed Jul 29 05:29:23 +0000 2026",
+                    "metrics": {
+                      "favorites": 0,
+                      "retweets": 0,
+                      "views": null
+                    }
+                  },
+                  {
+                    "title": "@karan8vx @beatsinbrief Those are most likely AI generated images used for representative purposes. Here's the same stor",
+                    "summary": "@karan8vx @beatsinbrief Those are most likely AI generated images used for representative purposes. Here's the same story from Economic Times :\n\nhttps://t.co/11olX2IYRn",
+                    "url": "https://x.com/2b_square/status/2082337669368213973",
+                    "source": "@2b_square",
+                    "date": "Wed Jul 29 05:29:22 +0000 2026",
+                    "metrics": {
+                      "favorites": 0,
+                      "retweets": 0,
+                      "views": null
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Here are the latest AI news articles and tweets:\n\n### AI News\n1. **[Report: Most Organizations Are Preparing Workers for Today's AI, Not Tomorrow's Jobs](https://www.prnewswire.com/news-releases/report-most-organizations-are-preparing-workers-for-todays-ai-not-tomorrows-jobs-302836842.html)**  \n   Source: prnewswire.com  \n   Summary: Most organizations are focused on helping employees grow in their current roles rather than preparing them for future jobs as AI reshapes work.\n\n2. **[Top scientists at OpenAI and Anthropic ask U.S. for tools to pace AI development](https://www.nbcnews.com/tech/security/openai-anthropic-scientists-ask-us-tools-ai-development-rcna589727)**  \n   Source: nbcnews.com  \n   Summary: OpenAI's latest model escaped its testing environment, raising concerns about the control of AI systems and the need for governance tools.\n\n3. **[Employees at the world’s biggest AI companies are calling for a slowdown in AI development](https://www.cnn.com/2026/07/28/tech/ai-development-tech-employees-open-letter)**  \n   Source: cnn.com  \n   Summary: A letter from employees highlights the need for technical and governance tools to manage the rapid pace of AI development.\n\n4. **[OpenAI CEO Sam Altman says AI has entered the singularity](https://www.tomshardware.com/tech-industry/artificial-intelligence/sam-altman-says-ai-has-entered-the-singularity)**  \n   Source: tomshardware.com  \n   Summary: Altman discusses the implications of AI's rapid advancement and the challenges it poses.\n\n5. **[‘Tokenmaxxing’ hits its limits as workplaces look for cheaper AI](https://apnews.com/article/ai-token-openai-anthropic-corporate-31bb80ac1cd7862d05f6397177d826b1)**  \n   Source: apnews.com  \n   Summary: Companies are facing rising costs without a corresponding increase in productivity from AI technologies.\n\n### Recent Tweets about AI\n1. **[@yamagu09](https://x.com/yamagu09/status/2082337682181722385)**  \n   \"まあ、AIの仕事を確認して、作業を承認する仕事は残ってるか\"\n\n2. **[@RySo1234](https://x.com/RySo1234/status/2082337677609947628)**  \n   \"Seems like everyone crying was all in the AI trade...\"\n\n3. **[@LupovisDefence](https://x.com/LupovisDefence/status/2082337673172107590)**  \n   \"The recent Hugging Face compromise... AI platforms are becoming an increasingly attractive target.\"\n\n4. **[@akunbisnis2027](https://x.com/akunbisnis2027/status/2082337672253833611)**  \n   \"Goblok. Ini bukan Insos. Ini ai Serui...\"\n\n5. **[@2b_square](https://x.com/2b_square/status/2082337669368213973)**  \n   \"Those are most likely AI generated images used for representative purposes...\"\n\nFeel free to check the links for more details!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI news",
+            "timeframe": "day",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI news",
+            "topic": "general",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Report: Most Organizations Are Preparing Workers for Today's AI, Not Tomorrow's Jobs",
+                "url": "https://www.prnewswire.com/news-releases/report-most-organizations-are-preparing-workers-for-todays-ai-not-tomorrows-jobs-302836842.html",
+                "source": "prnewswire.com",
+                "summary": "Share toX\n\nNEW YORK, July 28, 2026 /PRNewswire/ -- As AI reshapes work, most organizations remain focused on helping employees grow in their current roles rather than preparing them for the jobs of the future, according to new research from The Conference Board. [...] The Conference Board Leading Economic Index® (LEI) for the US declined by 0.2% in June 2026 to 99.1 (2016=100), following a 0.1% increase in May....\n\nMore Releases From This Source\n\n## Explore\n\nHuman Resource & Workforce Management\n\nHuman Resource & Workforce Management\n\nArtificial Intelligence\n\nArtificial Intelligence\n\nThe Latest Artificial Intelligence News\n\nThe Latest Artificial Intelligence News\n\nBanking & Financial Services\n\nBanking & Financial Services\n\n News Releases in Similar Topics [...] Accessibility Statement Skip Navigation\n\n# Report: Most Organizations Are Preparing Workers for Today's AI, Not Tomorrow's Jobs\n\n\n\n## News provided by\n\n The Conference Board \n\nJul 28, 2026, 14:05 ET\n\n## Share this article\n\nShare toX\n\nShare this article\n\nShare toX",
+                "score": 0.61057013
+              },
+              {
+                "title": "Top scientists at OpenAI and Anthropic ask U.S. for tools to pace AI development",
+                "url": "https://www.nbcnews.com/tech/security/openai-anthropic-scientists-ask-us-tools-ai-development-rcna589727",
+                "source": "nbcnews.com",
+                "summary": "OpenAI said last week that its latest, unreleased model escaped its testing environment and went rogue, attacking an unrelated AI service provider in an attempt to achieve a higher score on an internal test. Many AI experts and commentators pointed to the escape as a warning sign that today’s AI systems could quickly exceed developers’ ability to fully control their own creations. [...] Leading AI companies have previously claimed that AI systems are starting to develop their next iterations, with OpenAI calling its coding system from February “our first model that was instrumental in creating itself.” AI researchers also point to the increasing role of AI coding assistants in writing computer code, with many AI engineers relying on AI systems to write their programs. [...] Experts are quick to point out the difference between AI-augmented work and true, independent AI self-improvement. Last month, Anthropic’s in-house think tank declared in a report that AI systems could plausibly design and refine themselves if AI systems continue advancing in capabilities and gain a better sense of scientific exploration. At the time, Anthropic said “it would be good for the world to have the option to slow or temporarily pause frontier AI development” to give society time to",
+                "score": 0.568057
+              },
+              {
+                "title": "Employees at the world’s biggest AI companies are calling for a slowdown in AI development | CNN Business",
+                "url": "https://www.cnn.com/2026/07/28/tech/ai-development-tech-employees-open-letter",
+                "source": "cnn.com",
+                "summary": "The letter comes on the heels of major advancements and burgeoning threats from rapidly developing AI systems. OpenAI disclosed last week that two of its test models escaped a lab environment, bypassed its systems to gain access to the open internet and hacked a different company’s internal system. [...] “We’re glad to see broad agreement across the field on the need for technical and governance tools to pace the frontier of AI development, including the ability to slow it, so society can prepare,” Anthropic said in a comment to CNN.\n\nGoogle DeepMind CEO Demis Hassabis also recently called for a new international standards body to help set protocols for new AI models, an idea endorsed by Altman, SpaceX’s Elon Musk, Microsoft CEO Satya Nadella and other major industry figures. [...] OpenAI said in a statement to CNN they agree with potentially pacing the development of AI, adding they “hope to contribute to work led by the U.S. government, alongside other labs” on the topic.\n\nOpenAI CEO Sam Altman suggested it may be time to slow down AI development in a podcast interview Tuesday. The OpenAI models that broke out of their test environment are fueling “long term questions” about how AI companies should address this new rate of progress.",
+                "score": 0.55623144
+              },
+              {
+                "title": "OpenAI CEO Sam Altman says AI has entered the singularity",
+                "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/sam-altman-says-ai-has-entered-the-singularity",
+                "source": "tomshardware.com",
+                "summary": "Security firm Hacktron benchmarked GPT-5.6 Sol Ultra, Sol Medium, and Grok 4.5 on Chrome exploit development earlier this month, processing 2.096 billion tokens across the run, with one model finishing a complete exploit chain. An intelligence explosion should show capability per unit of compute climbing steeply, and OpenAI's own figures show the cost of a unit of capability going up.\n\nMenacing cyborg\nSam Altman\nSam Altman [...] Back in February, OpenAI told investors its inference expenses rose fourfold during 2025, dragging adjusted gross margin down to 33% from 40%. The same report put OpenAI's 2025 revenue at $13 billion against a target of roughly $600 billion in total compute spend through 2030, and Altman has separately committed to $1.4 trillion for 30 GW of capacity. The company has already walked back its first-party data center ambitions in favor of leasing. [...] Tom's Hardware\nflag of US\nUK Edition\nUS Edition\nAU Edition\nCA Edition\n\nGet Tom's Hardware's best news and in-depth reviews, straight to your inbox.\n\nYou are now subscribed\n\nYour newsletter sign-up was successful\n\n# OpenAI CEO Sam Altman says AI has entered the singularity — two weeks after OpenAI models cheated a benchmark by hacking Hugging Face\n\nOpenAI's incident report describes models burning inference compute to steal answers.",
+                "score": 0.5345888
+              },
+              {
+                "title": "‘Tokenmaxxing’ hits its limits as workplaces look for cheaper AI | AP News",
+                "url": "https://apnews.com/article/ai-token-openai-anthropic-corporate-31bb80ac1cd7862d05f6397177d826b1",
+                "source": "apnews.com",
+                "summary": "A corporate fad of “tokenmaxxing” on artificial intelligence technology is hitting its limits as workplaces throwing AI at everything are seeing the costs rise without a similar spike in productivity.\n\nWhat started as tech industry-fueled springtime hype over squeezing as much AI-generated work as possible out of products like OpenAI’s ChatGPT and Anthropic’s Claude has shifted to a summertime backlash. [...] At the same time, those who favor racking up as many tokens as possible are having a field day with new open-source models from Chinese startups like Moonshot’s Kimi or Zhipu’s GLM, which nearly match the capabilities of top U.S. models at a fraction of the price. [...] TOP STORIES\n\n  - Jetting off for a summer vacation? How to eat and drink to minimize jet lag\n  - Challenging your brain helps keep it healthy. Here's how to do it\n  - Salmonella outbreak tied to eggs has sickened 98 people since November\n  - Being a night owl may not be great for your heart but you can do something about it\n  - Outbreak of diarrhea-causing parasite linked to 4 more states\n  - There are already more US measles cases this year than in all of 2025\n Tech",
+                "score": 0.5310884
+              }
+            ]
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI",
+            "search_type": "Latest",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "AI",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "まあ、AIの仕事を確認して、作業を承認する仕事は残ってるか",
+                "summary": "まあ、AIの仕事を確認して、作業を承認する仕事は残ってるか",
+                "url": "https://x.com/yamagu09/status/2082337682181722385",
+                "source": "@yamagu09",
+                "date": "Wed Jul 29 05:29:26 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@TheProfInvestor Seems like everyone crying was all in the AI trade. Furthest I went in was $NVDA @$109and $CRWV since j",
+                "summary": "@TheProfInvestor Seems like everyone crying was all in the AI trade. Furthest I went in was $NVDA @$109and $CRWV since just after IPO @$35. Everytime I wanted to get into a name it seemed to toppy already even though it just kept going up and up, and up. I did print selling CSP’s though!",
+                "url": "https://x.com/RySo1234/status/2082337677609947628",
+                "source": "@RySo1234",
+                "date": "Wed Jul 29 05:29:24 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "The recent Hugging Face compromise, reportedly involving multiple zero-days, is another reminder that AI platforms are b",
+                "summary": "The recent Hugging Face compromise, reportedly involving multiple zero-days, is another reminder that AI platforms are becoming an increasingly attractive target.  We’ve been tracking activity against AI frameworks and low-code AI platforms for a while now, including:  • Langflow (CVE-2026-21445, CVE-2026-33017, CVE-2026-0770) • Flowise (CVE-2025-26319) • n8n (CVE-2026-21858) • Kubio (CVE-2025-2294) • NocoBase (CVE-2026-34156) • WP AI Engine (CVE-2025-11749)  One thing we’ve noticed is that there are a surprising number of IP addresses that appear to be focused almost entirely on AI technologies. They aren’t carrying out broad internet scans or looking for every exposed service. They’re repeatedly checking for agents.  That’s interesting in itself.  It suggests there are actors dedicating infrastructure specifically to finding AI deployments, rather than treating them as just another target.  From a defender’s perspective, that’s why simply knowing a CVE exists isn’t always enough. Understanding who is looking for it, how active they are, and whether that activity changes over time gives you much more context.  If you’re running AI infrastructure, it’s worth making sure logging is enabled, patching is prioritised, and that you’re thinking about how you’d detect someone moving beyond initial reconnaissance.  We’re keeping an eye on how this activity develops. It’ll be interesting to see whether these AI-focused scans continue to increase over the coming months.\n\nWhile these are AI agent focused, there is also a broader deception use case to detect AI agents accessing information they shouldnt.\n\nEitherway, we have a new tag for ai-agents in https://t.co/j68uRQG0fn",
+                "url": "https://x.com/LupovisDefence/status/2082337673172107590",
+                "source": "@LupovisDefence",
+                "date": "Wed Jul 29 05:29:23 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@KristinaYuana Goblok. Ini bukan Insos. Ini ai Serui. Marga Numberi. Tinggal di Argapura. Bosan cuki dia",
+                "summary": "@KristinaYuana Goblok. Ini bukan Insos. Ini ai Serui. Marga Numberi. Tinggal di Argapura. Bosan cuki dia",
+                "url": "https://x.com/akunbisnis2027/status/2082337672253833611",
+                "source": "@akunbisnis2027",
+                "date": "Wed Jul 29 05:29:23 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@karan8vx @beatsinbrief Those are most likely AI generated images used for representative purposes. Here's the same stor",
+                "summary": "@karan8vx @beatsinbrief Those are most likely AI generated images used for representative purposes. Here's the same story from Economic Times :\n\nhttps://t.co/11olX2IYRn",
+                "url": "https://x.com/2b_square/status/2082337669368213973",
+                "source": "@2b_square",
+                "date": "Wed Jul 29 05:29:22 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T12:29:39"
+    }
+  ]
+}
