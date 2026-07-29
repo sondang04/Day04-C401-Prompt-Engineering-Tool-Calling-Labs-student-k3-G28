@@ -1,4 +1,4 @@
-Danh Sách Thành Viên
+Danh Sách Thành Viên nhóm G28
 `Đặng Thái Nam Sơn` 2A202601431
 `Chu Thành Dũng` 2A202601405
 `Trần Đình Đăng` 2A202601998
