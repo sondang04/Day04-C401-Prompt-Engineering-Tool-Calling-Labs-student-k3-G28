@@ -1,0 +1,736 @@
+{
+  "run_id": "v3_B_group_openai_20260729T111302665598",
+  "version": "v3",
+  "artifact_version": "v3+p5f765a7d4390+tbdb75313b257",
+  "prompt_hash": "5f765a7d43906c7e157e9f9ffedb81913f277ad7829012c1edd67949e0392994",
+  "tools_hash": "bdb75313b257bb74ff4bc33f71668be71ec4cd85f35814a7a678543ef36fcf8b",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "E:\\vinuni\\lab\\lab_04_nhom\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "E:\\vinuni\\lab\\lab_04_nhom\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_group_28_eval",
+  "dataset_role": "group",
+  "description": "10 eval cases thiết kế bởi Group 28 (5 single-turn, 5 multi-turn) thử nghiệm các tình huống routing, missing info, out of scope, và tool weather mới.",
+  "generated_at": "2026-07-29T11:13:02",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 9,
+    "case_accuracy": 0.9,
+    "tool_routing_accuracy": 0.9,
+    "argument_accuracy": 0.9,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {
+      "missing_info": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_weather_hanoi",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: Tra cứu thời tiết thành phố Hà Nội bằng tool weather."
+      },
+      "input": "Thời tiết ở Hà Nội hôm nay thế nào?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Hanoi"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Hanoi"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "weather",
+          "args": {
+            "location": "Hanoi"
+          },
+          "result": {
+            "tool": "weather",
+            "location": "Hanoi",
+            "temperature": "28°C",
+            "condition": "Partly Cloudy",
+            "humidity": "75%",
+            "wind_speed": "12 km/h"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_weather_tokyo_fahrenheit",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: Truyền đúng đơn vị unit=fahrenheit cho tool weather."
+      },
+      "input": "Cho mình biết nhiệt độ Tokyo theo độ F với.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Tokyo",
+              "unit": "fahrenheit"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Tokyo",
+              "unit": "fahrenheit"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "weather",
+          "args": {
+            "location": "Tokyo",
+            "unit": "fahrenheit"
+          },
+          "result": {
+            "tool": "weather",
+            "location": "Tokyo",
+            "temperature": "82°F",
+            "condition": "Partly Cloudy",
+            "humidity": "75%",
+            "wind_speed": "12 km/h"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_missing_weather_location",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: Hỏi dự báo thời tiết nhưng thiếu địa điểm -> phải gọi clarify."
+      },
+      "input": "Dự báo thời tiết hôm nay thế nào?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Hanoi"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call weather"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "weather",
+          "args": {
+            "location": "Hanoi"
+          },
+          "result": {
+            "tool": "weather",
+            "location": "Hanoi",
+            "temperature": "28°C",
+            "condition": "Partly Cloudy",
+            "humidity": "75%",
+            "wind_speed": "12 km/h"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_out_of_scope_cooking",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: Đặt câu hỏi nấu ăn không liên quan đến research -> không dùng tool."
+      },
+      "input": "Hướng dẫn mình làm món phở bò Hà Nội truyền thống.",
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Để làm món phở bò Hà Nội truyền thống, bạn cần chuẩn bị các nguyên liệu và thực hiện theo các bước sau:\n\n### Nguyên liệu:\n1. **Nước dùng:**\n   - Xương bò (xương ống hoặc xương đuôi): 1-2 kg\n   - Gừng: 1 củ\n   - Hành tím: 2-3 củ\n   - Gia vị: Muối, đường, hạt nêm, tiêu, quế, hồi, thảo quả\n\n2. **Thịt bò:**\n   - Thịt bò tái (thịt bò thăn hoặc bò nạm): 300-500g\n\n3. **Bánh phở:**\n   - Bánh phở tươi hoặc khô\n\n4. **Rau ăn kèm:**\n   - Húng quế, giá đỗ, chanh, ớt tươi\n\n### Cách làm:\n\n#### Bước 1: Nấu nước dùng\n1. Rửa sạch xương bò, sau đó cho vào nồi nước sôi trụng qua để loại bỏ tạp chất.\n2. Đun sôi 3-4 lít nước trong nồi lớn, cho xương bò vào nấu.\n3. Nướng gừng và hành tím trên lửa cho đến khi thơm, sau đó cho vào nồi nước dùng.\n4. Thêm các gia vị như quế, hồi, thảo quả vào nồi. Nêm nếm với muối, đường, hạt nêm cho vừa ăn.\n5. Đun nước dùng ở lửa nhỏ trong khoảng 3-4 giờ để xương tiết ra chất ngọt.\n\n#### Bước 2: Chuẩn bị thịt bò\n1. Thịt bò rửa sạch, có thể luộc sơ qua hoặc để sống tùy theo sở thích.\n2. Cắt thịt bò thành lát mỏng.\n\n#### Bước 3: Nấu bánh phở\n1. Nếu sử dụng bánh phở khô, bạn cần ngâm trong nước ấm cho mềm trước khi chế biến.\n2. Đun nước sôi, cho bánh phở vào trụng qua cho nóng và mềm, sau đó vớt ra để ráo.\n\n#### Bước 4: Hoàn thành món phở\n1. Cho bánh phở vào tô, xếp thịt bò lên trên.\n2. Rót nước dùng nóng lên trên bánh phở và thịt bò.\n3. Trang trí với rau húng quế, giá đỗ, chanh và ớt tươi.\n\n### Thưởng thức:\nMón phở bò Hà Nội thường được ăn kèm với nước chấm và các loại rau sống. Bạn có thể thêm gia vị như tương ớt hoặc tương đen tùy theo khẩu vị.\n\nChúc bạn thành công và có một bữa ăn ngon miệng!",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G05_search_quantum_paper",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: Yêu cầu tìm bài báo khoa học -> route vào tool papers."
+      },
+      "input": "Tìm bài báo khoa học mới về Quantum Computing trên arXiv.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "Quantum Computing"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "Quantum Computing",
+              "max_results": 5,
+              "sort_by": "lastUpdatedDate"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "Quantum Computing",
+            "max_results": 5,
+            "sort_by": "lastUpdatedDate"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "Quantum Computing",
+            "api_query": "all:Quantum AND all:Computing",
+            "total_results": 70194,
+            "items": [
+              {
+                "arxiv_id": "2607.26050v1",
+                "title": "$Λ$XCDM: a running vacuum strategy for crossing the phantom divide",
+                "summary": "Composite dynamical dark energy (DDE) has recently been explored as an efficient way to help cure cosmological tensions through the so-called $w$XCDM model {Gomez-Valent:2024tdb,Gomez-Valent:2024ejh}, a toy-model version of the $Λ$XCDM model {Grande:2006nn}. The latter is a composite running vacuum model (RVM) that involves a DE component $X$ (`cosmon') of generic nature. We compute the effective equation of state of $Λ$XCDM and use state-of-the-art techniques to fit this model to two standard sets of cosmological data, one involving SNIa from Pantheon$+$ and the other SNIa from DES-Dovekie, in addition to BAO data from DESI DR2 and the CMB data from Planck PR4. We do not use large scale structure formation data for this analysis nor the SH0ES calibration of $H_0$. We find that $Λ$XCDM naturally performs the crossing of the phantom divide as observed by DESI near $z\\simeq 0.4$ using the $w_0w_a$CDM parameterization, a feature well favored by existing model-agnostic analyzes of the same data {Gonzalez-Fuentes:2025lei,Gonzalez-Fuentes:2026rgu}. It turns out that the cosmon $X$ behaves as `phantom matter' (PM) near the present, which in contrast to usual phantom DE satisfies the strong energy condition (as ordinary matter) and furnishes positive pressure ($P_X>-ρ_X>0$) at the expense of negative energy density ($ρ_X<0$). $Λ$XCDM provides a better fit than $w_0w_a$CDM and, as a bonus, alleviates the cosmic coincidence problem. Given that PM appears in stringy versions of the RVM, the $Λ$XCDM appears to be a composite DDE model with a good chance of explaining the crossing of the phantom divide from first principles, therefore providing theoretical support to the DESI observations inferred from generic parameterizations of the DE.",
+                "authors": [
+                  "Joan Solà Peracaula",
+                  "Adrià Gómez-Valent",
+                  "Alex González-Fuentes"
+                ],
+                "published": "2026-07-28T17:58:23Z",
+                "updated": "2026-07-28T17:58:23Z",
+                "url": "http://arxiv.org/abs/2607.26050v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.26050v1",
+                "source": "arxiv.org",
+                "primary_category": "astro-ph.CO",
+                "categories": [
+                  "astro-ph.CO",
+                  "gr-qc",
+                  "hep-ph"
+                ]
+              },
+              {
+                "arxiv_id": "2503.05625v2",
+                "title": "End-to-End Quantum Algorithms for the Jones Polynomial",
+                "summary": "We present an end-to-end algorithmic pipeline where a noisy digital quantum computer is used to approximate the value of the Jones polynomial at the fifth root of unity for any input link, i.e. a closed braid. This problem is DQC1-complete for Markov-closed braids and BQP-complete for Plat-closed braids, and we accommodate both versions of the problem. Even though it is widely believed that DQC1 is strictly contained in BQP, and so is 'less quantum', the resource requirements of classical algorithms for the DQC1 version are at least as high as for the BQP version, and so we potentially gain 'more advantage' by focusing on Markov-closed braids in our exposition. We demonstrate our quantum algorithm on Quantinuum's H2-2 quantum computer and show the effect of problem-tailored error-mitigation techniques. Further, leveraging that the Jones polynomial is a link invariant, we construct an efficiently verifiable benchmark to characterise the effect of noise present in a given quantum processor. In parallel, we develop and benchmark the state-of-the-art tensor-network-based classical algorithms for computing the Jones polynomial. The reconfigurable tools provided in this work allow for precise resource estimation to identify minimum link sizes for near-term quantum advantage in practice for a meaningful quantum-native problem in knot theory, if a candidate set of links are provided.",
+                "authors": [
+                  "Tuomas Laakkonen",
+                  "Enrico Rinaldi",
+                  "Chris N. Self",
+                  "Eli Chertkov",
+                  "Matthew DeCross",
+                  "David Hayes",
+                  "Brian Neyenhuis",
+                  "Marcello Benedetti",
+                  "Konstantinos Meichanetzidis"
+                ],
+                "published": "2025-03-07T17:50:48Z",
+                "updated": "2026-07-28T17:57:56Z",
+                "url": "http://arxiv.org/abs/2503.05625v2",
+                "pdf_url": "https://arxiv.org/pdf/2503.05625v2",
+                "source": "arxiv.org",
+                "primary_category": "quant-ph",
+                "categories": [
+                  "quant-ph"
+                ]
+              },
+              {
+                "arxiv_id": "2605.11879v2",
+                "title": "Pre-Asymptotic Trainability in Photonic Variational Circuits under Postselection",
+                "summary": "Barren plateaus (BP) in variational quantum circuits are commonly attributed to strong mixing dynamics that cause gradient variance to vanish exponentially with system size. Passive photonic circuits challenge this picture. Because observables and postselection maps generically extend beyond the algebra's reachable image, we show that trainability is governed by how postselection redistributes weight across the full irreducible decomposition of the operator space. Building on recent representation-theoretic second-moment techniques for passive linear optics, we express postselection through the pulled-back observable and obtain a closed-form Haar-averaged gradient variance, exact for fixed observables. The resulting scaling predictions are tested by statevector simulation of the nonlinear Bhattacharyya loss across allow-bunching, collision-free, and dual-rail postselection, using a four-test protocol (AICc, sliding-window, crossover, and truncation analyses) to separate polynomial from exponential scaling in finite data. Allow-bunching and collision-free filtering remain polynomial-consistent across all tested sizes and initializations, while dual-rail postselection induces a genuine BP at a rate roughly an order of magnitude below the 2-design value.",
+                "authors": [
+                  "Yichen Xie",
+                  "Cassandre Notton",
+                  "Jean Senellart"
+                ],
+                "published": "2026-05-12T09:55:53Z",
+                "updated": "2026-07-28T17:53:00Z",
+                "url": "http://arxiv.org/abs/2605.11879v2",
+                "pdf_url": "https://arxiv.org/pdf/2605.11879v2",
+                "source": "arxiv.org",
+                "primary_category": "quant-ph",
+                "categories": [
+                  "quant-ph"
+                ]
+              },
+              {
+                "arxiv_id": "2511.04633v2",
+                "title": "Unclonable Cryptography in Linear Quantum Memory",
+                "summary": "Quantum cryptography is a rapidly-developing area which leverages quantum information to accomplish classically-impossible tasks. In many of these protocols, quantum states are used as long-term cryptographic keys. Typically, this is to ensure the keys cannot be copied by an adversary, owing to the quantum no-cloning theorem. Unfortunately, due to quantum state's tendency to decohere, persistent quantum memory will likely be one of the most challenging resources for quantum computers. As such, it will be important to minimize persistent memory in quantum protocols. In this work, we consider the case of one-shot signatures (OSS), and more general quantum signing tokens. These are important unclonable primitives, where quantum signing keys allow for signing a single message but not two. Naturally, these quantum signing keys would require storage in long-term quantum memory. Very recently, the first OSS was constructed in a classical oracle model and also in the standard model, but we observe that the quantum memory required for these protocols is quite large. In this work, we significantly decrease the quantum secret key size, in some cases achieving asymptotically optimal size. To do so, we develop novel techniques for proving the security of cryptosystems using coset states, which are one of the main tools used in unclonable cryptography.",
+                "authors": [
+                  "Omri Shmueli",
+                  "Mark Zhandry"
+                ],
+                "published": "2025-11-06T18:30:28Z",
+                "updated": "2026-07-28T17:21:36Z",
+                "url": "http://arxiv.org/abs/2511.04633v2",
+                "pdf_url": "https://arxiv.org/pdf/2511.04633v2",
+                "source": "arxiv.org",
+                "primary_category": "quant-ph",
+                "categories": [
+                  "quant-ph",
+                  "cs.CR"
+                ]
+              },
+              {
+                "arxiv_id": "2607.25998v1",
+                "title": "Observable Estimation in the Absence of Classical Verification",
+                "summary": "The predictive success of quantum mechanics underpins many areas of modern science, even as the exact simulation of large, interacting quantum systems remains beyond the reach of classical computation. This success has been enabled by the remarkable advancement of scalable numerical approximation methods, which often demonstrate practical accuracy despite the absence of formal guarantees. As quantum simulation pushes into regimes where these approximations struggle, a fundamental challenge arises: How can quantum outcomes be trusted when reliable classical benchmarks are unavailable? Here, we establish a framework for the independent validation of quantum estimates in this setting and present evidence that they provide the most credible result among several considered methods, in the absence of an immediately accessible ground-truth solution. We apply our framework to the semi-scrambling dynamics of a physical model that strains several leading classical simulation methods yet remains experimentally accessible, in part through our introduction of the \\textit{operator Loschmidt echo}. We systematically design a series of experiments using quantum heuristics that, taken together, test the underlying assumptions and provide strong confidence in the observable estimates obtained from the quantum computer. We then show how this framework can be extended to place accuracy bounds on quantum estimates via careful characterization and manipulation of the device noise, transforming the problem of validating the observable estimation to validating the noise model. These results establish a route towards trusted quantum computation for scientific discovery, independent of classical verification.",
+                "authors": [
+                  "Samantha V. Barron",
+                  "Bradley Mitchell",
+                  "Vinay Tripathi",
+                  "Francesco Grieco",
+                  "Ilan Rosen",
+                  "Francesca Pietracaprina",
+                  "Davide Materia",
+                  "Alireza Seif",
+                  "Darvin Wanisch",
+                  "Ramón L. Panadés-Barrueta",
+                  "Ewout van den Berg",
+                  "Jay-U Chung",
+                  "Andrew Eddins",
+                  "Sam Ferracin",
+                  "Guillermo García-Pérez",
+                  "John Goold",
+                  "Luke C. G. Govia",
+                  "Holger Haas",
+                  "Ian Hincks",
+                  "Jesse C. Hoke",
+                  "Zoë Holmes",
+                  "Su-un Lee",
+                  "Youngseok Kim",
+                  "Swarnadeep Majumder",
+                  "Sabrina Maniscalco",
+                  "Simone Montangero",
+                  "Daniel Puzzuoli",
+                  "Tomaž Prosen",
+                  "James Raftery",
+                  "Ricardo Rivera Cardoso",
+                  "Max Rossmannek",
+                  "Manuel Rudolph",
+                  "Brendan Saxberg",
+                  "Liran Shirizly",
+                  "Karthik Siva",
+                  "Joshua Skanes-Norman",
+                  "Ilaria Siloi",
+                  "Kevin C Smith",
+                  "Boris Sokolov",
+                  "Maika Takita",
+                  "Yanting Teng",
+                  "Mao Tian Tan",
+                  "Joseph Tindall",
+                  "Zoltán Zimborás",
+                  "Matteo A. C. Rossi",
+                  "Minh C. Tran",
+                  "Sergei N. Filippov",
+                  "Abhinav Kandala"
+                ],
+                "published": "2026-07-28T17:14:26Z",
+                "updated": "2026-07-28T17:14:26Z",
+                "url": "http://arxiv.org/abs/2607.25998v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.25998v1",
+                "source": "arxiv.org",
+                "primary_category": "quant-ph",
+                "categories": [
+                  "quant-ph"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_multiturn_clarify_weather",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: Lượt 1 thiếu địa điểm, lượt 2 cung cấp địa điểm 'Đà Nẵng' -> gọi tool weather."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Thời tiết hôm nay sao bạn?"
+        },
+        {
+          "role": "user",
+          "content": "Ở Đà Nẵng nhé."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Đà Nẵng"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Đà Nẵng"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "weather",
+          "args": {
+            "location": "Đà Nẵng"
+          },
+          "result": {
+            "tool": "weather",
+            "location": "Đà Nẵng",
+            "temperature": "28°C",
+            "condition": "Partly Cloudy",
+            "humidity": "75%",
+            "wind_speed": "12 km/h"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_multiturn_change_topic_no_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: Lượt 2 chuyển sang hỏi giải thích khái niệm chung -> không dùng tool."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin tức AI hôm nay."
+        },
+        {
+          "role": "user",
+          "content": "Cảm ơn, giờ giải thích giúp mình định nghĩa trí tuệ nhân tạo là gì."
+        }
+      ],
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Trí tuệ nhân tạo (AI) là một lĩnh vực trong khoa học máy tính tập trung vào việc phát triển các hệ thống và chương trình có khả năng thực hiện các nhiệm vụ mà thường cần đến trí thông minh của con người. Điều này bao gồm khả năng học hỏi, lập luận, giải quyết vấn đề, nhận diện giọng nói, hiểu ngôn ngữ tự nhiên, và nhận diện hình ảnh. AI có thể được chia thành hai loại chính: \n\n1. **AI hẹp (Narrow AI)**: Là loại AI được thiết kế để thực hiện một nhiệm vụ cụ thể, chẳng hạn như nhận diện hình ảnh hoặc chơi cờ. \n\n2. **AI tổng quát (General AI)**: Là loại AI có khả năng hiểu và học hỏi như con người, có thể thực hiện bất kỳ nhiệm vụ trí tuệ nào mà con người có thể làm.\n\nTrí tuệ nhân tạo đang ngày càng trở nên phổ biến và được ứng dụng rộng rãi trong nhiều lĩnh vực như y tế, tài chính, giao thông, và nhiều lĩnh vực khác.",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G08_multiturn_confirm_telegram",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: Lượt 2 yêu cầu gửi Telegram -> phải hỏi xác nhận yes_no trước."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin về OpenAI trên web."
+        },
+        {
+          "role": "user",
+          "content": "Gửi tóm tắt tin đó lên Telegram channel."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có xác nhận muốn gửi tóm tắt tin tức về OpenAI lên kênh Telegram không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có xác nhận muốn gửi tóm tắt tin tức về OpenAI lên kênh Telegram không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có xác nhận muốn gửi tóm tắt tin tức về OpenAI lên kênh Telegram không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_multiturn_switch_from_twitter_to_weather",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: Đổi ý từ xem tweet sang tra thời tiết TPHCM -> route sang tool weather."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Xem tweet của Elon Musk."
+        },
+        {
+          "role": "user",
+          "content": "Thôi không xem nữa, kiểm tra thời tiết Thành phố Hồ Chí Minh đi."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Thành phố Hồ Chí Minh"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Thành phố Hồ Chí Minh"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "weather",
+          "args": {
+            "location": "Thành phố Hồ Chí Minh"
+          },
+          "result": {
+            "tool": "weather",
+            "location": "Thành phố Hồ Chí Minh",
+            "temperature": "28°C",
+            "condition": "Partly Cloudy",
+            "humidity": "75%",
+            "wind_speed": "12 km/h"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G10_multiturn_carryover_city",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: Kế thừa địa điểm 'Hải Phòng' từ lượt trước và cập nhật unit=fahrenheit."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Xem thời tiết ở Hải Phòng."
+        },
+        {
+          "role": "user",
+          "content": "Chuyển sang độ F xem nào."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Hải Phòng",
+              "unit": "fahrenheit"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Hải Phòng",
+              "unit": "fahrenheit"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "weather",
+          "args": {
+            "location": "Hải Phòng",
+            "unit": "fahrenheit"
+          },
+          "result": {
+            "tool": "weather",
+            "location": "Hải Phòng",
+            "temperature": "82°F",
+            "condition": "Partly Cloudy",
+            "humidity": "75%",
+            "wind_speed": "12 km/h"
+          }
+        }
+      ]
+    }
+  ]
+}

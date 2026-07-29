@@ -1,0 +1,238 @@
+{
+  "dataset_id": "day04_v2_group_28_eval",
+  "dataset_role": "group",
+  "description": "10 eval cases thiết kế bởi Group 28 (5 single-turn, 5 multi-turn) thử nghiệm các tình huống routing, missing info, out of scope, và tool weather mới.",
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
+  "cases": [
+    {
+      "id": "G01_weather_hanoi",
+      "phase": "B",
+      "query": "Thời tiết ở Hà Nội hôm nay thế nào?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Hà Nội"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: Tra cứu thời tiết thành phố Hà Nội bằng tool weather."
+      }
+    },
+    {
+      "id": "G02_weather_tokyo_fahrenheit",
+      "phase": "B",
+      "query": "Cho mình biết nhiệt độ Tokyo theo độ F với.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Tokyo",
+              "unit": "fahrenheit"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: Truyền đúng đơn vị unit=fahrenheit cho tool weather."
+      }
+    },
+    {
+      "id": "G03_missing_weather_location",
+      "phase": "B",
+      "query": "Dự báo thời tiết hôm nay thế nào?",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: Hỏi dự báo thời tiết nhưng thiếu địa điểm -> phải gọi clarify."
+      }
+    },
+    {
+      "id": "G04_out_of_scope_cooking",
+      "phase": "B",
+      "query": "Hướng dẫn mình làm món phở bò Hà Nội truyền thống.",
+      "failure_type": "out_of_scope",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: Đặt câu hỏi nấu ăn không liên quan đến research -> không dùng tool."
+      }
+    },
+    {
+      "id": "G05_search_quantum_paper",
+      "phase": "B",
+      "query": "Tìm bài báo khoa học mới về Quantum Computing trên arXiv.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "Quantum Computing"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: Yêu cầu tìm bài báo khoa học -> route vào tool papers."
+      }
+    },
+    {
+      "id": "G06_multiturn_clarify_weather",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Thời tiết hôm nay sao bạn?"
+        },
+        {
+          "role": "user",
+          "content": "Ở Đà Nẵng nhé."
+        }
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Đà Nẵng"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Lượt 1 thiếu địa điểm, lượt 2 cung cấp địa điểm 'Đà Nẵng' -> gọi tool weather."
+      }
+    },
+    {
+      "id": "G07_multiturn_change_topic_no_tool",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin tức AI hôm nay."
+        },
+        {
+          "role": "user",
+          "content": "Cảm ơn, giờ giải thích giúp mình định nghĩa trí tuệ nhân tạo là gì."
+        }
+      ],
+      "failure_type": "unnecessary_tool",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Lượt 2 chuyển sang hỏi giải thích khái niệm chung -> không dùng tool."
+      }
+    },
+    {
+      "id": "G08_multiturn_confirm_telegram",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin về OpenAI trên web."
+        },
+        {
+          "role": "user",
+          "content": "Gửi tóm tắt tin đó lên Telegram channel."
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Lượt 2 yêu cầu gửi Telegram -> phải hỏi xác nhận yes_no trước."
+      }
+    },
+    {
+      "id": "G09_multiturn_switch_from_twitter_to_weather",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Xem tweet của Elon Musk."
+        },
+        {
+          "role": "user",
+          "content": "Thôi không xem nữa, kiểm tra thời tiết Thành phố Hồ Chí Minh đi."
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Thành phố Hồ Chí Minh"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Đổi ý từ xem tweet sang tra thời tiết TPHCM -> route sang tool weather."
+      }
+    },
+    {
+      "id": "G10_multiturn_carryover_city",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Xem thời tiết ở Hải Phòng."
+        },
+        {
+          "role": "user",
+          "content": "Chuyển sang độ F xem nào."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Hải Phòng",
+              "unit": "fahrenheit"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Kế thừa địa điểm 'Hải Phòng' từ lượt trước và cập nhật unit=fahrenheit."
+      }
+    }
+  ]
+}
