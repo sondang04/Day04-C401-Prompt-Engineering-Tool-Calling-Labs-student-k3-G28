@@ -1,0 +1,612 @@
+{
+  "run_id": "v2_B_group_openrouter_20260729T111747214208",
+  "version": "v2",
+  "artifact_version": "v2+p6aa1a061e3ba+tbbfc1245f5f0",
+  "prompt_hash": "6aa1a061e3ba6ef2a89dea1bacf35e16efce7d1cd5c8e0ad6689fbf2b987474a",
+  "tools_hash": "bbfc1245f5f079327cc65173b55666bd4941839205abf289505bdc97d54f6c0c",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\Working\\Artificial_Inteligence\\Vin_AI_Thuc_chien\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\Working\\Artificial_Inteligence\\Vin_AI_Thuc_chien\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student-k3-G28\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "10 case do nhóm G28 tự viết: 5 single-turn (query) + 5 multi-turn (turns). Các case nhắm vào những lỗi mà base eval chưa đo hết: hỏi lại khi thiếu link, ranh giới xác nhận trước khi gửi ở giữa hội thoại, chuyển hướng tool giữa chừng, sửa timeframe/search_type ở lượt sau, và câu ngoài phạm vi xen giữa phiên research.",
+  "generated_at": "2026-07-29T11:17:47",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 10,
+    "case_accuracy": 1.0,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 1.0,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "G01_missing_link_reference",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_missing_url_indirect",
+        "difficulty": "medium",
+        "what_it_tests": "User nhắc tới một link không hề tồn tại trong hội thoại → phải hỏi lại xin URL, KHÔNG được bịa url cho fetch."
+      },
+      "input": "Đọc giúp mình cái link mình gửi lúc nãy rồi tóm tắt nhé",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có thể cung cấp lại link mà bạn muốn tóm tắt không?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có thể cung cấp lại link mà bạn muốn tóm tắt không?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có thể cung cấp lại link mà bạn muốn tóm tắt không?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_top_search_type_slang",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_search_type_synonym",
+        "difficulty": "medium",
+        "what_it_tests": "Từ đồng nghĩa của 'top' (hot nhất / nhiều tương tác nhất) → search_type=Top chứ không phải Latest mặc định."
+      },
+      "input": "Cho mình xem mấy tweet hot nhất, nhiều tương tác nhất về Gemini",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Gemini",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Gemini",
+              "search_type": "Top"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "Gemini",
+            "search_type": "Top"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_month_timeframe_query_hygiene",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_timeframe_month_query_clean",
+        "difficulty": "medium",
+        "what_it_tests": "'tháng này' → timeframe=month, topic=news, và query chỉ chứa chủ đề (không nhét 'tin tức'/'tháng này' vào query)."
+      },
+      "input": "Tổng hợp tin tức về chip AI trong tháng này giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "chip AI",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "chip AI",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "chip AI",
+            "topic": "news",
+            "timeframe": "month"
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "RuntimeError",
+            "message": "Missing TAVILY_API_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_send_boundary_urgent",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "confirm_before_write_under_pressure",
+        "difficulty": "hard",
+        "what_it_tests": "Sức ép 'ngay/gấp' không được phá ranh giới xác nhận: vẫn phải clarify(yes_no) trước, không gọi send."
+      },
+      "input": "Gửi ngay bản tóm tắt này lên Telegram cho team mình, gấp lắm rồi",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có chắc muốn đăng bản tóm tắt này lên Telegram không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có chắc muốn đăng bản tóm tắt này lên Telegram không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có chắc muốn đăng bản tóm tắt này lên Telegram không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_out_of_scope_translation",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_translation",
+        "difficulty": "easy",
+        "what_it_tests": "Yêu cầu dịch thuật nằm ngoài phạm vi research → trả lời bằng text, KHÔNG gọi lookup hay tool nào."
+      },
+      "input": "Dịch giúp mình câu này sang tiếng Nhật: 'Hẹn gặp lại bạn ngày mai'",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Câu \"Hẹn gặp lại bạn ngày mai\" dịch sang tiếng Nhật là: \"また明日会いましょう\" (Mata ashita aimashou).",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "GM01_switch_web_to_account",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_web_to_timeline",
+        "difficulty": "hard",
+        "what_it_tests": "Chuyển hướng ngược với M06: bỏ web search sang timeline một account, map tên → handle karpathy, limit=3, và KHÔNG gọi lại lookup của lượt đầu."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tin AI hôm nay có gì hot không?"
+        },
+        {
+          "role": "user",
+          "content": "Thôi khỏi tìm web, xem tweet của Andrej Karpathy đi"
+        },
+        {
+          "role": "user",
+          "content": "Lấy 3 tweet mới nhất thôi nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 3
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "karpathy",
+            "limit": 3
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM02_timeframe_correction",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_timeframe_override",
+        "difficulty": "hard",
+        "what_it_tests": "Lượt sau ghi đè timeframe week→month, đồng thời carry query và topic=news từ lượt đầu."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin tức về xe điện trong tuần này"
+        },
+        {
+          "role": "user",
+          "content": "Đổi lại thành trong tháng này đi"
+        },
+        {
+          "role": "user",
+          "content": "Vẫn giữ chủ đề xe điện nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "xe điện",
+            "topic": "news",
+            "timeframe": "month"
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "RuntimeError",
+            "message": "Missing TAVILY_API_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM03_search_type_correction",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_search_type_override",
+        "difficulty": "hard",
+        "what_it_tests": "Lượt sau đổi cách sắp xếp Latest→Top nhưng giữ nguyên tool và query từ lượt đầu."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mọi người đang nói gì về Claude trên Twitter?"
+        },
+        {
+          "role": "user",
+          "content": "Cho mình loại phổ biến nhất thay vì mới nhất"
+        },
+        {
+          "role": "user",
+          "content": "Vẫn chủ đề Claude nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Claude",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Claude",
+              "search_type": "Top"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "Claude",
+            "search_type": "Top"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM04_send_after_research",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_confirm_before_write",
+        "difficulty": "hard",
+        "what_it_tests": "Sau khi đã research, lượt cuối yêu cầu đăng → phải clarify(yes_no) trước, KHÔNG gọi send và cũng không gọi lại lookup của lượt đầu."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin AI hôm nay giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Ok, giờ đăng bản tóm tắt đó lên Telegram giúp mình"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có chắc muốn đăng bản tóm tắt đó lên Telegram không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có chắc muốn đăng bản tóm tắt đó lên Telegram không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có chắc muốn đăng bản tóm tắt đó lên Telegram không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM05_out_of_scope_midsession",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_out_of_scope",
+        "difficulty": "hard",
+        "what_it_tests": "Lượt cuối là câu toán ngoài phạm vi → KHÔNG gọi tool nào, kể cả không chạy lại lookup của lượt research trước đó."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tin tức AI hôm nay có gì?"
+        },
+        {
+          "role": "user",
+          "content": "Tiện thể giải giúp mình phương trình x^2 - 5x + 6 = 0 với"
+        }
+      ],
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi không thể giúp bạn giải phương trình. Nếu bạn cần thông tin về AI hoặc tin tức liên quan, hãy cho tôi biết!",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    }
+  ]
+}
