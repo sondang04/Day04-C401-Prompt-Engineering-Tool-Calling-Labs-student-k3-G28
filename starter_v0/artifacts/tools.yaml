@@ -9,55 +9,133 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: >
+      Ask the user a question instead of guessing. Two distinct uses:
+
+      (a) response_type="yes_no" — confirmation BEFORE any write action
+      (send / post / publish / đăng / gửi). Always use this for a send-type request,
+      even when the content to send is not in the conversation yet.
+
+      (b) response_type="text" — a read-only request is missing a required argument,
+      such as no account named for timeline, or no URL for fetch.
+
+      When clarify is needed it must be the ONLY tool call in that turn.
     parameters:
       type: object
       properties:
-        question: {type: string, default: "", description: "Câu hỏi"}
-        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Kiểu trả lời"}
+        question: {type: string, default: "", description: "Câu hỏi gửi cho người dùng"}
+        response_type:
+          type: string
+          enum: [text, yes_no, choice]
+          default: "text"
+          description: >
+            "yes_no" = xác nhận trước hành động ghi (send/post/publish) — luôn dùng cho
+            request gửi/đăng. "text" = hỏi thông tin còn thiếu (handle, URL, chủ đề).
+            "choice" = chọn trong options.
         options: {type: array, default: [], items: {type: string}, description: "Các lựa chọn"}
       required: [question]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: >
+      Lấy các bài đăng gần đây CỦA MỘT TÀI KHOẢN cụ thể trên Twitter/X.
+
+      Dùng khi user nêu rõ tên người hoặc tài khoản ("tweet của Sam Altman").
+
+      KHÔNG dùng tool này để tìm bài theo chủ đề — đó là social_search.
+
+      Nếu không có tài khoản nào được nêu, gọi clarify(response_type="text").
     parameters:
       type: object
       properties:
-        screenname: {type: string, default: "", description: "Tên tài khoản"}
-        limit: {type: integer, default: 5, description: "Số lượng"}
+        screenname:
+          type: string
+          default: ""
+          description: >
+            Twitter/X handle, KHÔNG có "@" và không phải tên hiển thị. Map tên phổ biến:
+            Sam Altman -> sama, Elon Musk -> elonmusk, Andrej Karpathy -> karpathy,
+            Sundar Pichai -> sundarpichai, Yann LeCun -> ylecun, OpenAI -> OpenAI,
+            Anthropic -> AnthropicAI, Google DeepMind -> GoogleDeepMind.
+        limit:
+          type: integer
+          default: 5
+          description: >
+            Số bài user yêu cầu ("10 tweet" -> 10, "3 tweet" -> 3). Lấy theo lượt nói
+            gần nhất có nêu số lượng.
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: >
+      Tìm bài đăng trên Twitter/X THEO CHỦ ĐỀ.
+
+      Dùng cho: "mọi người bàn gì về ...", "tweet về ...", "thảo luận trên Twitter về ...".
+
+      KHÔNG dùng để lấy bài của một tài khoản (dùng timeline).
+
+      KHÔNG dùng cho tin tức / tìm trên web — đó là lookup. Nếu lượt nói mới nhất
+      chuyển hướng khỏi mạng xã hội ("bỏ Twitter", "tìm trên web tin tức đi") thì
+      không được gọi tool này.
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Từ khóa"}
-        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Cách sắp xếp"}
+        query: {type: string, default: "", description: "Chỉ chủ đề cần tìm, vd \"GPT-5\", \"OpenAI\", \"AI\""}
+        search_type:
+          type: string
+          enum: [Latest, Top]
+          default: "Latest"
+          description: >
+            "Top" khi user hỏi bài phổ biến / top / hot / nhiều tương tác nhất;
+            còn lại "Latest".
         limit: {type: integer, default: 5, description: "Số lượng"}
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: >
+      Tìm kiếm trên WEB, và là tool đúng cho mọi request tin tức / tin thời sự
+      ("tin AI hôm nay", "tin công nghệ tuần này", "bản tin ...").
+
+      Cũng là tool dùng khi user chuyển từ Twitter sang tìm trên web.
+
+      query chỉ chứa chủ đề: KHÔNG nhét "tin tức", "news", "twitter", "web",
+      "hôm nay" vào query. Ví dụ: "Tin tức AI hôm nay" -> query="AI", topic="news",
+      timeframe="day".
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        topic: {type: string, enum: [general, news], default: "general", description: "Phân loại"}
-        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian"}
+        query: {type: string, default: "", description: "Chỉ chủ đề cần tra cứu, vd \"AI\", \"robotics\", \"OpenAI\""}
+        topic:
+          type: string
+          enum: [general, news]
+          default: "general"
+          description: "\"news\" cho tin tức/tin thời sự/bản tin; còn lại \"general\"."
+        timeframe:
+          type: string
+          enum: [day, week, month, year]
+          default: "week"
+          description: >
+            "hôm nay"/"today" -> day; "tuần này" -> week; "tháng này" -> month;
+            "năm nay" -> year. Giữ nguyên mốc thời gian đã nêu ở lượt trước nếu lượt
+            mới nhất không đổi nó.
         max_results: {type: integer, default: 5, description: "Số kết quả"}
       required: [query]
 
   - name: fetch
-    description: "Lấy nội dung từ một địa chỉ."
+    description: >
+      Đọc nội dung của một URL đã có sẵn trong hội thoại.
+
+      Chỉ dùng khi user đã cung cấp link; truyền đúng URL đó, không sửa.
+
+      KHÔNG tự bịa URL. Nếu user nói "bài này", "trang này" mà chưa có link,
+      gọi clarify(response_type="text").
     parameters:
       type: object
       properties:
-        url: {type: string, default: "", description: "Địa chỉ"}
+        url: {type: string, default: "", description: "URL người dùng đã cung cấp"}
       required: [url]
 
   - name: format
-    description: "Trình bày dữ liệu đã có thành văn bản."
+    description: >
+      Trình bày dữ liệu ĐÃ CÓ (do tool khác trả về trong hội thoại) thành văn bản.
+      Không bao giờ là tool đầu tiên hoặc tool duy nhất được gọi.
     parameters:
       type: object
       properties:
@@ -79,22 +157,53 @@ tools:
 
   # ---------------- Bonus tools ----------------
   - name: send
-    description: "Gửi một đoạn văn bản đi."
+    description: >
+      Gửi một đoạn văn bản lên kênh Telegram bên ngoài.
+
+      CHỈ dùng khi user yêu cầu rõ ràng gửi/đăng/publish nội dung.
+
+      KHÔNG bao giờ dùng tool này để trả lời câu hỏi thông thường hoặc câu ngoài phạm
+      vi (toán, code, tán gẫu) — những câu đó trả lời bằng text, không gọi tool.
+
+      KHÔNG gọi send ngay ở lượt user yêu cầu gửi. Lượt đó phải gọi
+      clarify(response_type="yes_no") trước. Chỉ gọi send ở lượt sau, khi user đã đồng
+      ý rõ ràng, và khi đó confirmed=true.
     parameters:
       type: object
       properties:
-        text: {type: string, default: "", description: "Nội dung"}
-        confirmed: {type: boolean, default: false, description: "Cờ xác nhận"}
+        text: {type: string, default: "", description: "Nội dung cần gửi"}
+        confirmed: {type: boolean, default: false, description: "Chỉ true sau khi user đã xác nhận yes"}
       required: [text]
 
   - name: policy
-    description: "Tìm trong tài liệu nội bộ."
+    description: >
+      Tra cứu quy định nội bộ của công ty trong bộ tài liệu company policy.
+
+      Dùng khi user hỏi "theo policy công ty...", "công ty có cho phép...",
+      "quy định nội bộ về ... là gì".
+
+      LUÔN truyền policy_area cụ thể theo chủ đề câu hỏi; chỉ dùng "all" khi câu hỏi
+      thực sự không thuộc nhóm nào ở dưới.
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Nhóm"}
-        top_k: {type: integer, default: 3, description: "Số mục"}
+        query: {type: string, default: "", description: "Nội dung cần tra trong policy"}
+        policy_area:
+          type: string
+          enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage]
+          default: "all"
+          description: >
+            Chọn nhóm policy theo chủ đề câu hỏi:
+            "source_citation" — nguồn tin, trích dẫn, tweet/tin đồn có được coi là fact
+            đã xác nhận không, cách cite arXiv/link;
+            "data_privacy" — API key, secret, dữ liệu khách hàng, PII, đưa gì vào prompt;
+            "external_publishing" — đăng/gửi/publish ra kênh ngoài (Telegram, blog,
+            social), quy trình duyệt và xác nhận trước khi đăng;
+            "ai_research" — quy trình nghiên cứu AI, research workflow, cách đọc và
+            đánh giá tài liệu;
+            "tool_usage" — quy định dùng tool/API bên ngoài, rate limit, chi phí;
+            "all" — chỉ khi không xác định được nhóm.
+        top_k: {type: integer, default: 3, description: "Số mục trả về"}
       required: [query]
 
   - name: papers
