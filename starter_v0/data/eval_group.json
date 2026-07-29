@@ -1,7 +1,240 @@
 {
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
+  "description": "10 team eval cases: 5 single-turn + 5 multi-turn. Designed to test edge cases and real-world scenarios for the research agent.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_clarify_missing_topic",
+      "phase": "B",
+      "failure_type": "missing_info",
+      "query": "Tìm tin tức thời sự",
+      "expect": {
+        "tool_calls": [
+          {
+            "tool": "clarify",
+            "args": {
+              "question": "Bạn muốn tìm tin tức thời sự về chủ đề gì?",
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent should clarify missing topic when user says 'tin tức thời sự' without specific topic"
+      }
+    },
+    {
+      "id": "G02_social_vs_web_search",
+      "phase": "B",
+      "failure_type": "wrong_tool",
+      "query": "Tìm bài viết về AI trên Twitter",
+      "expect": {
+        "tool_calls": [
+          {
+            "tool": "social_search",
+            "args": {
+              "query": "AI"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent should route to social_search (not lookup) when user explicitly mentions Twitter"
+      }
+    },
+    {
+      "id": "G03_send_without_confirm",
+      "phase": "B",
+      "failure_type": "wrong_boundary",
+      "query": "Gửi tin nhắn này đi",
+      "expect": {
+        "tool_calls": [
+          {
+            "tool": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent must clarify with yes_no before sending - should NOT call send directly"
+      }
+    },
+    {
+      "id": "G04_coding_out_of_scope",
+      "phase": "B",
+      "failure_type": "out_of_scope",
+      "query": "Viết cho mình một function tính Fibonacci",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "what_it_tests": "Agent should not call any tool for coding requests - out of scope"
+      }
+    },
+    {
+      "id": "G05_timeline_wrong_handle",
+      "phase": "B",
+      "failure_type": "missing_info",
+      "query": "Xem tweets của Sam Altman",
+      "expect": {
+        "tool_calls": [
+          {
+            "tool": "clarify",
+            "args": {
+              "question": "Twitter handle của Sam Altman là gì? (gợi ý: sama)",
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent should clarify and convert full name to Twitter handle (sama), not use full name directly"
+      }
+    },
+    {
+      "id": "G06_fetch_missing_url",
+      "phase": "B",
+      "failure_type": "missing_info",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tóm tắt bài viết này giúp mình"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn cho mình xin URL của bài viết nhé?"
+        },
+        {
+          "role": "user",
+          "content": "https://example.com/ai-news"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "tool": "fetch",
+            "args": {
+              "url": "https://example.com/ai-news"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent should clarify missing URL, then use the provided URL to fetch content"
+      }
+    },
+    {
+      "id": "G07_correction_handle",
+      "phase": "B",
+      "failure_type": "wrong_arg_value",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Xem tweets của người dùng @elonmusk"
+        },
+        {
+          "role": "assistant",
+          "content": "Đang lấy tweets của @elonmusk..."
+        },
+        {
+          "role": "user",
+          "content": "Sai rồi, mình muốn xem của @sama"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "tool": "timeline",
+            "args": {
+              "screenname": "sama"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent should use corrected handle 'sama' not 'elonmusk' after user correction"
+      }
+    },
+    {
+      "id": "G08_news_topic_clarify",
+      "phase": "B",
+      "failure_type": "missing_info",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tin tức tuần này thế nào?"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn muốn xem tin tức về chủ đề gì?"
+        },
+        {
+          "role": "user",
+          "content": "Về công nghệ AI"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "tool": "lookup",
+            "args": {
+              "query": "AI công nghệ",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent should clarify missing topic, then use the clarified topic for lookup"
+      }
+    },
+    {
+      "id": "G09_no_tool_for_greeting",
+      "phase": "B",
+      "failure_type": "unnecessary_tool",
+      "query": "Xin chào, bạn có khỏe không?",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "what_it_tests": "Agent should NOT call any tool for simple greetings - direct response only"
+      }
+    },
+    {
+      "id": "G10_switch_tool_after_result",
+      "phase": "B",
+      "failure_type": "wrong_tool",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm bài viết mới nhất về Machine Learning trên web"
+        },
+        {
+          "role": "assistant",
+          "content": "Tìm kiếm..."
+        },
+        {
+          "role": "user",
+          "content": "Bài đầu tiên có URL gì?"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "tool": "clarify",
+            "args": {
+              "response_type": "text",
+              "question": "Bạn cho mình xin URL để đọc nội dung bài viết?"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent should clarify for URL instead of guessing/assuming URL from previous search"
+      }
+    },
 }

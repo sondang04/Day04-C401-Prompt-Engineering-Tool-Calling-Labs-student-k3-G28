@@ -1,70 +1,72 @@
-# starter_v0 — tool declarations (intentionally vague).
-# Names and descriptions here are a rough first draft. Routing rules, name->handle
-# mapping, arg conventions (news/timeframe/Top), and the send-confirmation boundary
-# are NOT spelled out anywhere yet. Your job is to make these declarations + the
-# system prompt good enough that the agent routes correctly on the eval.
+# starter_v0 — tool declarations
+# Names and descriptions optimized for correct routing on eval.
+# Routing rules, name->handle mapping, arg conventions, and send-confirmation boundary
+# are now spelled out in detail.
 #
 # If you rename a tool, keep the name in sync across:
 #   this file  ->  tools/__init__.py (TOOL_FUNCTIONS)  ->  data/eval_base.json + data/eval_research_extension.json
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Ask the user a question. Use response_type='text' when user needs to PROVIDE more info (e.g., missing URL, missing handle). Use response_type='yes_no' when user WANTS TO DO an action that needs confirmation (e.g., sending, posting, publishing). Example: 'Đăng lên Telegram' → use response_type='yes_no'. Example: 'Tóm tắt bài này' without URL → use response_type='text'."
     parameters:
       type: object
       properties:
-        question: {type: string, default: "", description: "Câu hỏi"}
-        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Kiểu trả lời"}
-        options: {type: array, default: [], items: {type: string}, description: "Các lựa chọn"}
+        question: {type: string, default: "", description: "The question to ask user"}
+        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Response type expected. IMPORTANT: use 'yes_no' for confirmation (sending/publishing), 'text' for requesting info (URL, name, etc.)"}
+        options: {type: array, default: [], items: {type: string}, description: "Options for choice response"}
       required: [question]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: "Get recent tweets/posts from a specific person's Twitter account. REQUIRE Twitter handle, NOT full name. Common mappings: Sam Altman -> sama, Elon Musk -> elonmusk, Andrej Karpathy -> karpathy, etc."
     parameters:
       type: object
       properties:
-        screenname: {type: string, default: "", description: "Tên tài khoản"}
-        limit: {type: integer, default: 5, description: "Số lượng"}
+        screenname:
+          type: string
+          default: ""
+          description: "Twitter handle (e.g., 'sama' for Sam Altman, 'elonmusk' for Elon Musk, 'karpathy' for Andrej Karpathy). NEVER use full names."
+        limit: {type: integer, default: 5, description: "Number of tweets to retrieve"}
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: "Search for posts ON social media (Twitter/X) by keyword/topic. Use when user wants to find posts about something on social platforms."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Từ khóa"}
-        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Cách sắp xếp"}
-        limit: {type: integer, default: 5, description: "Số lượng"}
+        query: {type: string, default: "", description: "Search keyword"}
+        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Sort by Latest or Top"}
+        limit: {type: integer, default: 5, description: "Number of results"}
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: "Web search for news, articles, and general information. Use for 'tin tức', 'news', 'tìm trên web', 'hôm nay', 'tuần này'. This is for web search, NOT social media."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        topic: {type: string, enum: [general, news], default: "general", description: "Phân loại"}
-        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian"}
-        max_results: {type: integer, default: 5, description: "Số kết quả"}
+        query: {type: string, default: "", description: "Search query"}
+        topic: {type: string, enum: [general, news], default: "general", description: "Use 'news' for news/tin tức"}
+        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Time range: day=hôm nay, week=tuần này"}
+        max_results: {type: integer, default: 5, description: "Number of results"}
       required: [query]
 
   - name: fetch
-    description: "Lấy nội dung từ một địa chỉ."
+    description: "Read content from a specific URL provided by the user. Only use when user gives you an exact URL."
     parameters:
       type: object
       properties:
-        url: {type: string, default: "", description: "Địa chỉ"}
+        url: {type: string, default: "", description: "Exact URL to fetch"}
       required: [url]
 
   - name: format
-    description: "Trình bày dữ liệu đã có thành văn bản."
+    description: "Format and display results in markdown."
     parameters:
       type: object
       properties:
         items:
           type: array
           default: []
-          description: "Danh sách item"
+          description: "List of items to format"
           items:
             type: object
             properties:
@@ -73,46 +75,46 @@ tools:
               source: {type: string}
               summary: {type: string}
               section: {type: string}
-        template: {type: string, enum: [brief, sections, bullets, thread, daily_ai_vn], default: "sections", description: "Khuôn"}
-        headline: {type: string, default: "", description: "Tiêu đề"}
+        template: {type: string, enum: [brief, sections, bullets, thread, daily_ai_vn], default: "sections", description: "Format template"}
+        headline: {type: string, default: "", description: "Headline for the formatted output"}
       required: [items, template]
 
   # ---------------- Bonus tools ----------------
   - name: send
-    description: "Gửi một đoạn văn bản đi."
+    description: "Send/publish text. MUST confirm with clarify(response_type='yes_no') before sending. NEVER send without confirmation."
     parameters:
       type: object
       properties:
-        text: {type: string, default: "", description: "Nội dung"}
-        confirmed: {type: boolean, default: false, description: "Cờ xác nhận"}
+        text: {type: string, default: "", description: "Content to send"}
+        confirmed: {type: boolean, default: false, description: "Must be true only after user confirms"}
       required: [text]
 
   - name: policy
-    description: "Tìm trong tài liệu nội bộ."
+    description: "Search internal documents."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Nhóm"}
-        top_k: {type: integer, default: 3, description: "Số mục"}
+        query: {type: string, default: "", description: "Search query"}
+        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Policy area"}
+        top_k: {type: integer, default: 3, description: "Number of results"}
       required: [query]
 
   - name: papers
-    description: "Tìm bài báo khoa học."
+    description: "Search academic papers on arXiv."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Từ khóa"}
-        max_results: {type: integer, default: 5, description: "Số lượng"}
-        sort_by: {type: string, enum: [relevance, lastUpdatedDate, submittedDate], default: "relevance", description: "Sắp xếp"}
+        query: {type: string, default: "", description: "Search query"}
+        max_results: {type: integer, default: 5, description: "Number of results"}
+        sort_by: {type: string, enum: [relevance, lastUpdatedDate, submittedDate], default: "relevance", description: "Sort order"}
       required: [query]
 
   - name: paper_text
-    description: "Lấy nội dung text của một bài báo."
+    description: "Extract text content from an arXiv paper."
     parameters:
       type: object
       properties:
-        arxiv_url: {type: string, default: "", description: "ID hoặc địa chỉ"}
-        max_pages: {type: integer, default: 5, description: "Số trang"}
-        max_chars: {type: integer, default: 8000, description: "Số ký tự"}
+        arxiv_url: {type: string, default: "", description: "arXiv ID or URL"}
+        max_pages: {type: integer, default: 5, description: "Max pages"}
+        max_chars: {type: integer, default: 8000, description: "Max characters"}
       required: [arxiv_url]
