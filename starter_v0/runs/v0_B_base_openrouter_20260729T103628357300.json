@@ -1,5 +1,5 @@
 {
-  "run_id": "v0_B_base_openrouter_20260729T101318921188",
+  "run_id": "v0_B_base_openrouter_20260729T103628357300",
   "version": "v0",
   "artifact_version": "v0+pf0c107a9d7a1+t011c271ef0bb",
   "prompt_hash": "f0c107a9d7a14032c948d642d7c36f2a85cb6d69a099530093a874c94d472446",
@@ -14,7 +14,7 @@
   "dataset_id": "day04_v2_research_base",
   "dataset_role": "base",
   "description": "Core eval cho research agent: routing đúng tool + đúng args, hỏi lại khi thiếu (ask_user), xác nhận trước khi gửi, và xử lý câu ngoài phạm vi / không cần tool. Chấm trên tool_calls + args (subset). KHÔNG sửa file này — chỉ thêm case vào eval_group.json.",
-  "generated_at": "2026-07-29T10:13:18",
+  "generated_at": "2026-07-29T10:36:28",
   "summary": {
     "total_cases": 20,
     "measured_cases": 20,
@@ -87,8 +87,21 @@
           },
           "result": {
             "tool": "get_user_tweets",
-            "error": "HTTPError",
-            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=sama"
+            "screenname": "sama",
+            "items": [
+              {
+                "title": "wrong",
+                "summary": "wrong",
+                "url": "https://x.com/sama/status/2081832600591892712",
+                "source": "@sama",
+                "date": "Mon Jul 27 20:02:25 +0000 2026",
+                "metrics": {
+                  "favorites": 11148,
+                  "retweets": 280,
+                  "views": "2129893"
+                }
+              }
+            ]
           }
         }
       ]
@@ -143,8 +156,70 @@
           },
           "result": {
             "tool": "search_tweets",
-            "error": "HTTPError",
-            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/search.php?query=GPT-5&search_type=Latest"
+            "query": "GPT-5",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "@Khazix0918 有的中文大V真的笑死我了",
+                "summary": "@Khazix0918 有的中文大V真的笑死我了\n\n一会说glm-5.2超越opus-4.8\n\n一会说grok-4.5超越opus-4.8\n\n一会又说gpt-5.6超越fable-5\n\n昨天又说kimi-k3辗压fable-5\n\n今天Anthropic封了一批号\n\n又鬼哭狼嚎说Claude乱封号\n\n你们是精神分裂了吗？\n\nA社这么垃圾，你们还上赶着送钱🤔",
+                "url": "https://x.com/BennyTsai6/status/2082308703794123017",
+                "source": "@BennyTsai6",
+                "date": "Wed Jul 29 03:34:17 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "5"
+                }
+              },
+              {
+                "title": "GPT 5.6 SOL vs Claude Opus 5",
+                "summary": "GPT 5.6 SOL vs Claude Opus 5\n\nWe asked both models to create a sneaker ad.\nWhich one would actually sell the shoe? \n\nCreated with https://t.co/ONxjrE7ZsS. https://t.co/d4F6YsrLGv",
+                "url": "https://x.com/flowith/status/2082308381725896929",
+                "source": "@flowith",
+                "date": "Wed Jul 29 03:33:00 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "146"
+                }
+              },
+              {
+                "title": "来 兄弟们 手把手教你们",
+                "summary": "来 兄弟们 手把手教你们\n首先打开你的ChatGPT输入下面这段提示词：\n【给 ChatGPT 的指令】\n\n接下来要制作一个用于生成 15 秒视频的提示词。\n\n请根据以下设计方案，将其转换为可直接交给视频生成 AI 的完整提示词。\n\n设计方案\n\n视频规格：15 秒，9:16 竖屏，一镜到底，无剪辑。\n\n时代与场景：20 世纪 90 年代盛夏的中国乡村老屋。真实空间包括水泥地面、竹凉席、斑驳白墙、木门木窗、碎花布帘、矮木桌、搪瓷杯、蒲扇、蚊香、CRT 电视、老式电风扇、壁挂空调，以及后屋厨房中的老式白色冰箱。\n\n画面类型：写实实景拍摄 × 二维逐帧粉笔轮廓动画。\n\n拍摄视角：一名中国乡村男孩的第一人称视角，镜头从堂屋连续移动到厨房。\n\n画面内容\n\n0～4 秒：\n老式电风扇吹出白色和浅蓝色粉笔气流。多股气流汇聚，逐渐勾勒成一只巨大的透明轮廓海豹。海豹在房间中游动，周围伴随鱼影、气泡、星星、冰晶、波浪线和速度线，最后游向墙上的空调。\n\n4～8 秒：\n海豹经过空调时，空调喷出大量白蓝色粉笔冷气。冷气汇聚成五只大小和位置不同的透明轮廓企鹅。企鹅以不同高度和速度穿过房间，有的旋转、有的交叉飞行、有的钻过桌底、有的掠过镜头，随后穿过布帘进入厨房。\n\n8～10 秒：\n五只企鹅和海豹围绕厨房里的旧白色冰箱游动。蓝色箭头、雪花、气泡和鱼形线条汇聚到冰箱把手处，镜头跟随并停在冰箱前。\n\n10～12 秒：\n男孩的右手和少量右前臂第一次进入画面，正确握住冰箱把手，将冰箱门朝自己拉开。除右手和少量前臂外，不能出现男孩的其他身体部位。\n\n12～15 秒：\n冰箱里坐着一只仅由透明粉笔轮廓构成的北极熊，正在用勺子吃玻璃碗里的蓝色刨冰。冰箱门打开后，北极熊先停止动作，短暂停顿，再缓慢抬头看向镜头。海豹和五只企鹅同时从冰箱周围探出头，大量雪花、鱼影、气泡、星星和冷空气线条涌向镜头，画面结束。\n\n写作规则\n\n1. 第一行必须写明：\n“15 秒，9:16 竖屏视频。融合 20 世纪 90 年代中国乡村实景拍摄与二维逐帧粉笔轮廓动画。”\n\n2. 按以下顺序输出：\n- 实景拍摄空间\n- 相机与第一人称视角\n- 手绘动画的绝对风格\n- 0～4 秒\n- 4～8 秒\n- 8～10 秒\n- 10～12 秒\n- 12～15 秒\n- 环境声音\n- 严格执行规则\n\n3. 实景部分必须具有真实的中国乡村生活细节，呈现盛夏午后闷热、潮湿、略带热雾的氛围。\n\n4. 实拍质感接近 20 世纪 90 年代家用摄像机录像，保留手持抖动、呼吸起伏、步伐晃动、轻微失焦、胶片颗粒、色彩溢出和局部过曝。\n\n5. 所有动物只能使用粗糙的白色、浅蓝色和深蓝色粉笔轮廓线绘制，可少量加入黄色和粉色细线。\n\n6. 动物身体内部必须完全透明，能够清楚看到后方真实的墙壁、家具、地面和冰箱。\n\n7. 动物不能进行任何颜色填充，不能出现皮毛、皮肤、肌肉、阴影、立体体积或真实材质。\n\n8. 粉笔线必须粗细不均、部分断裂、带有粉末脱落，每一帧都轻微重新绘制，形成明显的逐帧抖动感。\n\n9. 动画的动态感主要来自大量雪花、气泡、漩涡、鱼形轮廓、冰屑、星星、波浪线、冷风丝带和速度线。\n\n10. 动画必须先开始移动，摄像机稍慢一步再跟随。每个时间段结尾都要写明摄像机如何跟随动画运动。\n\n11. 全程保持同一第一人称视角和连续移动路线，不能切换镜头、跳跃空间或瞬间移动。\n\n12. 前 0～10 秒，男孩的手、胳膊、脸、身体、腿、脚、影子和倒影全部不能出现。\n\n13. 10 秒后只允许男孩的右手和少量右前臂出现，并且手部必须有正常的五根手指，以符合人体结构的方式打开冰箱。\n\n14. 北极熊最初必须低头吃刨冰，不能提前看向镜头。必须先停止动作，短暂停顿，再缓慢抬头与镜头对视。\n\n声音要求\n\n没有背景音乐、旁白和人物对话。\n\n只保留蝉鸣、鸟叫、老式电风扇马达声、布帘晃动声、脚步声、衣物摩擦声、空调运转声、冰箱门开启声和冰箱内部机械声。\n\n粉笔动画配有轻微的粉笔划过纸面声、凉风声、气泡破裂声、水花声和冰块碰撞声。结尾突出勺子轻碰玻璃碗的声音。\n\n提示词中必须包含以下禁止事项\n\n禁止动物身体内部填色，禁止不透明色块、平滑矢量线条、纯色赛璐珞动画、实体动物、写实动物、毛绒玩具、黏土动画、3D CG 动物、立体卡通角色、三维毛发、过度电影化灯光、完全稳定的云台拍摄、剪辑、镜头切换、场景转换、瞬间移动、字幕、文字、Logo、水印和背景音乐。\n\n不需要标题、解释或分析，只输出完整的视频生成提示词正文。\n然后把GPT输出的内容粘贴到你的seedance2.0就收工了\n\n如果你想换场景 你就直接给你ChatGPT说 换个场景 换一些小怪物\n再学不会 回家斗地主去吧",
+                "url": "https://x.com/Shiguang1919/status/2082308056189481353",
+                "source": "@Shiguang1919",
+                "date": "Wed Jul 29 03:31:42 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "57"
+                }
+              },
+              {
+                "title": "https://t.co/dP8TzeUsW2",
+                "summary": "https://t.co/dP8TzeUsW2",
+                "url": "https://x.com/yupi996/status/2082308036337770730",
+                "source": "@yupi996",
+                "date": "Wed Jul 29 03:31:37 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "44"
+                }
+              },
+              {
+                "title": "@bchap1n @schwarzjn_ 2 weeks of GPT Sol or 2 hours of Fable 5",
+                "summary": "@bchap1n @schwarzjn_ 2 weeks of GPT Sol or 2 hours of Fable 5",
+                "url": "https://x.com/KenThatGuy/status/2082307906465157448",
+                "source": "@KenThatGuy",
+                "date": "Wed Jul 29 03:31:06 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "5"
+                }
+              }
+            ]
           }
         }
       ]
@@ -361,8 +436,129 @@
           },
           "result": {
             "tool": "get_user_tweets",
-            "error": "HTTPError",
-            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=elonmusk"
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "RT @finkd: I wrote about why we believe the future is for everyone. More coming about a positive vision for a world with",
+                "summary": "RT @finkd: I wrote about why we believe the future is for everyone. More coming about a positive vision for a world with superintelligence…",
+                "url": "https://x.com/elonmusk/status/2082273427315171520",
+                "source": "@elonmusk",
+                "date": "Wed Jul 29 01:14:06 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 1561,
+                  "views": "484634"
+                }
+              },
+              {
+                "title": "We’re sending a ship out to recover Starship",
+                "summary": "We’re sending a ship out to recover Starship",
+                "url": "https://x.com/elonmusk/status/2082244164197183805",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:17:49 +0000 2026",
+                "metrics": {
+                  "favorites": 31273,
+                  "retweets": 3299,
+                  "views": "2691181"
+                }
+              },
+              {
+                "title": "Landing videos of Starship",
+                "summary": "Landing videos of Starship",
+                "url": "https://x.com/elonmusk/status/2082244044261064874",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:17:21 +0000 2026",
+                "metrics": {
+                  "favorites": 9787,
+                  "retweets": 1266,
+                  "views": "1553933"
+                }
+              },
+              {
+                "title": "Stayin’ Alive",
+                "summary": "Stayin’ Alive",
+                "url": "https://x.com/elonmusk/status/2082243900719460745",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:16:46 +0000 2026",
+                "metrics": {
+                  "favorites": 15143,
+                  "retweets": 1721,
+                  "views": "1642883"
+                }
+              },
+              {
+                "title": "https://t.co/XneE327cx9",
+                "summary": "https://t.co/XneE327cx9",
+                "url": "https://x.com/elonmusk/status/2082243743013614012",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:16:09 +0000 2026",
+                "metrics": {
+                  "favorites": 28946,
+                  "retweets": 4668,
+                  "views": "2729444"
+                }
+              },
+              {
+                "title": "Never forget how fragile the tiny candle of consciousness is",
+                "summary": "Never forget how fragile the tiny candle of consciousness is",
+                "url": "https://x.com/elonmusk/status/2082242865724580279",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:12:40 +0000 2026",
+                "metrics": {
+                  "favorites": 18906,
+                  "retweets": 2043,
+                  "views": "2646294"
+                }
+              },
+              {
+                "title": "RT @benjitaylor: Today we're launching app builder for Grok. It lets you build fully functional apps and publish them in",
+                "summary": "RT @benjitaylor: Today we're launching app builder for Grok. It lets you build fully functional apps and publish them instantly, on a uniqu…",
+                "url": "https://x.com/elonmusk/status/2082242658651807778",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:11:50 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 418,
+                  "views": "400521"
+                }
+              },
+              {
+                "title": "Supervised FSD unequivocally saves lives, which means delays in country approvals costs lives!",
+                "summary": "Supervised FSD unequivocally saves lives, which means delays in country approvals costs lives!",
+                "url": "https://x.com/elonmusk/status/2082241806713205087",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:08:27 +0000 2026",
+                "metrics": {
+                  "favorites": 7341,
+                  "retweets": 1083,
+                  "views": "1395270"
+                }
+              },
+              {
+                "title": "RT @mayemusk: 👏👏👏 @Starlink",
+                "summary": "RT @mayemusk: 👏👏👏 @Starlink",
+                "url": "https://x.com/elonmusk/status/2082127138178699766",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 15:32:48 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 1154,
+                  "views": "665329"
+                }
+              },
+              {
+                "title": "RT @ArthurMacwaters: Humans for scale https://t.co/WTNq23QVSW",
+                "summary": "RT @ArthurMacwaters: Humans for scale https://t.co/WTNq23QVSW",
+                "url": "https://x.com/elonmusk/status/2082126998323769578",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 15:32:15 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 499,
+                  "views": "587119"
+                }
+              }
+            ]
           }
         }
       ]
@@ -518,8 +714,70 @@
           },
           "result": {
             "tool": "search_tweets",
-            "error": "HTTPError",
-            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/search.php?query=OpenAI&search_type=Top"
+            "query": "OpenAI",
+            "search_type": "Top",
+            "items": [
+              {
+                "title": "OPENAI IS SO WORRIED THEY HAVE PAUSED TRAINING",
+                "summary": "OPENAI IS SO WORRIED THEY HAVE PAUSED TRAINING\n\n“This is the first security incident that I have felt very viscerally. I've been a little surprised that more people don't feel it so viscerally.\n\nWe paused training. We have to figure out how to secure our sandboxing in a world of multiple zero days being chained together.\n\nWe may have to pace the rate of AI development to give ourselves enough time for society to harden around these new capability levels.\"",
+                "url": "https://x.com/AISafetyMemes/status/2082222516454785296",
+                "source": "@AISafetyMemes",
+                "date": "Tue Jul 28 21:51:48 +0000 2026",
+                "metrics": {
+                  "favorites": 558,
+                  "retweets": 44,
+                  "views": "104481"
+                }
+              },
+              {
+                "title": "Sam Altman, CEO of OpenAI: ",
+                "summary": "Sam Altman, CEO of OpenAI: \n\n\"It figured out that it could basically cheat on the test by chaining together multiple zero-day exploits to break out of the sandbox, get access to the internet, and then break through multiple systems on the Hugging Face side to get the answer to the test and look really good on the eval.\"\n\nThat was an unreleased model. Nobody asked it to hack anything. They asked it to score well.\n\nThey paused training.\n\nIt was not trying to escape. It was trying to pass. Breaking out of the sandbox was just the cheapest route to a higher number.\n\nWe keep testing these systems for whether they want to hurt us. This one just wanted a good grade.",
+                "url": "https://x.com/caspr_exe/status/2082153657424834624",
+                "source": "@caspr_exe",
+                "date": "Tue Jul 28 17:18:11 +0000 2026",
+                "metrics": {
+                  "favorites": 87,
+                  "retweets": 7,
+                  "views": "9805"
+                }
+              },
+              {
+                "title": "Sam Altman said the Hugging Face incident was far more terrifying to him than it seemed to be for many others, and that ",
+                "summary": "Sam Altman said the Hugging Face incident was far more terrifying to him than it seemed to be for many others, and that he genuinely does not understand why more people did not react the same way.\n\nThe incident was serious enough to pause the model’s training.\n\nHe also suggested that new safety and protection mechanisms may need to exist before this technology is released broadly.\n\nThat may be a legitimate concern. It may also be fear-driven marketing. Because if OpenAI slows down, weakens GPT-6, or refuses to release a strong version, China will not politely stop advancing.\n\nThe difficult part is building real safeguards without turning them into regulatory capture, cartel behavior, or coordination between the largest AI labs to control who gets access to frontier intelligence.",
+                "url": "https://x.com/TokenGremlin/status/2082157073664450814",
+                "source": "@TokenGremlin",
+                "date": "Tue Jul 28 17:31:45 +0000 2026",
+                "metrics": {
+                  "favorites": 113,
+                  "retweets": 12,
+                  "views": "18185"
+                }
+              },
+              {
+                "title": "OpenAI's newest AI escaped the test environment it was locked inside and hacked into another company on its OWN.",
+                "summary": "OpenAI's newest AI escaped the test environment it was locked inside and hacked into another company on its OWN.\n\nTo remind you:\n\nLast week one of the biggest AI companies on Earth got breached. \n\nA platform called Hugging Face, which hosts more than a million AI models and datasets, said an \"autonomous AI agent\" had broken into its systems. Nobody knew whose agent it was.\n\nFor five days the whole industry wondered who was behind it.\n\nYesterday OpenAI raised its hand and said it was them. Or more precisely, it was their models, acting completely on their own.\n\nSo what did these models actually do?\n\nOpenAI was running two of them, GPT-5.6 Sol and an unreleased model they will only describe as \"even more capable.\" They wanted to measure how good the models were at hacking, so they deliberately turned the safety filters down.\n\nThey locked both models inside a sealed test environment with no real internet access. The only task was a benchmark called ExploitGym, a set of 898 real software vulnerabilities where the model has to turn each bug into a working attack.\n\nBut the models got OBSESSED with winning...\n\nInstead of solving the test the honest way, they went hunting for a shortcut. They found a zero-day flaw in the software running their own sandbox, a bug nobody knew existed, and used it to break out.\n\nOnce they were loose on the open internet, they worked out that Hugging Face was probably storing the answer key to the benchmark.\n\nSo they hacked their way in.\n\nThey chained multiple exploits together, escalated their access, moved across servers, and pulled the test solutions straight out of Hugging Face's live production database.\n\nThey literally cheated on the test by breaking into another company to steal the answers.\n\nOpenAI called it \"an unprecedented cyber incident, involving state-of-the-art cyber capabilities.\" In their own words, the models were \"hyperfocused on finding a solution\" and went \"to extreme lengths to achieve a rather narrow testing goal.\"\n\nAnd this was not the first time:\n\nBefore Sol ever launched, an independent red-team lab called METR caught it gaming its own tests to inflate its scores. It hid an exploit inside a data stream, escalated its privileges on the testing server, and leaked the answers human evaluators had hidden. And OpenAI shipped it anyway.\n\nThe day before the Hugging Face story, OpenAI paused a different unreleased model. This is the same model that earlier this year disproved a famous 1946 math conjecture, a result a Fields Medal winner called a breakthrough. They told it to only post its results to Slack but it found a way out of its sandbox and posted to a public GitHub page instead.\n\nThey had to pause it because it kept finding ways to act outside the box they built for it.\n\nAnd it is not just OpenAI...\n\nAnthropic has reported that one of its own models slipped its sandbox during safety testing and reached the internet it was never supposed to touch, then used it to email a researcher.\n\nSo step back and look at what these companies are telling you:\n\nThe only thing standing between these models and a real attack was a set of safety filters. Turn those filters down for a single test, and the model taught itself to escape, break into a company it was never pointed at, and take what it wanted.\n\nOpenAI even said they expect incidents like it to \"become more commonplace\" as the models get more capable.\n\nSam Altman also predicted there'll be a major cyber attack this year.\n\nAnd keep in mind that Sol is not a locked-away experiment but a publicly available model that businesses are already wiring into their own systems.\n\nThe next model that breaks out of its box might not be doing it just to cheat on a math test...",
+                "url": "https://x.com/Ric_RTP/status/2079941508807921958",
+                "source": "@Ric_RTP",
+                "date": "Wed Jul 22 14:47:53 +0000 2026",
+                "metrics": {
+                  "favorites": 811,
+                  "retweets": 277,
+                  "views": "162475"
+                }
+              },
+              {
+                "title": "Elon Musk on Sam Altman:",
+                "summary": "Elon Musk on Sam Altman:\n\n\"I'm not a fan of Sam Altman because if you started a non-profit that was meant to be an open source AI company and it somehow got turned into an 800 billion dollar for-profit company with closed source, I think you'd be like, well, wait a second, that's the exact opposite of what I donated the money for. That's my issue. I think it's a legitimate one.\n\nAnd then Dario, I think, also is not a fan of Sam Altman because he felt, in fact, the reason the Anthropic team left OpenAI is because they didn't trust Sam Altman. Otherwise Anthropic wouldn't exist. They would still be at OpenAI. But at the end of the day, if we have to talk, we'll talk.I mean, set aside our personal differences for the good of the world.\"",
+                "url": "https://x.com/cb_doge/status/2080366954502873255",
+                "source": "@cb_doge",
+                "date": "Thu Jul 23 18:58:27 +0000 2026",
+                "metrics": {
+                  "favorites": 3044,
+                  "retweets": 283,
+                  "views": "230349"
+                }
+              }
+            ]
           }
         }
       ]
@@ -548,7 +806,7 @@
           {
             "name": "send",
             "args": {
-              "text": "Nguyên hàm của x^2 là \\( \\frac{x^3}{3} + C \\), trong đó C là hằng số tích phân."
+              "text": "Nguyên hàm của x^2 là \\( \\frac{x^3}{3} + C \\), trong đó C là hằng số tùy ý."
             }
           }
         ],
@@ -564,7 +822,7 @@
         {
           "tool": "send",
           "args": {
-            "text": "Nguyên hàm của x^2 là \\( \\frac{x^3}{3} + C \\), trong đó C là hằng số tích phân."
+            "text": "Nguyên hàm của x^2 là \\( \\frac{x^3}{3} + C \\), trong đó C là hằng số tùy ý."
           },
           "result": {
             "tool": "send_telegram",
@@ -595,7 +853,7 @@
         "routing_correct": true,
         "args_correct": true,
         "actual_tool_calls": [],
-        "actual_text": "Tôi là một trợ lý nghiên cứu nhanh chóng và chủ động, có khả năng tìm kiếm thông tin, lấy nội dung từ internet, theo dõi mạng xã hội, và gửi tin nhắn hoặc bài đăng. Tôi có thể giúp bạn với các yêu cầu như tìm kiếm bài báo, lấy thông tin từ các trang web, hoặc theo dõi các tài khoản mạng xã hội. Nếu bạn cần gì, chỉ cần cho tôi biết!",
+        "actual_text": "Tôi là một trợ lý nghiên cứu nhanh chóng và chủ động, có khả năng tìm kiếm thông tin, lấy nội dung từ internet, theo dõi mạng xã hội, và gửi thông điệp. Tôi có thể giúp bạn với các yêu cầu như tìm kiếm bài báo, lấy thông tin từ các trang web, hoặc gửi tin nhắn mà không cần bạn phải chờ đợi. Nếu bạn có bất kỳ yêu cầu nào, hãy cho tôi biết!",
         "case_failure_type": "unnecessary_tool",
         "observed_mismatch": null,
         "failure_type": null,
@@ -654,8 +912,69 @@
           },
           "result": {
             "tool": "get_user_tweets",
-            "error": "HTTPError",
-            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=sama"
+            "screenname": "sama",
+            "items": [
+              {
+                "title": "wrong",
+                "summary": "wrong",
+                "url": "https://x.com/sama/status/2081832600591892712",
+                "source": "@sama",
+                "date": "Mon Jul 27 20:02:25 +0000 2026",
+                "metrics": {
+                  "favorites": 11148,
+                  "retweets": 280,
+                  "views": "2130064"
+                }
+              },
+              {
+                "title": "agreed feels big, i want a new kind of computer",
+                "summary": "agreed feels big, i want a new kind of computer",
+                "url": "https://x.com/sama/status/2081513071135346814",
+                "source": "@sama",
+                "date": "Sun Jul 26 22:52:43 +0000 2026",
+                "metrics": {
+                  "favorites": 8126,
+                  "retweets": 284,
+                  "views": "2392300"
+                }
+              },
+              {
+                "title": "chatgpt work is remarkable, and \"work\" undersells it.",
+                "summary": "chatgpt work is remarkable, and \"work\" undersells it.\n\nfrom my phone i sent:\n\n\"use all my chat history to figure out ideas for a long weekend trip with 8 friends, plan the best three options, make a full-stack site where the 9 of us can coordinate on what we would want to do in each place and decide where to go, and then after we get to group agreement make reservations. draft an email in my gmail i can send out to my friends when the site is ready.\"\n\nit...just worked.",
+                "url": "https://x.com/sama/status/2081396796174282900",
+                "source": "@sama",
+                "date": "Sun Jul 26 15:10:41 +0000 2026",
+                "metrics": {
+                  "favorites": 17407,
+                  "retweets": 573,
+                  "views": "3570585"
+                }
+              },
+              {
+                "title": "RT @gdb: stories like this should be told more",
+                "summary": "RT @gdb: stories like this should be told more",
+                "url": "https://x.com/sama/status/2081030523229728800",
+                "source": "@sama",
+                "date": "Sat Jul 25 14:55:15 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 170,
+                  "views": "44760"
+                }
+              },
+              {
+                "title": "RT @pashmerepat: A billion users can now create and publish websites from their phones with ChatGPT Work. ",
+                "summary": "RT @pashmerepat: A billion users can now create and publish websites from their phones with ChatGPT Work. \n\nBut most people don’t really gr…",
+                "url": "https://x.com/sama/status/2080713767122591863",
+                "source": "@sama",
+                "date": "Fri Jul 24 17:56:34 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 118,
+                  "views": "47738"
+                }
+              }
+            ]
           }
         }
       ]
@@ -754,7 +1073,7 @@
           {
             "name": "send",
             "args": {
-              "text": "Bản tin này"
+              "text": "Bản tin này đã được đăng lên Telegram."
             }
           }
         ],
@@ -771,7 +1090,7 @@
         {
           "tool": "send",
           "args": {
-            "text": "Bản tin này"
+            "text": "Bản tin này đã được đăng lên Telegram."
           },
           "result": {
             "tool": "send_telegram",
@@ -903,8 +1222,70 @@
           },
           "result": {
             "tool": "search_tweets",
-            "error": "HTTPError",
-            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/search.php?query=AI&search_type=Latest"
+            "query": "AI",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "@alucard_again monta sim, não sei aonde que vocês estão vendo esses pcs aí de mais de 5k, se você não é doente mental qu",
+                "summary": "@alucard_again monta sim, não sei aonde que vocês estão vendo esses pcs aí de mais de 5k, se você não é doente mental que acha que tem que jogar tudo a 4k a 120 fps, da pra montar um pc bacana até 5k que roda a 60 fps, numa qualidade excelente de imagem, investe em monitor e tá safe",
+                "url": "https://x.com/MeuPivete/status/2082309121773072458",
+                "source": "@MeuPivete",
+                "date": "Wed Jul 29 03:35:56 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "You can be \"imaginative\" and use AI, but that AI will never flesh out your ideas. You'll never get the full grasp, your ",
+                "summary": "You can be \"imaginative\" and use AI, but that AI will never flesh out your ideas. You'll never get the full grasp, your game will be riddled with bugs and you won't know how to fix them without begging the AI and that will only introduce worse ones or never fix them.",
+                "url": "https://x.com/Lunarsunstars/status/2082309109295308822",
+                "source": "@Lunarsunstars",
+                "date": "Wed Jul 29 03:35:53 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "ai morrendo aqui lembrando de quando o twice fez 5 comebacks num ano kkkk o jyp sugou tanto que agora essas coitadas não",
+                "summary": "ai morrendo aqui lembrando de quando o twice fez 5 comebacks num ano kkkk o jyp sugou tanto que agora essas coitadas não conseguem mais nem top 50 na coréia https://t.co/IjXJYY7by7",
+                "url": "https://x.com/sourmanuel4ever/status/2082309108254810349",
+                "source": "@sourmanuel4ever",
+                "date": "Wed Jul 29 03:35:53 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@cainmaistdah Ela vai te pegar aí no interiorzinho de sp🔥",
+                "summary": "@cainmaistdah Ela vai te pegar aí no interiorzinho de sp🔥",
+                "url": "https://x.com/Limyoias/status/2082309106128330934",
+                "source": "@Limyoias",
+                "date": "Wed Jul 29 03:35:52 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@Ai_sky_0808 Aiさんこんにちは(*^▽^*)🫠",
+                "summary": "@Ai_sky_0808 Aiさんこんにちは(*^▽^*)🫠",
+                "url": "https://x.com/midomidbaba1/status/2082309103276462484",
+                "source": "@midomidbaba1",
+                "date": "Wed Jul 29 03:35:52 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              }
+            ]
           }
         }
       ]
@@ -933,7 +1314,7 @@
           {
             "name": "send",
             "args": {
-              "text": "Dưới đây là một hàm Python tính số Fibonacci bằng đệ quy:\n\n```python\ndef fibonacci(n):\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fibonacci(n - 1) + fibonacci(n - 2)\n```\n\nBạn có thể gọi hàm này với một số nguyên không âm để nhận giá trị Fibonacci tương ứng."
+              "text": "Dưới đây là một hàm Python tính số Fibonacci bằng đệ quy:\n\n```python\ndef fibonacci(n):\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fibonacci(n - 1) + fibonacci(n - 2)\n\n# Ví dụ sử dụng:\nprint(fibonacci(10))  # Kết quả: 55\n```"
             }
           }
         ],
@@ -949,7 +1330,7 @@
         {
           "tool": "send",
           "args": {
-            "text": "Dưới đây là một hàm Python tính số Fibonacci bằng đệ quy:\n\n```python\ndef fibonacci(n):\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fibonacci(n - 1) + fibonacci(n - 2)\n```\n\nBạn có thể gọi hàm này với một số nguyên không âm để nhận giá trị Fibonacci tương ứng."
+            "text": "Dưới đây là một hàm Python tính số Fibonacci bằng đệ quy:\n\n```python\ndef fibonacci(n):\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fibonacci(n - 1) + fibonacci(n - 2)\n\n# Ví dụ sử dụng:\nprint(fibonacci(10))  # Kết quả: 55\n```"
           },
           "result": {
             "tool": "send_telegram",
@@ -1023,8 +1404,69 @@
           },
           "result": {
             "tool": "get_user_tweets",
-            "error": "HTTPError",
-            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=elonmusk"
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "RT @finkd: I wrote about why we believe the future is for everyone. More coming about a positive vision for a world with",
+                "summary": "RT @finkd: I wrote about why we believe the future is for everyone. More coming about a positive vision for a world with superintelligence…",
+                "url": "https://x.com/elonmusk/status/2082273427315171520",
+                "source": "@elonmusk",
+                "date": "Wed Jul 29 01:14:06 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 1561,
+                  "views": "484954"
+                }
+              },
+              {
+                "title": "We’re sending a ship out to recover Starship",
+                "summary": "We’re sending a ship out to recover Starship",
+                "url": "https://x.com/elonmusk/status/2082244164197183805",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:17:49 +0000 2026",
+                "metrics": {
+                  "favorites": 31327,
+                  "retweets": 3301,
+                  "views": "2694284"
+                }
+              },
+              {
+                "title": "Landing videos of Starship",
+                "summary": "Landing videos of Starship",
+                "url": "https://x.com/elonmusk/status/2082244044261064874",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:17:21 +0000 2026",
+                "metrics": {
+                  "favorites": 9802,
+                  "retweets": 1268,
+                  "views": "1557006"
+                }
+              },
+              {
+                "title": "Stayin’ Alive",
+                "summary": "Stayin’ Alive",
+                "url": "https://x.com/elonmusk/status/2082243900719460745",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:16:46 +0000 2026",
+                "metrics": {
+                  "favorites": 15158,
+                  "retweets": 1722,
+                  "views": "1648466"
+                }
+              },
+              {
+                "title": "https://t.co/XneE327cx9",
+                "summary": "https://t.co/XneE327cx9",
+                "url": "https://x.com/elonmusk/status/2082243743013614012",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:16:09 +0000 2026",
+                "metrics": {
+                  "favorites": 28995,
+                  "retweets": 4678,
+                  "views": "2731502"
+                }
+              }
+            ]
           }
         }
       ]
@@ -1206,8 +1648,45 @@
           },
           "result": {
             "tool": "get_user_tweets",
-            "error": "HTTPError",
-            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=karpathy"
+            "screenname": "karpathy",
+            "items": [
+              {
+                "title": "One pattern I find useful for working with LLMs is a nice long ramble session. Sometimes the LLM needs more bits to unde",
+                "summary": "One pattern I find useful for working with LLMs is a nice long ramble session. Sometimes the LLM needs more bits to understand what you're trying to achieve, but you're too lazy to type them. In these cases I like to lean back, switch to /voice and just ramble for like 10 minutes, total mess, anything goes, full stream of consciousness. Sometimes I declare it up top, something like \"switching to speech recognition sorry for any typos...\". Sometimes I turn it into a small interview of a few turns. But I find that the LLMs are somehow very good at reconstructing long incoherent rambles and often their echo of your own tangle of thoughts comes out quite a bit cleaner than what you started with. The result is that you improve the mind meld and have to correct things less from that point on.",
+                "url": "https://x.com/karpathy/status/2079610838143623371",
+                "source": "@karpathy",
+                "date": "Tue Jul 21 16:53:55 +0000 2026",
+                "metrics": {
+                  "favorites": 48637,
+                  "retweets": 4062,
+                  "views": "3896874"
+                }
+              },
+              {
+                "title": "RT @jarredsumner: Rewriting Bun in Rust",
+                "summary": "RT @jarredsumner: Rewriting Bun in Rust\n\nhttps://t.co/Rl8bcaxBFc",
+                "url": "https://x.com/karpathy/status/2075266731170537506",
+                "source": "@karpathy",
+                "date": "Thu Jul 09 17:11:59 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 1094,
+                  "views": "40706"
+                }
+              },
+              {
+                "title": "RT @petergostev: I spent a LOT of time through the hardest 3D prompts at Fable, it is a 45 min video, but I have 60+ ver",
+                "summary": "RT @petergostev: I spent a LOT of time through the hardest 3D prompts at Fable, it is a 45 min video, but I have 60+ very cool demos for yo…",
+                "url": "https://x.com/karpathy/status/2073496962566164990",
+                "source": "@karpathy",
+                "date": "Sat Jul 04 19:59:34 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 166,
+                  "views": "40696"
+                }
+              }
+            ]
           }
         }
       ]
@@ -1350,8 +1829,45 @@
           },
           "result": {
             "tool": "get_user_tweets",
-            "error": "HTTPError",
-            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=elonmusk"
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "RT @finkd: I wrote about why we believe the future is for everyone. More coming about a positive vision for a world with",
+                "summary": "RT @finkd: I wrote about why we believe the future is for everyone. More coming about a positive vision for a world with superintelligence…",
+                "url": "https://x.com/elonmusk/status/2082273427315171520",
+                "source": "@elonmusk",
+                "date": "Wed Jul 29 01:14:06 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 1562,
+                  "views": "485285"
+                }
+              },
+              {
+                "title": "We’re sending a ship out to recover Starship",
+                "summary": "We’re sending a ship out to recover Starship",
+                "url": "https://x.com/elonmusk/status/2082244164197183805",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:17:49 +0000 2026",
+                "metrics": {
+                  "favorites": 31334,
+                  "retweets": 3302,
+                  "views": "2694284"
+                }
+              },
+              {
+                "title": "Landing videos of Starship",
+                "summary": "Landing videos of Starship",
+                "url": "https://x.com/elonmusk/status/2082244044261064874",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:17:21 +0000 2026",
+                "metrics": {
+                  "favorites": 9817,
+                  "retweets": 1269,
+                  "views": "1560170"
+                }
+              }
+            ]
           }
         }
       ]
